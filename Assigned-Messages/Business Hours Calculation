@@ -1,0 +1,93 @@
+// In all the calculations here, the least unit counted is minutes
+var holidays = [new Date(0, 0, 1)], // 1st of Jan. Notice that we set the year to 0 because holidays are fixed days of a year
+    weeklyHolidays = [0, 6], // Sundays and Saturdays are off
+    workShifts = [{
+        start: 0,
+        end: 4
+    }, {
+        start: 9,
+        end: 17
+    }, {
+        start: 20,
+        end: 24
+    }],
+    today = new Date("$value -now$");
+
+setInterval(function ()
+{
+    today.setMilliseconds(today.getMilliseconds() + 1000);
+}, 1000);
+
+function calculateWorkHours(startDate)
+{
+    /// <param name="startDate" type="Date"></param>
+    if(today - startDate <= 0)
+        return 0;
+
+    var startDateTotalHours = startDate.getHours() + startDate.getMinutes() / 60,
+        endDateTotalHours = today.getHours() + today.getMinutes() / 60;
+
+    if(startDate.getFullYear() == today.getFullYear() &&
+       startDate.getMonth() == today.getMonth() &&
+       startDate.getDate() == today.getDate())
+    {
+        return workShifts.reduce(function (previous, current)
+        {
+            if(current.end >= startDateTotalHours)
+            {
+                previous += (current.end > endDateTotalHours ? endDateTotalHours : current.end) -
+                            (current.start > startDateTotalHours ? current.start : startDateTotalHours);
+            }
+
+            return previous;
+        }, 0);
+    }
+
+    startDate = new Date(startDate.getTime());
+
+    var totalBusinessHours = workShifts.reduce(function (previous, current)
+    {
+        if(current.end >= startDateTotalHours)
+            previous += current.end - (current.start > startDateTotalHours ? current.start : startDateTotalHours);
+
+        return previous;
+    }, 0),
+        dayTotalWorkHours = workShifts.reduce(function (previous, current)
+        {
+            return previous + current.end - current.start;
+        }, 0);
+
+    // Move to next day
+    startDate.setDate(startDate.getDate() + 1);
+
+    while(startDate.getFullYear() != today.getFullYear() ||
+          startDate.getMonth() != today.getMonth() ||
+          startDate.getDate() != today.getDate())
+    {
+        if(weeklyHolidays.indexOf(startDate.getDay()) < 0 &&
+          !holidays.some(function (h)
+        {
+            return h.getMonth() == startDate.getMonth() &&
+            h.getDate() == startDate.getDate();
+        }))
+        {
+            totalBusinessHours += dayTotalWorkHours;
+        }
+
+        // Move to next day
+        startDate.setDate(startDate.getDate() + 1);
+    }
+
+    totalBusinessHours = workShifts.reduce(function (previous, current)
+    {
+        if(current.start <= endDateTotalHours)
+        {
+            previous += (current.end > endDateTotalHours ? endDateTotalHours : current.end) -
+                        current.start;
+        }
+
+        return previous;
+    }, totalBusinessHours);
+
+    return totalBusinessHours;
+}
