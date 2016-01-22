@@ -1,0 +1,18 @@
+Feedback has been receieved for an iService support incident.
+
+Feedback provided
+------------------
+
+Reference # of interaction: $form -id'ref'$
+How well was your question answered? $form -id'answer_quality'$
+How timely was your issue resolved?  $form -id'answer_speed'$
+How would you rate the skills of the support representative? $form -id'answer_skill'$ 
+How friendly was the support representative? $form -id'answer_friendliness'$
+What could we have done to prevent the problem in the first place? $form -id'prevent'$
+
+Additional comments:
+$form -id'comments'$ 
+
+
+To view the original question that was evaluated, visit the link below:
+https://[Your iService URL]/MessageQueue.aspx?mode=search&num=1&where0=entire&field0=ID&s0=$form -id'ref'$
