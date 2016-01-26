@@ -1,5 +1,6 @@
 ; (function ()
 {
+// Dummy
     // In all the calculations here, the least unit counted is minutes
     // The calculations use JavaScript Date object conventions. For reference, view the MDN article about the
     // issue https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date
