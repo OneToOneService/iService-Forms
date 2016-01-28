@@ -1,4 +1,4 @@
-﻿$if -fieldregex'form'='^js$'$$header -filetype(js)$
+$if -fieldregex'form'='^js$'$$header -filetype(js)$
 var rootPath = '$value -rootpath$',
     app = angular.module('iService', ['ngSanitize', 'ngRoute', 'ui.date']),
     loggedIn = $json -loginloggedin$,
