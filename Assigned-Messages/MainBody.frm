@@ -167,9 +167,9 @@ function ControllerMessageQueueSuperviseByAgent($scope, $http, $timeout)
 
     $scope.SearchRunning = fetchData();
 
-    $scope.SelectAgent = function (agent)
+    $scope.selectAgent = function (agent)
     {
-        $scope.showFor = agent;
+        $scope.showFor = ($scope.showFor == agent) ? null : agent;
     }
 }
 
@@ -307,30 +307,34 @@ $if -fieldregex'form'='^$'$
                 </tr>
             </thead>
             <tbody class="agents">
-                <tr ng-repeat="agent in agentList.rows" ng-class-even="'row-even'" ng-class-odd="'row-odd'" ng-class="{'row-selected': showFor === agent }" ng-controller="ControllerAgent">
+                <tr ng-repeat-start="agent in agentList.rows" ng-class-even="'row-even'" ng-class-odd="'row-odd'" ng-class="{'row-selected': showFor === agent }" ng-controller="ControllerAgent">
                     <td class="column-name padded">{{ agent.name }}</td>
-                    <td class="column-num padded"><span class="nglink" ng-click="SelectAgent(agent)">{{ agent.num }}</span></td>
+                    <td class="column-num padded"><span class="nglink" ng-click="selectAgent(agent)">{{ agent.num }}</span></td>
                     <td class="column-hours padded">{{ agent.hours | formatInterval }}</td>
                 </tr>
+                <tr ng-repeat-end ng-if="showFor == agent">
+                    <td colspan="3" class="agent-messages">
+                        <table class="messages common-search-results hover stack">
+                            <thead>
+                                <tr>
+                                    <th class="column-topic"><span class="nglink" ng-click="messageList.SortClick('topicName')">Topic Name</span><div class="sort-direction-indicator" ng-class="messageList.SortDirectionClass('topicName')"></div></th>
+                                    <th class="column-date"><span class="nglink" ng-click="messageList.SortClick('dateObj')">Message Date</span><div class="sort-direction-indicator" ng-class="messageList.SortDirectionClass('dateObj')"></div></th>
+                                    <th class="column-hours"><span class="nglink" ng-click="messageList.SortClick('hours')">Business Hours</span><div class="sort-direction-indicator" ng-class="messageList.SortDirectionClass('hours')"></div></th>
+                                </tr>
+                            </thead>
+                            <tbody class="agents">
+                                <tr ng-repeat="message in messageList.rows | filter: ShowMessage" ng-class-even="'row-even'" ng-class-odd="'row-odd'" ng-controller="ControllerMessage">
+                                    <td class="column-topic padded">{{ message.topicName }}</td>
+                                    <td class="column-date padded">{{ message.date }}</td>
+                                    <td class="column-hours padded">{{ message.hours | formatInterval }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
             </tbody>
         </table>
-        <h2 ng-show="showFor">Messages for: {{showFor.name}}<br></h2>
-        <table class="messages common-search-results hover stack" ng-show="showFor">
-            <thead>
-                <tr>
-                    <th class="column-topic"><span class="nglink" ng-click="messageList.SortClick('topicName')">Topic Name</span><div class="sort-direction-indicator" ng-class="messageList.SortDirectionClass('topicName')"></div></th>
-                    <th class="column-date"><span class="nglink" ng-click="messageList.SortClick('dateObj')">Message Date</span><div class="sort-direction-indicator" ng-class="messageList.SortDirectionClass('dateObj')"></div></th>
-                    <th class="column-hours"><span class="nglink" ng-click="messageList.SortClick('hours')">Business Hours</span><div class="sort-direction-indicator" ng-class="messageList.SortDirectionClass('hours')"></div></th>
-                </tr>
-            </thead>
-            <tbody class="agents">
-                <tr ng-repeat="message in messageList.rows | filter: ShowMessage" ng-class-even="'row-even'" ng-class-odd="'row-odd'" ng-controller="ControllerMessage">
-                    <td class="column-topic padded">{{ message.topicName }}</td>
-                    <td class="column-date padded">{{ message.date }}</td>
-                    <td class="column-hours padded">{{ message.hours | formatInterval }}</td>
-                </tr>
-            </tbody>
-        </table>
+        <!--<h2 ng-show="showFor">Messages for: {{showFor.name}}<br></h2>-->
     </script>
 </body>
 </html>
@@ -355,8 +359,16 @@ thead th
     margin: 5px auto auto auto;
 }
 
+/* Style for the agent messages table cell */
+.common-search-results .agent-messages
+{
+    border-style: dashed;
+    padding: 5px;
+    border-width: 2px;
+}
+
 .common-search-results { width: 100%; table-layout: fixed; }
-.common-search-results td { border: solid 1px #cacaca; border-top: none; }
+.common-search-results td { border: solid 1px #cacaca; }
 .common-search-results th { border-bottom: solid 1px #cacaca; }
 .common-search-results tr.row-even td { background-color: #e8e8e8; }
 .common-search-results tr.row-odd td { background-color: #fff; }
