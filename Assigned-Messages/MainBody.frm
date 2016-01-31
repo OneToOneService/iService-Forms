@@ -157,10 +157,18 @@ function ControllerMessageQueueSuperviseByAgent($scope, $http, $timeout)
     InstallControllerSort(messageList, { column: 'dateObj', ascend: true });
 
     $scope.showFor = null;
-    $scope.ShowMessage = function (value, index, array)
+
+    $scope.showMessage = function (message)
     {
-        return $scope.showFor && value.assignedToID == $scope.showFor.id;
+        return $scope.showFor && message.assignedToID == $scope.showFor.id;
     }
+
+    function isAgentSelected(agent)
+    {
+        return $scope.showFor && agent.id == $scope.showFor.id;
+    }
+
+    $scope.isAgentSelected = isAgentSelected;
 
     httpService = $http;
     fetchParams = param;
@@ -169,7 +177,7 @@ function ControllerMessageQueueSuperviseByAgent($scope, $http, $timeout)
 
     $scope.selectAgent = function (agent)
     {
-        $scope.showFor = ($scope.showFor == agent) ? null : agent;
+        $scope.showFor = isAgentSelected(agent) ? null : agent;
     }
 }
 
@@ -307,12 +315,12 @@ $if -fieldregex'form'='^$'$
                 </tr>
             </thead>
             <tbody class="agents">
-                <tr ng-repeat-start="agent in agentList.rows" ng-class-even="'row-even'" ng-class-odd="'row-odd'" ng-class="{'row-selected': showFor === agent }" ng-controller="ControllerAgent">
+                <tr ng-repeat-start="agent in agentList.rows" ng-class-even="'row-even'" ng-class-odd="'row-odd'" ng-class="{'row-selected': isAgentSelected(agent) }" ng-controller="ControllerAgent">
                     <td class="column-name padded">{{ agent.name }}</td>
                     <td class="column-num padded"><span class="nglink" ng-click="selectAgent(agent)">{{ agent.num }}</span></td>
                     <td class="column-hours padded">{{ agent.hours | formatInterval }}</td>
                 </tr>
-                <tr ng-repeat-end ng-if="showFor == agent">
+                <tr ng-repeat-end ng-if="isAgentSelected(agent)">
                     <td colspan="3" class="agent-messages">
                         <table class="messages common-search-results hover stack">
                             <thead>
@@ -323,7 +331,7 @@ $if -fieldregex'form'='^$'$
                                 </tr>
                             </thead>
                             <tbody class="agents">
-                                <tr ng-repeat="message in messageList.rows | filter: ShowMessage" ng-class-even="'row-even'" ng-class-odd="'row-odd'" ng-controller="ControllerMessage">
+                                <tr ng-repeat="message in messageList.rows | filter: showMessage" ng-class-even="'row-even'" ng-class-odd="'row-odd'" ng-controller="ControllerMessage">
                                     <td class="column-topic padded">{{ message.topicName }}</td>
                                     <td class="column-date padded">{{ message.date }}</td>
                                     <td class="column-hours padded">{{ message.hours | formatInterval }}</td>
