@@ -115,16 +115,6 @@ function incrementAgent(message)
 
 function ControllerMessageQueueSuperviseByAgent($scope, $http, $timeout)
 {
-    $scope.tabs = [
-      { name: 'My Queue', right: 'Tab.Top.MessageQueue', path: rootPath + 'f/messagequeue' },
-      { name: 'Manage Msgs', right: 'Tab.MessageQueue.Supervise', path: rootPath + 'MessageQueue.aspx?mode=managemessages' },
-      { name: 'Manage Chats', right: 'Tab.MessageQueue.SuperviseChat', path: rootPath + 'MessageQueue.aspx?mode=managechats' },
-      { name: 'Search', right: 'Tab.MessageQueue.Search', path: rootPath + 'MessageQueue.aspx?mode=search' }
-    ];
-
-    $scope.currentTab = $scope.tabs[1];
-    $scope.MainTabClass = function (tab) { return (tab == $scope.currentTab) ? 'active' : 'inactive'; };
-
     var statuses = [ $repeat -messagesearchfields(statuses)$ { id: '$value -Pjs -messagesearchfield(value)$', name: '$value -Pjs -messagesearchfield(name)$' } $if -more$,
                      $endif$$endrepeat$ ],
     unassigned,
@@ -134,9 +124,10 @@ function ControllerMessageQueueSuperviseByAgent($scope, $http, $timeout)
     {
         var status = statuses[i];
 
-        if(status.name == 'Queued') queued = status.id;
-
-        if(status.name == 'Unassigned') unassigned = status.id;
+        if(status.name == 'Queued')
+            queued = status.id;
+        else if(status.name == 'Unassigned')
+            unassigned = status.id;
     }
 
     var param = {
@@ -291,9 +282,6 @@ $if -fieldregex'form'='^$'$
         <strong>Please login to view the messages</strong>
     </section>
     <div ng-cloak id="messagequeue" ng-controller="ControllerMessageQueueSuperviseByAgent" class="main-tabbed-content common-tabs-container" ng-show="HaveRight('Tab.Top.MessageQueue')">
-        <div class="common-tabs" ng-cloak>
-            <div ng-repeat="tab in tabs" ng-controller="ControllerTab" ng-show="HaveRight(tab.right)" class="tab" ng-class="MainTabClass(tab)"><a id="{{idPrefix}}link" href="{{tab.path}}">{{ tab.name }}</a></div>
-        </div>
         <div ng-include="'superviseByAgentBody.html'"></div>
     </div>
     $include -placeholder'common-footer' -indent'  '$
