@@ -221,6 +221,7 @@ $if -fieldregex'form'='^$'$
 <html xmlns:ng="http://angularjs.org" id="ng-app" ng-app="iService">
 <head>
     $include -placeholder'common-head' -indent'  '$
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/foundation/6.1.1/foundation.min.css" />
     <link rel="stylesheet" href="$value -rootpath$css/webapp.messagequeue.css" />
     <link rel="stylesheet" href="$value -rootpath$f/$value -formid$?form=css" />
