@@ -14,6 +14,7 @@ $if -fieldregex'form'='^$'$
     var rootPath = '$value -rootpath$';
     var o2o = {};
   </script>
+  
 </head>
 <body ng-controller="ControllerBody">
   
@@ -89,28 +90,60 @@ $if -fieldregex'form'='^$'$
      <section class="content">
      
      <section class="left_container">
+	
                         <article class="list_container">
                            <div class="showmenu" ng-click="toggle()">&nbsp;</div>
                            <h2 class="">Topic List</h2>
-                           
                            <nav class="nav topiclist" role="navigation" ng-class="myClass" >
-                                <ul class="nav__list">
-                                  <li></li>
-                                  <li ng-repeat="topic in topicList" ng-click="ShowTopic(topic)" id="{{topic.id}}"  ng-init="(topic.id == param2) ? ShowTopic(topic) : ''" 
-  ng-class="{active: isActive(topic)}" on-finish-render="test()">
-                                    <input id="group-[]" type="checkbox" hidden />
-                                    <label for="group-1"><span class="fa fa-angle-right">{{topic.segmentName}} - </span> <span class="nglink1" >{{topic.name}}</span><strong>&nbsp;{{topic.count}} ({{topic.countRecurse}})</strong></label>
-                                  </li>
-                                </ul>
-                              </nav>
+                              <div accordion="" close-others="false">
+							     <div ng-repeat="topicarraylist in topicArrya">
+									<div accordion-group="" ng-class="{isOpen: status.isOpen}"  ng-repeat="topic in topicarraylist" ng-init="status = {isOpen: true}" is-open="status.isOpen" on-finish-render="test()" >
+									  <div accordion-heading="">
+									     <div class="xa" ng-class="{active: isActive(topic)}">
+										 <a ng-click="changeLink(topic)" ng-class="{active: isActive(topic)}">
+										   <div ng-class="{isOpen: status.isOpen}" id="{{topic.id}}" ng-init="(topic.id==param2) ? ShowTopic(topic) : ''"  >{{topic.name}}({{topic.countRecurse}})</div>
+										  </a> 
+										   
+									     </div>
+									  </div>
+									  <div accordion="" close-others="false">
+										<div ng-repeat="subtopic in topic.subarray" >
+										<div class="subsubtopics"  ng-if="topic.subarray[$index].subarray.length > 0" ng-class="{isOpen: status.isOpen}" accordion-group="nested" ng-init="status = {isOpen: true}" is-open="status.isOpen">
+										  <div accordion-heading="" >
+										   <a ng-click="changeLink(subtopic)" ng-class="{active: isActive(subtopic)}">
+											<div ng-class="{isOpen: status.isOpen}" class="subsubtopiclist"   id="{{subtopic.id}}" ng-init="(subtopic.id==param2) ? ShowTopic(subtopic) : ''">{{topic.subarray[$index].name}}({{topic.subarray[$index].countRecurse}})</div>
+										  </a>
+										  </div>
+										  <ul>
+											<li ng-repeat="subsubtopic in topic.subarray[$index].subarray">
+											<div ng-click="changeLink(subsubtopic)">
+											 <div id="{{subsubtopic.id}}"  ng-init="(subsubtopic.id==param2) ? ShowTopic(subsubtopic) : ''" ng-class="{active: isActive(subsubtopic)}"> {{subsubtopic.name}}({{subsubtopic.countRecurse}})
+											 </div>
+											</div>  
+											</li>
+										  </ul>
+										</div>
+										 <a ng-click="changeLink(subtopic)" style="padding:0; margin:0;">
+										 <div class="subtopics" ng-if="topic.subarray[$index].subarray.length <= 0"  id="{{topic.subarray[$index].id}}"  ng-init="(topic.subarray[$index].id==param2) ? ShowTopic(subtopic) : ''"  ng-class="{active: isActive(subtopic)}" class="subtopiclist">
+										 {{topic.subarray[$index].name}}({{topic.subarray[$index].countRecurse}}) 
+										 </div> 
+										 </a> 
+										</div>
+									  </div>
+									 
+									</div>
+								  </div>
+								  </div>
+						   </nav>
+                          
                         </article>
                         
-                        <article class="list_container topfaq" ng-controller="ControllerTopFaq" >
+                        <article class="list_container topfaq"  >
                            <div class="showtopfaq" ng-click="togglefaq()">&nbsp;</div>
                            <h2 class="">Top FAQ</h2>
                            <nav class="nav topfaqlist" role="navigation" ng-class="myClassFaq">
                                 <ul class="nav__list">
-                                 <li ng-repeat="articles in articleListFaq">
+                                 <li ng-repeat="articles in articleListFaq" ng-if="$index < 5">
                                     <label ><span class="fa fa-angle-right"></span><a href="#/find-answers?articleID={{articles.id}}">{{articles.subject}}</a></label>
                                   </li>
                                 </ul>
@@ -144,8 +177,8 @@ $if -fieldregex'form'='^$'$
                               </article>
                           </section>
                           <section class="search_results" >
-                              <div class="t_content" id="articleID{{article.id}}"   ng-click="ShowArticle(article,$index)"  dir-paginate="article in articleList|orderBy:sortKey:reverse|filter:search|itemsPerPage:8" current-page="SelectedPage" ng-init="(article.id == param) ? ShowArticle(article,$index) : ''" >
-                                <div class="question">
+                              <div class="t_content"   dir-paginate="article in articleList|orderBy:sortKey:reverse|filter:search|itemsPerPage:8" current-page="SelectedPage" ng-init="(article.id==param) ? ShowArticle(article,$index,'init') : ''" >
+                                <div class="question" id="articleID{{article.id}}"   ng-click="changeArticle(article,$index,'')" on-finish-render="loadfaq()" >
                                      <aside class="col1">
                                         {{article.subject}}
                                      </aside>
@@ -156,6 +189,8 @@ $if -fieldregex'form'='^$'$
                                         {{article.date}}
                                      </aside>
                                      <aside class="col4">
+
+
                                        {{article.viewCount}}
                                      </aside>
                                       <aside class="col5">
@@ -186,30 +221,12 @@ $if -fieldregex'form'='^$'$
                                               
                                             </aside> 
                                         </aside>
-                                         <aside class="articleDetail">
-                                           <span class="label">Subscribe and Rate this article</span>     
-                                           
-                                            <aside class="detail">
-                                              <aside class="row">
-                                                <aside class="dcol">
-                                                   Not Helpful ---------> Very Helpful - 46546
-                                                 </aside> 
-                                                 <aside class="dcol">
-                                                 
-                                                </aside>
-                                                <aside class="dcol">
-                                                  <a href="" class="btn"> 
-                                                     Email me when this article changes!
-                                                  </a>   
-                                                </aside>
-                                            </aside> 
-                                            </aside>
-                                        </aside> 
+                                         
                                             
                                     </div>
                                  </div>
                               </div>
-                              <span ng-show="!articleList.length" ng-cloak>No Articles</span>
+                              <span ng-show="!articleList.length"  ng-cloak >No Articles</span>
                           </section>
       
       
@@ -242,7 +259,7 @@ $if -fieldregex'form'='^$'$
                   </div>
                   <div ng-show="iservice.loggedIn.isLoggedIn">
                     <div class="row  control-group"  ng-class="{true: 'error'}[askquestionsubmitted && askquestionform.fromEmail.$invalid]"> 
-                   <label> From </label><select class="w60" ng-cloak ng-model="destEmail" name="fromEmail" ng-options="login.name as login.name for login in iservice.loggedIn.logins" required></select>
+                   <label> From </label><select class="w60" ng-cloak ng-model="destEmail" name="fromEmail" ng-options="login.name as login.name for login in iservice.loggedIn.logins" ng-init="destEmail = iservice.loggedIn.logins[0].name"  required></select>
                   <span class="validation_error" ng-show="askquestionsubmitted && askquestionform.fromEmail.$error.required"> Please enter from email</span> 
 
                    <span class="w100 subtext">The answer to your question will be sent to the specified address.</span>
@@ -258,7 +275,8 @@ $if -fieldregex'form'='^$'$
                   <span class="w100">
   				    Please pick the topic of your question:
                   </span> 
-   				 <select ng-cloak class="topic t_select" ng-model="details.topicID" name="questionTopic"  ng-options="topic.id as topic.option for topic in topicsList" ></select>
+   				 <select ng-cloak class="topic t_select" ng-model="details.topicID" name="questionTopic"  ng-options="topic.id as topic.option for topic in topicsList"  
+        ></select>
                   <span class="validation_error" ng-show="askquestionsubmitted && askquestionform.questionTopic.$error.required">Please enter topic of your question</span> 
                  </div>
                   <div class="row2 control-group"  ng-class="{true: 'error'}[askquestionsubmitted && askquestionform.questionBody.$invalid]">
@@ -310,33 +328,7 @@ $if -fieldregex'form'='^$'$
           </div>
         $include -placeholder'history-partials'$
         
-            <script type="text/ng-template" id="stockresponse-picker.html">
-          <div class="stock-picker" ng-controller="ControllerPicker">
-            <div class="tabs">
-              <div class="tab" class="variable" ng-class="TabClass('var')"><span class="nglink" ng-click="ClickTab('var')">Variables</span></div>
-              <div class="tab" class="stock" ng-class="TabClass('stock')"><span class="nglink" ng-click="ClickTab('stock')">Stock Responses</span></div>
-            </div>
-            <div class="vars " ng-show="tab == 'stock'" ng-controller="ControllerPickerStock">
-              <input id="{{idPrefix}}stockSearch" class="response-filter" type="text" value="" ng-model="stockSearch" placeholder="Keyword Search"/>
-              <div ng-repeat="section in stockSections" class="section" ng-controller="ControllerPickerSection">
-                <span class="label">{{section.name}}</span>
-                <div class="stock" ng-repeat="stock in section.responses | filter:stockSearch" ng-controller="ControllerPickerStock">
-                  <span id="{{idPrefix}}add" class="nglink" ng-click="PasteStockVar(stock, pasteTarget)">{{stock.name}}</span>
-                  <div id="{{idPrefix}}text" class="var-only nglink" ng-click="PasteStockText(stock, pasteTarget)">Text</div>
-                </div>
-              </div>
-            </div>
-            <div class="vars" ng-show="tab == 'var'" ng-controller="ControllerPickerVariable">
-              <div ng-repeat="section in varSections" class="section" ng-controller="ControllerPickerSection">
-                <span class="label">{{section.name}}</span>
-                <div class="var" ng-repeat="variable in section.properties" ng-controller="ControllerPickerVariable" ng-class="VarClass(variable)">
-                  <span id="{{idPrefix}}add" ng-class="{nglink: variable.text, 'seg-name': !variable.text }" ng-click="PasteVariable(variable, pasteTarget)">{{variable.name}}</span>
-                </div>
-              </div>
-            </div>
-            <div grey-out ng-show="StockLoadRunning()"></div>
-          </div>
-        </script>
+            
 			<script type="text/ng-template" id="history-thread-closed.html">
               <div class="list-history-row-container"> 
               <div class="thread-root interaction-type-history" ng-class="InteractionType(thread.type)">
@@ -399,26 +391,12 @@ $if -fieldregex'form'='^$'$
                   <div class="child-details-actions">
                     <div ng-include="ActionsUrl()"></div>
                   </div>
+
 				</div>
                 <div grey-out ng-show="ActionRunning()"></div>
               </div>
             </script>
-            <script type="text/ng-template" id="child-details-body-history.html">
-              <div class="child-details-body">
-                <textarea ng-show="details.displayPlain" id="{{idPrefix}}plain" class="body-plain" ng-model="details.bodyPlain">dddd</textarea>
-                <div ng-show="!details.displayPlain" id="{{idPrefix}}html" class="body-html" bind-html-compile="details.bodyHtml"></div>
-                <div ng-show="details.note">Agent Notes:<br />
-                  <textarea id="{{idPrefix}}note" class="note" ng-model="details.note"></textarea>
-                </div>
-              </div>
-            </script>
-            <script type="text/ng-template" id="child-details-body-search.html">
-              <div class="bodies">
-                <textarea ng-show="details.displayPlain" id="{{idPrefix}}plain" class="body-plain" ng-model="details.bodyPlain"></textarea>
-                <div class="bodyhtml" ng-show="!details.displayPlain" id="{{idPrefix}}html" bind-html-compile="details.bodyHtml"></div>
-                <div class="note" ng-show="details.note">Agent Notes:<br /><textarea ng-model="details.note"></textarea></div>
-              </div>
-            </script>
+            
             <script type="text/ng-template" id="child-details-body-agentemail.html">
               <div class="action-body">
                 <div class="menus">
@@ -438,6 +416,7 @@ $if -fieldregex'form'='^$'$
                   <select ng-options="mailbox.id as mailbox.name for mailbox in mailboxes" id="{{idPrefix}}From" ng-model="agentEmail.mailboxID"></select>
                 </div>
                 <div class="header-row">
+
                   <div class="label">To:</div>
                   <select ng-options="address for address in addresses" id="{{idPrefix}}To" ng-model="agentEmail.destEmail"></select>
                 </div>
@@ -784,10 +763,11 @@ $if -fieldregex'form'='^$'$
   </div>
   
   $include -placeholder'common-javascript' -indent'  '$
+  
   <script src="$value -rootpath$f/$value -formid$?form=js"></script>
   <script src="$value -rootpath$js/iService.directive.js?v=$value -version -urlencode$"></script>
   $include -placeholder'interaction-properties' -indent'  '$
-
+   
   <script type="text/javascript">
 
 
@@ -1065,6 +1045,7 @@ $if -fieldregex'form'='^$'$
                 }
             };
 
+
             function goToPage(num) {
                 if (isValidPageNumber(num)) {
                     scope.pages = generatePagesArray(num, paginationService.getCollectionLength(paginationId), paginationService.getItemsPerPage(paginationId), paginationRange);
@@ -1192,6 +1173,7 @@ $if -fieldregex'form'='^$'$
                 paginationId = DEFAULT_ID;
             }
             if (!paginationService.isRegistered(paginationId)) {
+
                 throw 'pagination directive: the itemsPerPage id argument (id: ' + paginationId + ') does not match a registered pagination-id.';
             }
             var end;
@@ -1296,13 +1278,19 @@ $if -fieldregex'form'='^$'$
 
 
 </script>
+ 
+  $include -placeholder'86'$
 </body>
 </html>
 $endif$$if -fieldregex'form'='^js$'$$header -filetype(js)$
-var app = angular.module('iService',['angularUtils.directives.dirPagination','ngRoute']);
+var app = angular.module('iService',['angularUtils.directives.dirPagination','ngRoute','ui.bootstrap']);
 app.config(function ($routeProvider) {
     $routeProvider
         .when('/find-answers', {
+         templateUrl: 'findanswer.html',  
+         controller: 'ControllerFindAnswers',
+        })
+        .when('/find-answers/:topicID"', {
          templateUrl: 'findanswer.html',  
          controller: 'ControllerFindAnswers',
         })
@@ -1393,7 +1381,7 @@ function ControllerFALogin($scope, $http,$rootScope) {
 var topics = [ $repeat -topics(findanswer)${ "id": "$value -Pjs -topic(id)$", "name": "$value -Pjs -topic(name)$", "count": $value -Pjs -topic(messagecount)$, "countRecurse": $value -Pjs -topic(messagecount)$, "parentID": "$value -Pjs -topic(parentID)$", "segmentName": "$value -Pjs -topic(segmentname)$" }$if -more$,
                $endif$$endrepeat$ ];
 
-function ControllerFindAnswers($scope, $http, $sce, $rootScope,$location,$routeParams,$timeout) {
+function ControllerFindAnswers($scope, $http,$window, $sce, $rootScope,$location,$routeParams,$timeout,$filter,orderByFilter) {
 $scope.pageSize = 8;
 $scope.param = $routeParams.articleID;
 $scope.param2 = $routeParams.topicID;
@@ -1412,7 +1400,7 @@ $scope.SelectedPage = 1;
   function LoadTopics() {
     $scope.Loading = iservice.FindAnswerTopics($http, function (data) {
       var topics = data.topics;
-      $scope.topicList = topics;
+      $rootScope.topicList = topics;
       var topicByID = {};
       for (var i = 0; i < topics.length; i++) { topicByID[topics[i].id] = topics[i]; if(topics[i].id == $scope.param2){ $scope.match = 1;}}
       for (var i = topics.length - 1; i >= 0; i--) {
@@ -1420,22 +1408,93 @@ $scope.SelectedPage = 1;
         var parent = topicByID[topic.parentID];
         if (parent) parent.countRecurse += topic.countRecurse;
       }
+      $scope.topics = topics;
+      $scope.topicArrya = [];
+      $scope.topicsubarray = [];
+      for(var i=0; i<$scope.topics.length; i++)
+      {
+          $scope.newarray = [];
+          $scope.objtoarray = []; 
+          for(var j=0;j<$scope.topics.length;j++)
+          { 
+             $scope.temparray=[]; 
+             if($scope.topics[i]['id'] == $scope.topics[j]['parentID'])
+             {
+                $scope.subarray=[];
+                for(var k=0;k<$scope.topics.length;k++)
+                {  
+                   if($scope.topics[j]['id'] == $scope.topics[k]['parentID'])
+                   {
+                    $scope.subarray.push($scope.topics[k]);
+                   }
+                }
+                $scope.topics[j]['subarray'] = $scope.subarray;
+        
+                $scope.newarray.push($scope.topics[j]);
+                
+             }
+          } 
+          if($scope.topics[i]['parentID'] == ''){
+                $scope.objtoarray.push({
+                    id: $scope.topics[i]['id'],
+                    name:$scope.topics[i]['name'],
+                    count:$scope.topics[i]['count'],
+                    countRecurse:$scope.topics[i]['countRecurse'],
+                    segmentName:$scope.topics[i]['segmentName'],
+                    parentID:$scope.topics[i]['parentID'],
+                    subarray:$scope.newarray
+                 });
+   		   } 
+           if($scope.objtoarray.length > 0){
+             $scope.topicArrya.push($scope.objtoarray);
+             
+           } 
+      }
+     
     });
-     $rootScope.firstTopicID = topics[0].id;
+    
+    $rootScope.firstTopicID = topics[0].id;
+    
   }
-  LoadTopics();
+  $scope.$watch('iservice.loggedIn.contactID', function(newValue, oldValue) {
+    $scope.selectedTopic = undefined;
+    $scope.selectedArticle = undefined;
+    $scope.articleList = undefined;
+    LoadTopics();
+  });
   
-
+  $scope.changeLink = function (topic){
+   $window.location.href = $location.absUrl().split('?')[0]+"?topicID="+topic.id;
+  }
+  $scope.changeArticle = function (article, index){
+  
+   if(angular.isUndefined($scope.param2)){
+        var u ="?articleID="+article.id; 
+   }
+   else
+   {    
+        var u ="?topicID="+$scope.param2+"&articleID="+article.id;
+   		
+   }
+   $window.location.href = $location.absUrl().split('?')[0]+u;
+  }
+  
   $scope.ShowTopic = function (topic) {
     $scope.selectedTopic = topic;
     $scope.Searching = iservice.FindAnswerArticles($http, topic.id, $scope.searchString, $scope.recursive, 1, 1000, null, function (data) {
       iservice.SanitizeHistoryRows(data.interactions);
       $scope.articleList = data.interactions;
-      $scope.topFaqList = $filter('orderBy')(data.interactions, "viewCount");
+      $scope.articleListval = data.interactions.length;
+      if(data.interactions.length <= 0){
+      $timeout(function() {
+      topfaq();
+    }, 0);
+      
+     }
       var p =1;
       for (var j=0 ; j< data.interactions.length ; j++) {
-          var x = (parseInt(j)+1)%$scope.pageSize;
-          if(x == 0)  
+          var x = (parseInt(p))*$scope.pageSize;
+          if(x <= j)  
           {
             p = parseInt(p)+1;
           }
@@ -1445,7 +1504,6 @@ $scope.SelectedPage = 1;
              break;
           }
       }
-     
     });
     
     $scope.selected = topic; 
@@ -1453,9 +1511,16 @@ $scope.SelectedPage = 1;
         return $scope.selected === topic;
     };
   }
- 
-  function FixFilePath(body) {
-    return body.split('src="File.aspx?interactionID=').join('src="$value -rootpath$File.aspx?interactionID=');
+  
+   function topfaq(){
+      $scope.recursive = true;
+      iservice.FindAnswerArticles($http, 1, $scope.searchString, $scope.recursive, 1, 5, 'RATING', function (data) {
+          $scope.articleListFaq = data.interactions;
+      });
+   }
+   function FixFilePath(article, member) {
+    iservice.SanitizeInlineImageAttachments(article, member, article.attachments);
+    article[member] = article[member].split('src="File.aspx?interactionID=').join('src="$value -rootpath$File.aspx?interactionID=');
   }
   
   $scope.toggle = function() {
@@ -1463,6 +1528,7 @@ $scope.SelectedPage = 1;
          $scope.myClass.push('nav2');
          $scope.myClassFaq.pop('nav2')
      } else {
+
          $scope.myClass.pop('nav2');
      }
    };
@@ -1475,17 +1541,20 @@ $scope.SelectedPage = 1;
          $scope.myClassFaq.pop('nav2');
      }
     };
-  
-  
-  
  $scope.SeeArticle = function (article,$index) {if($scope.selectedArticle === article) {if(articleID == article.id && change ==1){return true;} if(articleID == article.id){ return !toggle;} return true;} else return false; }
-  $scope.ShowArticle = function (article,$index) {
+  $scope.ShowArticle = function (article,$index,init) {
     $scope.selectedArticle = article;
+      if(init == 'init') 
+      {
+         articleID = article.id;change  = 1;toggle = 0;
+      }else{
      if(articleID != article.id){ articleID = article.id;change  = 1;toggle = 0; }else{change = 0; toggle = !toggle; if(toggle){return false;}} 
+      }
       $scope.Searching = iservice.FindAnswerDetails($http, article.id, function (data) {
       $scope.selectedArticle.data = data;
-      data.question = FixFilePath(data.question);
-      data.answer = FixFilePath(data.answer);
+      FixFilePath(data, 'question');
+      FixFilePath(data, 'answer');
+      
       data.questionSafe = $sce.trustAsHtml(data.question);
       data.answerSafe = $sce.trustAsHtml(data.answer);
       data.articleIdSafe = $sce.trustAsHtml(data.id); 
@@ -1495,51 +1564,53 @@ $scope.SelectedPage = 1;
       data.viewSafe = $sce.trustAsHtml(data.viewCount);
     });
   }
-  
-  
-
    $scope.test = function() {
        if($scope.match !=1)
        { 
           if(topics[0].id != ''){
           $timeout(function() {
-                angular.element("#"+topics[0].id).triggerHandler('click');
-               
+                $scope.ShowTopic(topics[0]);
             }, 0);
            } 
        }
     }
- 
+    
+    $scope.loadfaq = function() {
+      topfaq();
+    }
 }
                
-function ControllerTopFaq($scope, $http,$rootScope){
-   $scope.recursive = true;
-   $scope.Searching = iservice.FindAnswerArticles($http,  $rootScope.firstTopicID, $scope.searchString, $scope.recursive, 1, 5, null, function (data) {
-   iservice.SanitizeHistoryRows(data.interactions);
-   $scope.articleListFaq = data.interactions;
-   });  
-}
-
 
 function ControllerAskAQuestion($scope, $http,$rootScope) {
 
  $scope.topicList = [];
-  $scope.details = { topicID: '' };
+ $rootScope.details = { topicID: '' };
   function LoadTopics() {
     $scope.Loading = iservice.FindAnswerTopics($http, function (data) {
       var topics = data.topics;
-      $scope.topicsList = topics;
+      $scope.topicsList = topics; 
+      $rootScope.details = { topicID: $scope.topicsList[0].id };
     });
   }
+   
+
   LoadTopics();
+
+
   $scope.$watch('details.topicID', function(newValue, oldValue) {
-    $scope.Searching = iservice.FindAnswerTopicProperties($http, $scope.details.topicID, function (data) {
+    $scope.Searching = iservice.FindAnswerTopicProperties($http, $rootScope.details.topicID, function (data) {
       iservice.SanitizePropertyGroups(data.properties);
       $scope.properties = data.properties;
     });
   });
+   $scope.$watch('iservice.loggedIn.contactID', function(newValue, oldValue) {
+    $scope.selectedTopic = undefined;
+    $scope.selectedArticle = undefined;
+    $scope.articleList = undefined;
+    LoadTopics();
+  });
   
-
+  
   $scope.Submit = function () {
     $scope.errors = [];
     $scope.askquestionsubmitted = true;
