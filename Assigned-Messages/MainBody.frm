@@ -9,11 +9,7 @@ var rootPath = '$value -rootpath$',
     nobody = null,
     agents,
     httpService,
-    fetchParams,
-    numberFormatOptions = {
-        minimumIntegerDigits: 2,
-        useGrouping: false
-    };
+    fetchParams;
 
 iservice.ProcessLogin(loggedIn);
 
@@ -21,13 +17,19 @@ app.filter('formatInterval', function ()
 {
     return function (wholeHours)
     {
+        // wholeHours is a decimal number resembling hours with the fraction part as the minutes. We want to
+        // format it in the HH:mm format
         var hours,
             minutes;
 
-        hours = Math.floor(wholeHours);
-        minutes = (wholeHours - hours) * 60;
+        hours = Math.floor(wholeHours); // Get the hours part by removing the fractions
+        minutes = Math.round((wholeHours - hours) * 60).toString(); // Get the minutes by multiplying the fraction part by 60
 
-        return hours.toString() + ":" + minutes.toLocaleString("en", numberFormatOptions);
+        // If the minutes is a single digit number, pad it with a 0
+        if(minutes.length == 1)
+            minutes = "0" + minutes;
+
+        return hours.toString() + ":" + minutes;
     };
 });
 
@@ -280,7 +282,7 @@ $if -fieldregex'form'='^$'$
     <section ng-show="!iservice.loggedIn.isLoggedIn" class="main-tabbed-content common-tabs-container">
         <strong>Please login to view the messages</strong>
     </section>
-    <div ng-cloak id="messagequeue" ng-controller="ControllerMessageQueueSuperviseByAgent" class="main-tabbed-content common-tabs-container" ng-show="HaveRight('Tab.Top.MessageQueue')">
+    <div ng-cloak ng-controller="ControllerMessageQueueSuperviseByAgent" class="main-tabbed-content common-tabs-container" ng-show="HaveRight('Tab.Top.MessageQueue')">
         <div ng-include="'superviseByAgentBody.html'"></div>
     </div>
     $include -placeholder'common-footer' -indent'  '$
@@ -329,7 +331,6 @@ $if -fieldregex'form'='^$'$
                 </tr>
             </tbody>
         </table>
-        <!--<h2 ng-show="showFor">Messages for: {{showFor.name}}<br></h2>-->
     </script>
 </body>
 </html>
