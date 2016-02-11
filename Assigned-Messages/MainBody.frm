@@ -295,35 +295,35 @@ $if -fieldregex'form'='^$'$
     <script src="$value -rootpath$js/iService.directive.js?v=$value -version -urlencode$"></script>
     <script type="text/ng-template" id="superviseByAgentBody.html">
         <h2>Count of open messages by agent.</h2>
-        <table class="messages common-search-results hover stack">
+        <table class="messages common-search-results stack">
             <thead>
                 <tr>
-                    <th class="column-name"><span class="nglink" ng-click="agentList.SortClick('name')">Agent Name</span><div class="sort-direction-indicator" ng-class="agentList.SortDirectionClass('name')"></div></th>
-                    <th class="column-num"><span class="nglink" ng-click="agentList.SortClick('num')"># Messages Assigned</span><div class="sort-direction-indicator" ng-class="agentList.SortDirectionClass('num')"></div></th>
-                    <th class="column-hours"><span class="nglink" ng-click="agentList.SortClick('hours')">Oldest Message Business Hours</span><div class="sort-direction-indicator" ng-class="agentList.SortDirectionClass('oldHours')"></div></th>
+                    <th><span class="nglink" ng-click="agentList.SortClick('name')">Agent Name</span><div class="sort-direction-indicator" ng-class="agentList.SortDirectionClass('name')"></div></th>
+                    <th><span class="nglink" ng-click="agentList.SortClick('num')"># Messages Assigned</span><div class="sort-direction-indicator" ng-class="agentList.SortDirectionClass('num')"></div></th>
+                    <th><span class="nglink" ng-click="agentList.SortClick('hours')">Oldest Message Business Hours</span><div class="sort-direction-indicator" ng-class="agentList.SortDirectionClass('hours')"></div></th>
                 </tr>
             </thead>
             <tbody class="agents">
                 <tr ng-repeat-start="agent in agentList.rows" ng-class-even="'row-even'" ng-class-odd="'row-odd'" ng-class="{'row-selected': isAgentSelected(agent) }" ng-controller="ControllerAgent">
-                    <td class="column-name padded">{{ agent.name }}</td>
-                    <td class="column-num padded"><span class="nglink" ng-click="selectAgent(agent)">{{ agent.num }}</span></td>
-                    <td class="column-hours padded">{{ agent.hours | formatInterval }}</td>
+                    <td class="padded">{{ agent.name }}</td>
+                    <td class="padded"><span class="nglink" ng-click="selectAgent(agent)">{{ agent.num }}</span></td>
+                    <td class="padded">{{ agent.hours | formatInterval }}</td>
                 </tr>
                 <tr ng-repeat-end ng-if="isAgentSelected(agent)">
                     <td colspan="3" class="agent-messages">
-                        <table class="messages common-search-results hover stack">
+                        <table class="messages common-search-results stack">
                             <thead>
                                 <tr>
-                                    <th class="column-topic"><span class="nglink" ng-click="messageList.SortClick('topicName')">Topic Name</span><div class="sort-direction-indicator" ng-class="messageList.SortDirectionClass('topicName')"></div></th>
-                                    <th class="column-date"><span class="nglink" ng-click="messageList.SortClick('dateObj')">Message Date</span><div class="sort-direction-indicator" ng-class="messageList.SortDirectionClass('dateObj')"></div></th>
-                                    <th class="column-hours"><span class="nglink" ng-click="messageList.SortClick('hours')">Business Hours</span><div class="sort-direction-indicator" ng-class="messageList.SortDirectionClass('hours')"></div></th>
+                                    <th><span class="nglink" ng-click="messageList.SortClick('topicName')">Topic Name</span><div class="sort-direction-indicator" ng-class="messageList.SortDirectionClass('topicName')"></div></th>
+                                    <th><span class="nglink" ng-click="messageList.SortClick('dateObj')">Message Date</span><div class="sort-direction-indicator" ng-class="messageList.SortDirectionClass('dateObj')"></div></th>
+                                    <th><span class="nglink" ng-click="messageList.SortClick('hours')">Business Hours</span><div class="sort-direction-indicator" ng-class="messageList.SortDirectionClass('hours')"></div></th>
                                 </tr>
                             </thead>
                             <tbody class="agents">
                                 <tr ng-repeat="message in messageList.rows | filter: showMessage" ng-class-even="'row-even'" ng-class-odd="'row-odd'" ng-controller="ControllerMessage">
-                                    <td class="column-topic padded">{{ message.topicName }}</td>
-                                    <td class="column-date padded">{{ message.date | amDateFormat:'YYYY-MM-DD h:mm:ss A' }}</td>
-                                    <td class="column-hours padded">{{ message.hours | formatInterval }}</td>
+                                    <td class="padded">{{ message.topicName }}</td>
+                                    <td class="padded">{{ message.date | amDateFormat:'YYYY-MM-DD h:mm:ss A' }}</td>
+                                    <td class="padded">{{ message.hours | formatInterval }}</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -344,6 +344,11 @@ thead td,
 thead th
 {
     padding: 0; /* Eliminate the big padding set by Foundation */
+}
+
+.common-search-results thead
+{
+    background: #333;
 }
 /* End of Foundation overrides*/
 
