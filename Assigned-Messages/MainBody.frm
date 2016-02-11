@@ -1,6 +1,6 @@
 $if -fieldregex'form'='^js$'$$header -filetype(js)$
 var rootPath = '$value -rootpath$',
-    app = angular.module('iService', ['ngSanitize', 'ngRoute', 'ui.date']),
+    app = angular.module('iService', ['ngSanitize', 'ngRoute', 'ui.date', "angularMoment"]),
     loggedIn = $json -loginloggedin$,
     canAgentLogin = $if -domainuser$true$else$false$endif$,
     messageList = {},
@@ -322,7 +322,7 @@ $if -fieldregex'form'='^$'$
                             <tbody class="agents">
                                 <tr ng-repeat="message in messageList.rows | filter: showMessage" ng-class-even="'row-even'" ng-class-odd="'row-odd'" ng-controller="ControllerMessage">
                                     <td class="column-topic padded">{{ message.topicName }}</td>
-                                    <td class="column-date padded">{{ message.date }}</td>
+                                    <td class="column-date padded">{{ message.date | amDateFormat:'YYYY-MM-DD h:mm:ss A' }}</td>
                                     <td class="column-hours padded">{{ message.hours | formatInterval }}</td>
                                 </tr>
                             </tbody>
