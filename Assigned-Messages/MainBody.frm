@@ -285,53 +285,64 @@ $if -fieldregex'form'='^$'$
     <div ng-cloak ng-controller="ControllerMessageQueueSuperviseByAgent" class="main-tabbed-content common-tabs-container" ng-show="HaveRight('Tab.Top.MessageQueue')">
         <div ng-include="'superviseByAgentBody.html'"></div>
     </div>
-    $include -placeholder'common-footer' -indent'  '$
-    $include -placeholder'interaction-properties' -indent'  '$
-    $include -placeholder'history-partials' -indent'  '$
-    $include -placeholder'common-javascript' -indent'  '$
-    <script type="text/javascript" src="$value -rootpath$js/iService.messagequeue.js?v=$value -version -urlencode$"></script>
-    <script type="text/javascript" src="$value -rootpath$f/84"></script>
-    <script type="text/javascript" src="$value -rootpath$f/$value -formid$?form=js"></script>
-    <script src="$value -rootpath$js/iService.directive.js?v=$value -version -urlencode$"></script>
-    <script type="text/ng-template" id="superviseByAgentBody.html">
-        <h2>Count of open messages by agent.</h2>
-        <table class="messages common-search-results stack">
-            <thead>
-                <tr>
-                    <th><span class="nglink" ng-click="agentList.SortClick('name')">Agent Name</span><div class="sort-direction-indicator" ng-class="agentList.SortDirectionClass('name')"></div></th>
-                    <th><span class="nglink" ng-click="agentList.SortClick('num')"># Messages Assigned</span><div class="sort-direction-indicator" ng-class="agentList.SortDirectionClass('num')"></div></th>
-                    <th><span class="nglink" ng-click="agentList.SortClick('hours')">Oldest Message Business Hours</span><div class="sort-direction-indicator" ng-class="agentList.SortDirectionClass('hours')"></div></th>
-                </tr>
-            </thead>
-            <tbody class="agents">
-                <tr ng-repeat-start="agent in agentList.rows" ng-class-even="'row-even'" ng-class-odd="'row-odd'" ng-class="{'row-selected': isAgentSelected(agent) }" ng-controller="ControllerAgent">
-                    <td class="padded">{{ agent.name }}</td>
-                    <td class="padded"><span class="nglink" ng-click="selectAgent(agent)">{{ agent.num }}</span></td>
-                    <td class="padded">{{ agent.hours | formatInterval }}</td>
-                </tr>
-                <tr ng-repeat-end ng-if="isAgentSelected(agent)">
-                    <td colspan="3" class="agent-messages">
-                        <table class="messages common-search-results stack">
-                            <thead>
-                                <tr>
-                                    <th><span class="nglink" ng-click="messageList.SortClick('topicName')">Topic Name</span><div class="sort-direction-indicator" ng-class="messageList.SortDirectionClass('topicName')"></div></th>
-                                    <th><span class="nglink" ng-click="messageList.SortClick('dateObj')">Message Date</span><div class="sort-direction-indicator" ng-class="messageList.SortDirectionClass('dateObj')"></div></th>
-                                    <th><span class="nglink" ng-click="messageList.SortClick('hours')">Business Hours</span><div class="sort-direction-indicator" ng-class="messageList.SortDirectionClass('hours')"></div></th>
-                                </tr>
-                            </thead>
-                            <tbody class="agents">
-                                <tr ng-repeat="message in messageList.rows | filter: showMessage" ng-class-even="'row-even'" ng-class-odd="'row-odd'" ng-controller="ControllerMessage">
-                                    <td class="padded">{{ message.topicName }}</td>
-                                    <td class="padded">{{ message.date | amDateFormat:'YYYY-MM-DD h:mm:ss A' }}</td>
-                                    <td class="padded">{{ message.hours | formatInterval }}</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </script>
+    <div id="copyright">
+        <div>© 2008-2016 One-to-One Service.com. All rights reserved.</div>
+        <span>Powered by <a href="http://www.1to1service.com/iservice.asp" target="_blank">iService</a></span>
+        <span class="version-number">Version: $value -version$</span>
+
+        <div class="spam-policy" ng-show="iservice.loggedIn.spamPolicyUrl">
+            <a href="{{ iservice.loggedIn.spamPolicyUrl }}" target="_blank">Anti-Spam Policy</a>
+
+            <div class="websync-feedback"><span ng-class="websyncClient.Status()"></span></div>
+
+        </div>
+    </div>
+        $include -placeholder'interaction-properties' -indent'  '$
+        $include -placeholder'history-partials' -indent'  '$
+        $include -placeholder'common-javascript' -indent'  '$
+        <script type="text/javascript" src="$value -rootpath$js/iService.messagequeue.js?v=$value -version -urlencode$"></script>
+        <script type="text/javascript" src="$value -rootpath$f/84"></script>
+        <script type="text/javascript" src="$value -rootpath$f/$value -formid$?form=js"></script>
+        <script src="$value -rootpath$js/iService.directive.js?v=$value -version -urlencode$"></script>
+        <script type="text/ng-template" id="superviseByAgentBody.html">
+            <h2>Count of open messages by agent.</h2>
+            <table class="messages common-search-results stack">
+                <thead>
+                    <tr>
+                        <th><span class="nglink" ng-click="agentList.SortClick('name')">Agent Name</span><div class="sort-direction-indicator" ng-class="agentList.SortDirectionClass('name')"></div></th>
+                        <th><span class="nglink" ng-click="agentList.SortClick('num')"># Messages Assigned</span><div class="sort-direction-indicator" ng-class="agentList.SortDirectionClass('num')"></div></th>
+                        <th><span class="nglink" ng-click="agentList.SortClick('hours')">Oldest Message Business Hours</span><div class="sort-direction-indicator" ng-class="agentList.SortDirectionClass('hours')"></div></th>
+                    </tr>
+                </thead>
+                <tbody class="agents">
+                    <tr ng-repeat-start="agent in agentList.rows" ng-class-even="'row-even'" ng-class-odd="'row-odd'" ng-class="{'row-selected': isAgentSelected(agent) }" ng-controller="ControllerAgent">
+                        <td class="padded">{{ agent.name }}</td>
+                        <td class="padded"><span class="nglink" ng-click="selectAgent(agent)">{{ agent.num }}</span></td>
+                        <td class="padded">{{ agent.hours | formatInterval }}</td>
+                    </tr>
+                    <tr ng-repeat-end ng-if="isAgentSelected(agent)">
+                        <td colspan="3" class="agent-messages">
+                            <table class="messages common-search-results stack">
+                                <thead>
+                                    <tr>
+                                        <th><span class="nglink" ng-click="messageList.SortClick('topicName')">Topic Name</span><div class="sort-direction-indicator" ng-class="messageList.SortDirectionClass('topicName')"></div></th>
+                                        <th><span class="nglink" ng-click="messageList.SortClick('dateObj')">Message Date</span><div class="sort-direction-indicator" ng-class="messageList.SortDirectionClass('dateObj')"></div></th>
+                                        <th><span class="nglink" ng-click="messageList.SortClick('hours')">Business Hours</span><div class="sort-direction-indicator" ng-class="messageList.SortDirectionClass('hours')"></div></th>
+                                    </tr>
+                                </thead>
+                                <tbody class="agents">
+                                    <tr ng-repeat="message in messageList.rows | filter: showMessage" ng-class-even="'row-even'" ng-class-odd="'row-odd'" ng-controller="ControllerMessage">
+                                        <td class="padded">{{ message.topicName }}</td>
+                                        <td class="padded">{{ message.date | amDateFormat:'YYYY-MM-DD h:mm:ss A' }}</td>
+                                        <td class="padded">{{ message.hours | formatInterval }}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </script>
 </body>
 </html>
 $endif$$if -fieldregex'form'='^css$'$$header -filetype(css)$
@@ -364,6 +375,13 @@ thead th
     width: 85% !important;
     float: none !important;
     margin: 5px auto auto auto;
+}
+
+/* Fix for issue #26: Give the copyright div a bottom padding so that the anti-spam policy link rests in the
+padding area on narrow screens */
+#copyright
+{
+    padding-bottom: 20px;
 }
 
 /* Style for the agent messages table cell */
