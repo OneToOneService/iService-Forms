@@ -352,6 +352,12 @@ thead th
 }
 /* End of Foundation overrides*/
 
+/* Override for the .nglink rule in webapp.css */
+.common-search-results thead .nglink
+{
+    color: #fff;
+}
+
 /* Override for the login section style */
 .loginsection
 {
