@@ -1517,7 +1517,7 @@ padding-left: 0;
                 </thead>
                 <tbody class="agents">
                     <tr ng-repeat-start="agent in agentList.rows" ng-class-even="'row-even'" ng-class-odd="'row-odd'" ng-class="{'row-selected': isAgentSelected(agent) }" ng-controller="ControllerAgent">
-                        <td class="padded">{{ agent.name }}</td>
+                        <td class="padded agent-name">{{ agent.name }}</td>
                         <td class="padded"><span class="nglink" ng-click="selectAgent(agent)">{{ agent.num }}</span></td>
                         <td class="padded">{{ agent.hours | formatInterval }}</td>
                     </tr>
@@ -1591,6 +1591,12 @@ padding area on narrow screens */
     border-style: dashed;
     padding: 5px;
     border-width: 2px;
+}
+
+/* Per issue #35, make agent names bold */
+.agent-name
+{
+    font-weight: bold;
 }
 
 .common-search-results { width: 100%; table-layout: fixed; }
