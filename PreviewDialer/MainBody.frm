@@ -19,7 +19,7 @@ $if -fieldregex'form'='^$'$
   $include -placeholder'common-loginbar' -indent'  '$
   $include -placeholder'common-agentchat' -indent'  '$
 
-  <div id="preview-dialer" ng-controller="ControllerPreviewDialer">
+  <div id="preview-dialer" ng-controller="ControllerPreviewDialer" ng-show="iservice.loggedIn.isLoggedIn">
     
      $include -placeholder'78'$
     <div id="contact" class="dialer-section contact-info">
