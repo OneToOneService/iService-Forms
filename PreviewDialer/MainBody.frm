@@ -8,6 +8,8 @@ $if -fieldregex'form'='^$'$
 
   $include -placeholder'common-head' -indent'  '$
   <link rel="stylesheet" href="$value -rootpath$f/$value -formid$?form=css" />
+  <style >
+  </style>
   <script> 
     var rootPath = '$value -rootpath$';
     var activePage = '';
