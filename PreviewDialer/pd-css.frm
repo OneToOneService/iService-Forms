@@ -71,7 +71,8 @@ div.interaction-history div.thread-subject{    margin-right: 221px;}
 .history-common-search-results .history-heading .column-type{width:18%;float:left; padding-left:2%;}
 .history-common-search-results .history-heading .column-date{width:18%;float:left;padding-left:2%;}
 .column-subject span, .column-type span, .column-date span{padding-right:5px;}
-.history-common-search-results .history-content-row{width:100%;float:left; background:#fff; padding-top:10px; padding-bottom:10px; border-top:1px solid #e6e4e4;}
+.history-common-search-results .history-content-row{width:100%;float:left; background:#fff;/* padding-top:10px; padding-bottom:10px;*/ border-top:1px solid #e6e4e4;}
+.history-common-search-results .list-history-row-container{padding-top:10px;padding-bottom:10px; cursor:pointer;display:inline-block;width:100%;} 
 div.interaction-history div.thread-root {border:none;}
 div.interaction-history div.thread-even, div.interaction-history div.thread-odd { border-right: none;}
 .history-content-row .interaction-type-history{border:0px;float:left;}
@@ -80,11 +81,12 @@ div.interaction-history div.thread-even, div.interaction-history div.thread-odd 
 .history-content-row .interaction-type-history .thread-type-history{width:18%; float:left;padding-left:2%; }
 .history-content-row .interaction-type-history .thread-date-history{width:18%; float:left;padding-left:2%;}
 .history-content-row .thread-children-history{float:left; background:#fefcfc; border:1px solid #e6e4e4; border-radius:5px;}
-.history-content-row .thread-children-history {float:left;padding-left: 4%;padding-top: 8px;margin-top:12px;}
+.history-content-row .thread-children-history {float:left;padding-left: 4%;padding-top: 8px;/*margin-top:12px;*/margin-bottom:10px; width:100%;}
+.history-content-row .thread-children-history div.thread-child-history:last-child{border-bottom:none;}
 .history-content-row .thread-children-history .interaction-type{border:none; color:#a4a5a8;background:none;background-color:none;}
 .history-content-row .thread-children-history div.thread-child-history{float:left;margin-bottom:10px;border-bottom:1px solid #e6e4e4;padding: 10px 0px 10px 0px;}
 .thread-child-history .child-header{float:left; width:100%;}
-.thread-child-history .child-header .child-open-header{float:left; width:100%;}
+.thread-child-history .child-header .child-open-header{float:left; width:100%; cursor:pointer;padding-bottom: 10px;}
 .thread-child-history .child-header .child-open-header .child-open-expander{width:6%;float:left;}
 .child-open-header .child-open-subject{width:56%;float:left;}
 .child-open-header .child-open-type,.child-open-header .child-open-date{width:18%;padding-left:2%;float:left;}
@@ -180,6 +182,12 @@ div.customer-details div.properties-left,div.customer-details div.properties-rig
 .contact-detail-content .interaction-property{margin-right:8px;}
 .interaction-property-list div.interaction-property{width: 282px;}
 div.customer-details div.logins div.login,.contact-detail-content .logins button{float:left;}
+.wd{width:100%;margin-bottom:12px;}
+.contact-detail-content .membership{width:100%;}
+.contact-detail-content .membership label{float:left;}
+.pd1{padding-top:10px;padding-bottom: 10px;cursor: pointer;}
+.sublink{cursor:pointer;display: inline-block;width: 100%;}
+.grey-out{width:100%; height:100%; position:fixed;}
 
 
 @media (max-width: 997px) {
