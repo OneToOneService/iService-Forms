@@ -34,7 +34,7 @@
             start: 20,
             end: 24 // There's no such thing as a 24 hour value, but just to make the shift continuous from 20 (8 PM) to 4 AM, so, we used 24 instead of something like 23.99999
         }*/],
-        today = new Date("$value -now$"); // today is the server time now
+        today = new Date("$value -isoutc -now$"); // today is the server time now
 
     // As the page fetches the data from the server every fixed amount of time, we need to keep the today date
     // object synchronized with the server time, so, we use setInterval to create a timer that updates it every second 
