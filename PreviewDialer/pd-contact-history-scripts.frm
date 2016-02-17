@@ -3,7 +3,17 @@
       <h2>Contact History</h2>
       <span class="contact-info-show-box" ng-click="toggleContactHistory('classhistorytcontent')"></span>
       </div>
+      
+     
+      
       <div ng-cloak class="customer-history history-content" ng-class="classhistorytcontent" ng-controller="ControllerPreviewDialerHistory">
+        <div ng-show="notemessageerror">
+             <div ng-cloak ng-repeat="error in noteErrors" class="error-messages wd">{{ error }}</div>
+        </div>
+        <div ng-show="notemessagesuccess"> 
+             <div ng-cloak ng-repeat="message in noteSuccess" class="success-messages wd">{{ message }}</div>
+        </div>
+        
         <div class="page-links pagination">
           <ul>
              <li ng-repeat="page in pageNums" ng-controller="ControllerPageLink">
@@ -53,20 +63,20 @@
           </div>
         </script>
 			<script type="text/ng-template" id="history-thread-closed.html">
-              <div class="list-history-row-container"> 
-              <div class="thread-root interaction-type-history" ng-class="InteractionType(thread.type)">
+              <div class="list-history-row-container" ng-click="ThreadExpandClick(thread)"> 
+              <div class="thread-root interaction-type-history pd" ng-class="InteractionType(thread.type)">
                 <div class="column-expand thread-expander-history">
                   <div id="{{idPrefix}}expand" class="expander-image list-expand" ng-click="ThreadExpandClick(thread)"></div>
                   <div grey-out ng-show="ThreadExpandRunning()"></div>
                 </div>
                 <div class="column-subject thread-subject-history">{{ thread.subject }}</div>
                 <div class="column-type thread-type-history">{{ thread.type }}</div>
-                <div class="column-date thread-date-history">{{ thread.date }}</div>
+                <div class="column-date thread-date-history">{{ thread.date| date: 'M/d/yyyy h:mm:ss a' }}</div>
               </div>
               </div>
             </script>
             <script type="text/ng-template" id="history-thread-open.html">
-              <div class="thread-root interaction-type-history" ng-class="InteractionType(thread.type)">
+              <div class="thread-root interaction-type-history pd1" ng-class="InteractionType(thread.type)" ng-click="ThreadExpandClick(thread)">
                 <div class="column-expand thread-expander-history">
                   <div id="{{idPrefix}}expand" class="expander-image list-contract" ng-click="ThreadExpandClick(thread)"></div>
                 </div>
@@ -79,26 +89,28 @@
               </div>
             </script>
             <script type="text/ng-template" id="history-child-closed.html">
-              <div class="child-expander">
-                <div id="{{idPrefix}}expand" class="expander-image list-expand" ng-click="ChildExpandClick(child)"></div>
+			  <div ng-click="ChildExpandClick(child)" class="sublink">
+              <div class="child-expander" >
+                <div id="{{idPrefix}}expand" class="expander-image list-expand" ></div>
                 <div grey-out ng-show="ChildExpandRunning()"></div>
               </div>
               <div class="column-subject child-subject">{{ child.subject }}</div>
               <div class="column-type child-type">{{ child.type }}</div>
-              <div class="column-date child-date">{{ child.date }}</div>
+              <div class="column-date child-date">{{ child.date | date: 'M/d/yyyy h:mm:ss a'}}</div>
+			  </div>
             </script>
             <script type="text/ng-template" id="history-child-open.html">
               <div ng-repeat="details in [child.details]" ng-controller="ControllerHistoryChildOpen" class="child-details-container">
                <div class="child-details" ng-class="ActionClass()">
 			   <div>
-                  <div class="child-header">
+                  <div class="child-header" ng-click="ChildExpandClick(child)">
 				    <div class="child-open-header">
                     <div class="child-open-expander">
                       <div id="{{idPrefix}}expand" class="expander-image list-contract" ng-click="ChildExpandClick(child)"></div>
                     </div>
                     <div class="column-subject-h child-open-subject">{{ child.subject }}</div>
                     <div class="column-type-h child-open-type">{{ child.type }}</div>
-                    <div class="child-open-date">{{ child.date }}</div>
+                    <div class="child-open-date">{{ child.date | date: 'M/d/yyyy h:mm:ss a'}}</div>
                   </div>
 				  </div>
 				 
@@ -275,6 +287,7 @@
                     <div class="section"><span class="label">Topic Name:</span> {{details.topicName}}</div>
                     <div ng-repeat="group in properties" ng-controller="ControllerPropertyGroup">
                       <div class="interaction-property" ng-class="InteractionPropertyClass(property)" ng-repeat="property in group.properties" ng-controller="ControllerPropertyProperty" ng-include="PropertyUrl(property)"></div>
+
                     </div>
                   </div>
                 </div>
