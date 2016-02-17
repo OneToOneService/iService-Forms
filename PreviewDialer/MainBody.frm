@@ -8,8 +8,6 @@ $if -fieldregex'form'='^$'$
 
   $include -placeholder'common-head' -indent'  '$
   <link rel="stylesheet" href="$value -rootpath$f/$value -formid$?form=css" />
-  <style >
-  </style>
   <script> 
     var rootPath = '$value -rootpath$';
     var activePage = '';
@@ -23,18 +21,18 @@ $if -fieldregex'form'='^$'$
 
   <div id="preview-dialer" ng-controller="ControllerPreviewDialer" ng-show="iservice.loggedIn.isLoggedIn">
     
-     $include -placeholder'78'$
+     $include -placeholder'pd-header-info'$
     <div id="contact" class="dialer-section contact-info">
-      $include -placeholder'74'$
+      $include -placeholder'pd-contact-info'$
       
-      $include -placeholder'75'$
+      $include -placeholder'pd-script-content'$
     </div>
     
-    $include -placeholder'77'$
-    $include -placeholder'71'$
+    $include -placeholder'pd-contact-history-scripts'$
+    $include -placeholder'pd-content-note'$
     <div style="clear: both;"></div>
     
-    $include -placeholder'76'$
+    $include -placeholder'pd-contact-detail-content'$
    <div style="clear: both;"></div>
   $include -placeholder'common-footer' -indent'  '$
   $include -placeholder'common-javascript' -indent'  '$
@@ -45,7 +43,7 @@ $if -fieldregex'form'='^$'$
 </html>
 
 $endif$$if -fieldregex'form'='^css$'$$header -filetype(css)$
-$include -placeholder'70'$
+$include -placeholder'pd-css'$
 
 
 $endif$$if -fieldregex'form'='^js$'$$header -filetype(js)$
@@ -59,7 +57,7 @@ var contactID = query['contactID'];
 
 
 
-function ControllerPreviewDialer($scope, $http, $rootScope) {
+function ControllerPreviewDialer($scope,$timeout, $http, $rootScope) {
   SetIDPrefix($scope, 'Dialer');
   $scope.closereason = 'Open';
   $scope.classinfocontent = [];
@@ -141,7 +139,8 @@ function ControllerPreviewDialer($scope, $http, $rootScope) {
       body: $scope.body,
     };
     iservice.ContactNoteCreate($scope, idPrefix, contactID, properties, details, function (data) {
-      if (data.errors && data.errors.length) return;
+      if (data.errors && data.errors.length){$scope.noteErrors = ['Error in creating note !'];$scope.notemessageerror = true;  $timeout(function () { $scope.notemessageerror = false; }, 3000);   return;}else{ $scope.noteSuccess = ['Note created successfuly !'];$scope.notemessagesuccess = true; $timeout(function () { $scope.notemessagesuccess = false; }, 3000); }
+      
       iservice.SanitizeHistoryRow(data.row);
       $rootScope.$broadcast('updated-row', data);
       $scope.body = '';
