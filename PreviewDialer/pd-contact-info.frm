@@ -5,7 +5,6 @@
          </div>
         <div class="content content-detail" ng-class="classinfocontent">
           <address>
-            $value -customer(name) -Pid'contactID'$ <br>
             $value -customer(property'Job Title') -Pid'contactID'$ <br>
             $value -customer(property'Customer Type') -Pid'contactID'$<br>
             $value -customer(property'Address1') -Pid'contactID'$ $value -customer(property'State') -Pid'contactID'$

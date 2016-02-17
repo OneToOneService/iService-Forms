@@ -24,7 +24,8 @@
               <div ng-repeat="login in segment.logins" ng-controller="ControllerPropertyLogin" class="login">
                 <input id="{{idPrefix}}name" type="text" value="" ng-model="login.name" class="text-no-desc">
                 <label><input id="{{idPrefix}}isEmail" type="checkbox" ng-model="login.isEmail" class="w30">Is Email</label>
-                <label><input id="{{idPrefix}}isBounced" type="checkbox" ng-model="login.isBounced" class="w30">Is Bounced</label>
+                <label><input id="{{idPrefix}}isBounced" type="checkbox" ng-model="login.isBounced" class="w30">Is Bounced</label> 
+                
               </div>
               <button class="add-login-" id="{{idPrefix}}addValue" type="button" ng-click="AddLoginClick(segment)">+</button>
             </div>
