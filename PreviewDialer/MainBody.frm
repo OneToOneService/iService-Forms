@@ -21,29 +21,39 @@ $if -fieldregex'form'='^$'$
 
   <div id="preview-dialer" ng-controller="ControllerPreviewDialer" ng-show="iservice.loggedIn.isLoggedIn">
     
-     $include -placeholder'pd-header-info'$
+     $include -placeholder'previewdialer-header-info'$
+      <div ng-cloak class="errors" ng-show="adminLoaded">
+      <span class="error-messages margin" ng-show="!noteTopic">Can't find topic with ID of '$form -id'topicID'$'</span>
+      <!-- <span class="warning-messages" ng-show="!propCallDate">Optional contact property 'Next Call Date' does not exist.</span>
+      <span class="warning-messages" ng-show="!propCloseReason">Optional contact property 'Close Reason' does not exist.</span>
+      <span class="warning-messages" ng-show="!propWebSite">Optional contact property 'Web Site' does not exist.</span>
+      <span class="warning-messages" ng-show="!propLinkedIn">Optional contact property 'LinkedIn' does not exist.</span>
+      <span class="warning-messages" ng-show="!propFollowUp">Optional contact property 'Follow Up' does not exist.</span>
+      <span class="warning-messages" ng-show="!propTimeZone">Optional contact property 'Time Zone' does not exist.</span>
+      <span class="warning-messages" ng-show="!propNextAction">Optional contact property 'NEXT ACTION*' does not exist.</span>-->
+    </div>
     <div id="contact" class="dialer-section contact-info">
-      $include -placeholder'pd-contact-info'$
+      $include -placeholder'previewdialer-contact-info'$
       
-      $include -placeholder'pd-script-content'$
+      $include -placeholder'previewdialer-script-content'$
     </div>
     
-    $include -placeholder'pd-contact-history-scripts'$
-    $include -placeholder'pd-content-note'$
+    $include -placeholder'previewdialer-contact-history-scripts'$
+    $include -placeholder'previewdialer-content-note'$
     <div style="clear: both;"></div>
     
-    $include -placeholder'pd-contact-detail-content'$
+    $include -placeholder'previewdialer-contact-detail-content'$
    <div style="clear: both;"></div>
   $include -placeholder'common-footer' -indent'  '$
   $include -placeholder'common-javascript' -indent'  '$
-  <script src="$value -rootpath$f/$value -formid$?form=js"></script>
+  <script src="$value -rootpath$f/$value -formid$?form=js&topicID=$form -id'topicID'$"></script>
   <script src="$value -rootpath$js/iService.directive.js?v=$value -version -urlencode$"></script>
   $include -placeholder'interaction-properties' -indent'  '$
 </body>
 </html>
 
 $endif$$if -fieldregex'form'='^css$'$$header -filetype(css)$
-$include -placeholder'pd-css'$
+$include -placeholder'previewdialer-css'$
 
 
 $endif$$if -fieldregex'form'='^js$'$$header -filetype(js)$
@@ -108,17 +118,17 @@ function ControllerPreviewDialer($scope,$timeout, $http, $rootScope) {
     
     for (var i = 0; i < data.topics.length; i++) {
       var topic = data.topics[i];
-      if (topic.name == 'Pipeline Counts') $scope.noteTopic = topic;
+       if (topic.id == '$form -id'topicID'$') $scope.noteTopic = topic;
     }
     for (var i = 0; i < data.contactProperties.length; i++) {
       var property = data.contactProperties[i];
-      if (property.name == 'Next Call Date') $scope.propCallDate = property;
+     /* if (property.name == 'Next Call Date') $scope.propCallDate = property;
       if (property.name == 'Close Reason') $scope.propCloseReason = property;
       if (property.name == 'Web Site') $scope.propWebSite = property;
       if (property.name == 'LinkedIn') $scope.propLinkedIn = property;
       if (property.name == 'Follow Up') $scope.propFollowUp = property;
       if (property.name == 'Time Zone') $scope.propTimeZone = property;
-      if (property.name == 'NEXT ACTION*') $scope.propNextAction = property;
+      if (property.name == 'NEXT ACTION*') $scope.propNextAction = property;*/
     }
   });
   $scope.CreateNote = function(subject, idPrefix) {
