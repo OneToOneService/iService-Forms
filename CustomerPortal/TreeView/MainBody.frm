@@ -14,10 +14,10 @@ $if -fieldregex'form'='^$'$
 </head>
 <body ng-controller="ControllerBody">
 
-$include -placeholder'StandardHeader'$
+$include -placeholder'customerportal-standard-header'$
 $include -placeholder'customerportal-treeview-innerbody'$
 
-$include -placeholder'StandardFooter'$
+$include -placeholder'customerportal-standard-footer'$
   $include -placeholder'interaction-properties' -indent'  '$
   $include -placeholder'common-javascript' -indent'  '$
   $include -placeholder'customerportal-treeview-bootstrap'$ <!-- bootstrap.ui.js with customizations -->
