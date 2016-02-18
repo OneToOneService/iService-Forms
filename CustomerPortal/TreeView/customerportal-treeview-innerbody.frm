@@ -141,6 +141,8 @@ We will send you a link so you can change your password.</span>
                    </span>
 
 
+
+
                </form>       
                </div>
              <!--Registration form end-->  
@@ -161,7 +163,7 @@ We will send you a link so you can change your password.</span>
     
   
     <script type=text/ng-template id=findanswer.html> 
-    <div class="findanswersection" ng-controller="ControllerFindAnswers">
+    <div class="findanswersection">
      <section class="content">
      
      <section class="left_container">
@@ -171,8 +173,8 @@ We will send you a link so you can change your password.</span>
                            <h2 class="">Topic List</h2>
                            <nav class="nav topiclist" role="navigation" ng-class="myClass" >
                               <div accordion="" close-others="false">
-							     <div ng-repeat="topicarraylist in topicArrya">
-									<div accordion-group="" ng-class="{isOpen: status.isOpen}"  ng-repeat="topic in topicarraylist" ng-init="status = {isOpen: true}" is-open="status.isOpen" on-finish-render="test()" >
+							     <div ng-repeat="topicarraylist in topicArrya" on-finish-render="showArticleInt()">
+									<div accordion-group="" ng-class="{isOpen: status.isOpen}"  ng-repeat="topic in topicarraylist" ng-init="status = {isOpen: true}" is-open="status.isOpen"  >
 									  <div accordion-heading="">
 									     <div class="xa" ng-class="{active: isActive(topic)}">
 										   <div ng-class="{isOpen: status.isOpen}" ng-click="ShowTopic(topic)" id="{{topic.id}}" ng-init="(topic.id==param2) ? ShowTopic(topic) : ''"  >{{topic.name}}({{topic.countRecurse}})</div>
@@ -312,7 +314,7 @@ We will send you a link so you can change your password.</span>
     </script>
     <script type=text/ng-template id=askquestion.html>
     <div class="askquestion_content" >
-             <div class="page askqu" ng-controller="ControllerAskAQuestion">
+             <div class="page askqu">
                <form name="askquestionform" novalidate>    
                   <span ng-show="result" class="submitedsuccess">Your question was submitted.  Ref #{{ result }}.</span>
                   <div ng-cloak ng-repeat="error in errors" class="error-messages">{{ error }}</div>
@@ -620,12 +622,6 @@ We will send you a link so you can change your password.</span>
      </div>
     </div>
   </div>
-  
 
-   
-  <script type="text/javascript">
-
-
-</script>
 
 $endif$
