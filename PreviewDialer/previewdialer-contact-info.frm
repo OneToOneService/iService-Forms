@@ -12,11 +12,6 @@
             <a target="_blank" href="$value -customer(property'Web Site') -Pid'contactID' -nodescription$">$value -customer(property'Web Site') -Pid'contactID'$</a><br>
             <a target="_blank" href="$value -customer(property'LinkedIn') -Pid'contactID'$">$value -customer(property'LinkedIn') -Pid'contactID'$</a><br>
           </address>
-          <p>
-            Close Reason: $value -customer(property'Close Reason') -Pid'contactID'$<br>
-            Follow Up: $value -customer(property'Follow Up') -Pid'contactID'$<br>
-            Time Zone: $value -customer(property'Time Zone') -Pid'contactID'$<br>
-            Next Action: $value -customer(property'NEXT ACTION*') -Pid'contactID'$<br>
-          </p>
+          
         </div>
       </div>
