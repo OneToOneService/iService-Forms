@@ -4122,7 +4122,7 @@ $if -fieldregex'form'='^$'$
                 <tr>
                     <th><span class="nglink" ng-click="agentList.SortClick('name')">Agent Name</span><div class="sort-direction-indicator" ng-class="agentList.SortDirectionClass('name')"></div></th>
                     <th><span class="nglink" ng-click="agentList.SortClick('num')"># Messages Assigned</span><div class="sort-direction-indicator" ng-class="agentList.SortDirectionClass('num')"></div></th>
-                    <th><span class="nglink" ng-click="agentList.SortClick('hours')">Oldest Message Business Hours</span><div class="sort-direction-indicator" ng-class="agentList.SortDirectionClass('hours')"></div></th>
+                    <th><span class="nglink" ng-click="agentList.SortClick('hours')">Oldest Message Business Hours (HH:MM)</span><div class="sort-direction-indicator" ng-class="agentList.SortDirectionClass('hours')"></div></th>
                 </tr>
             </thead>
             <tbody class="agents">
