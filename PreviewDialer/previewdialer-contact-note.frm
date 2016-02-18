@@ -4,7 +4,7 @@
       </div>
       <div class="contact-note-content" ng-class="classnotecontent">
       <textarea placeholder="Enter call notes here (optional) and Click a disposition button" id="{{idPrefix}}Body" name="body" type="text" ng-model="body"></textarea>
-      <input type="text" placeholder="Follow Up Date" class="followupdate" ui-date="dateOptions" id="{{idPrefix}}CallDate" ng-model="nextcalldate">
+     <!-- <input type="text" placeholder="Follow Up Date" class="followupdate" ui-date="dateOptions" id="{{idPrefix}}CallDate" ng-model="nextcalldate">
       <select type="text" class="pic_list" id="{{idPrefix}}CloseReason" ng-model="closereason">
         <option value="">-- Pick Sales Close Reason --</option>
         <option value="Being Acquired">Being Acquired</option>
@@ -42,7 +42,7 @@
         <option value="Referred to other department">Referred to other department</option>
         <option value="wrong number">wrong number</option>
         <option value=""></option>
-      </select>     
+      </select> -->    
       <div class="btnSection">
         <a ng-click="CreateNote('Call Notes', idPrefix)" class="btn">Call Notes</a>          
         <a ng-click="CreateNote('leftVM', idPrefix)" class="btn">Left VM</a>
