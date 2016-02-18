@@ -4,6 +4,6 @@
            <span class="contact-info-show-box" ng-click="toggleScript('classscriptcontent')"></span>
          </div>
         <div class="content script-content" ng-class="classscriptcontent" >
-          $include -placeholder'66'$
+          $include -placeholder'previewdialer-script-content-include'$
         </div>
 </div>
