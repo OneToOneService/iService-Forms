@@ -41,6 +41,12 @@
 	}
    .btn_cancel{padding: 6px 6%;}
    .btn_okay{padding: 6px 8%;}
+    .container {width:100%}
+    #main-nav a {padding: 34px 17px 32px;}
+    .topcontainer{width:90%;}
+    #main-nav a {
+   	 padding: 34px 10px 32px;
+    }
 
 
 @media (max-width: 767px) {
@@ -48,7 +54,7 @@
   .topfaq{background-position:11px 7px}
   .right_container{width:100%;margin-top:10px;}
 
-  .search_container input{height:34px;width:75%; padding-left:15%;}
+  .search_container input{height:34px;width:75%; padding-left:15%;background-size:25px;}
   .search_container .submitBtn{width:24%;height:34px;}
   .t_heading{display:none;}
   .question{padding-top: 3px;padding-bottom: 15px;}
@@ -108,6 +114,29 @@
    .interaction-property-list div.interaction-property input.text-with-desc{width:52%}
    .my-details .loginc { width: 93%;}
    .my-details .logins .login input[type="text"] {width: 98%;}
+    #main-nav {
+    float: none;
+    margin: 0px auto;
+    width: 97%;
+    }
+   .responsivemenu{display:block;float:right; margin-top: 23px;}
+   .menucontainer {
+       float: right;
+       border:1px solid #ccc;border-radius: 5px;display:none;
+    }
+   .menu_arrow {
+        float: right;
+        margin: -18px 13px 0 2px;
+        display:block;
+   }
+   .showheadermenu{display:block;width: 100%;}
+   #main-nav .menucontainer ul.showheadermenu{display:block;}
+   #main-nav .menucontainer ul {width:100%;}
+   #main-nav .menucontainer ul li{width:100%;border-bottom:1px solid #ccc;}
+   #main-nav .menucontainer ul li:last-child{border:0px;}
+   #main-nav .menucontainer ul li a{width:100%; padding:5px; color:#5e5e5e; font-weight:normal;border-top: 2px;}
+   #main-nav .menucontainer ul li:hover,#main-nav .menucontainer ul li a:hover{background:#f5f5f5; border-top: 2px;}
+   
 
 @media (max-width: 479px) {
   .box-title a{display:block;}
