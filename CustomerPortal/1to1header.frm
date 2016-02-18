@@ -1,5 +1,3 @@
-<html>
-<head>
 <style>
 /*header and footer*/
 #top 
@@ -374,8 +372,7 @@ padding-left: 0;
 .responsivemenu{display:none;}   
 
 </style>
-</head>
-<body>
+
 <header id="top">
 	<div class="topcontainer">
 			<!-- JS to open chat in new window -->
