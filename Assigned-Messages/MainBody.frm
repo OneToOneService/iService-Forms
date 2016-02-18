@@ -196,7 +196,7 @@ function ControllerFALogin($scope, $http, $rootScope)
             host = window.location.host,
             pathname = window.location.pathname,
             dirname = pathname.substring(0, pathname.lastIndexOf('/') + 1),
-            resetUrl = protocol + '//' + host + dirname + rootPath + 'PasswordReset.aspx?confirm=$value -passwordreset(guid)$';
+            resetUrl = protocol + '//' + host + dirname + rootPath + "PasswordReset.aspx?confirm=$" + "value -passwordreset(guid)$";
 
         $scope.errors = [];
 
