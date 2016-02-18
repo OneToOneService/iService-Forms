@@ -51,14 +51,5 @@
         <div grey-out ng-show="Saving()"></div>
       </div>
     </div>
-      <div ng-cloak class="errors" ng-show="adminLoaded">
-      <span class="error-messages" ng-show="!noteTopic">This form can't be used without a topic named 'Pipeline Counts'</span>
-      <span class="warning-messages" ng-show="!propCallDate">Optional contact property 'Next Call Date' does not exist.</span>
-      <span class="warning-messages" ng-show="!propCloseReason">Optional contact property 'Close Reason' does not exist.</span>
-      <span class="warning-messages" ng-show="!propWebSite">Optional contact property 'Web Site' does not exist.</span>
-      <span class="warning-messages" ng-show="!propLinkedIn">Optional contact property 'LinkedIn' does not exist.</span>
-      <span class="warning-messages" ng-show="!propFollowUp">Optional contact property 'Follow Up' does not exist.</span>
-      <span class="warning-messages" ng-show="!propTimeZone">Optional contact property 'Time Zone' does not exist.</span>
-      <span class="warning-messages" ng-show="!propNextAction">Optional contact property 'NEXT ACTION*' does not exist.</span>
-    </div>
+     
    </div>
