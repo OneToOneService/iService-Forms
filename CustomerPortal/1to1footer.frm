@@ -17,5 +17,3 @@
 </div><!-- end .container -->
 
 </footer>
-</body>
-</html>
