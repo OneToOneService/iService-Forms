@@ -204,7 +204,7 @@ function ControllerFALogin($scope,$window,$route, $http,$rootScope) {
     var host = window.location.host;
     var pathname = window.location.pathname;
     var dirname = pathname.substring(0, pathname.lastIndexOf('/') + 1);
-    var resetUrl = protocol + '//' + host + dirname + rootPath + 'PasswordReset.aspx?confirm=$'+'value -passwordreset(guid)$';
+    var resetUrl = protocol + '//' + host + dirname + rootPath + 'PasswordReset.aspx?confirm=$' + 'value -passwordreset(guid)$';
     $scope.errors = [];
     $scope.ResetRunning = iservice.PasswordResetSend($http, $scope.reset.email, resetUrl, function (data) {
       $scope.errorsforget = data.errors;
@@ -225,7 +225,28 @@ function ControllerFALogin($scope,$window,$route, $http,$rootScope) {
 var topics = [ $repeat -topics(findanswer)${ "id": "$value -Pjs -topic(id)$", "name": "$value -Pjs -topic(name)$", "count": $value -Pjs -topic(messagecount)$, "countRecurse": $value -Pjs -topic(messagecount)$, "parentID": "$value -Pjs -topic(parentID)$", "segmentName": "$value -Pjs -topic(segmentname)$" }$if -more$,
                $endif$$endrepeat$ ];
 
-function ControllerFindAnswers($scope, $http,$window, $sce, $rootScope,$location,$routeParams,$timeout,$filter,orderByFilter) {
+var articleListQueue = [];
+var runningQueued = false;
+function QueueArticleSearch(func) {
+  if (runningQueued) {
+    runningQueued = false;
+    return false;
+  }
+  articleListQueue.push(func);
+  if (articleListQueue.length > 1) {
+    return true;
+  }
+  return false;
+}
+function FinishedArticleSearch() {
+  articleListQueue.splice(0, 1);
+  if (articleListQueue.length) {
+    runningQueued = true;
+    articleListQueue[0]();
+  }
+}
+
+function ControllerFindAnswers($scope, $http,$window, $sce, $rootScope,$location,$routeParams,$timeout,$filter,orderByFilter) { 
 $scope.pageSize = 8;
 $scope.param = $routeParams.articleID;
 $scope.param2 = $routeParams.topicID;
@@ -238,9 +259,6 @@ $scope.SelectedPage = 1;
   $scope.myClass = []; 
   $scope.myClassFaq = []; 
   $rootScope.firstTopicID = '';
-  
-  
-
   function LoadTopics() {
     $scope.Loading = iservice.FindAnswerTopics($http, function (data) {
       var topics = data.topics;
@@ -307,36 +325,37 @@ $scope.SelectedPage = 1;
     $scope.articleList = undefined;
     LoadTopics();
   });
-  
-  function topfaq(){
-      $scope.recursive = true;
-      iservice.FindAnswerArticles($http, 1, $scope.searchString, $scope.recursive, 1, 5, 'RATING_REVERSE', function (data) {
-          $scope.articleListFaq = data.interactions;
-      });
-   }
+  function topfaq() {
+    if (QueueArticleSearch(topfaq)) return;
+    $scope.recursive = true;
+    iservice.FindAnswerArticles($http, 1, $scope.searchString, $scope.recursive, 1, 5, 'RATING_REVERSE', function (data) {
+      $scope.articleListFaq = data.interactions;
+      $timeout(FinishedArticleSearch);
+    });
+  }
   
   $scope.ShowTopic = function (topic) {
+    if (QueueArticleSearch(function () { $scope.ShowTopic(topic); })) return;
     $scope.selectedTopic = topic;
     $scope.Searching = iservice.FindAnswerArticles($http, topic.id, $scope.searchString, $scope.recursive, 1, 1000, null, function (data) {
       iservice.SanitizeHistoryRows(data.interactions);
       $scope.articleList = data.interactions;
       $scope.articleListval = data.interactions.length;
-      if(data.interactions.length <= 0){
+      if(data.interactions.length <= 0) {
      
-     }
+      }
       var p =1;
       for (var j=0 ; j< data.interactions.length ; j++) {
-          var x = (parseInt(p))*$scope.pageSize;
-          if(x <= j)  
-          {
+        var x = (parseInt(p))*$scope.pageSize;
+        if(x <= j) {
             p = parseInt(p)+1;
-          }
-          if($scope.param == data.interactions[j].id)
-          {
-             $scope.SelectedPage = p;
-             break;
-          }
+        }
+        if($scope.param == data.interactions[j].id) {
+          $scope.SelectedPage = p;
+          break;
+        }
       }
+      $timeout(FinishedArticleSearch);
     });
     
     $scope.selected = topic; 
@@ -395,7 +414,7 @@ $scope.SelectedPage = 1;
     });
   }
   $scope.hosturl = $location.absUrl().split('?')[0];
-   $scope.test = function() {
+   $scope.showArticleInt = function() {
        if($scope.match !=1)
        { 
           if(topics[0].id != ''){
