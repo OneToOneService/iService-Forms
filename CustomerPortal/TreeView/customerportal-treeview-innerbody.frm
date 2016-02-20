@@ -143,6 +143,7 @@ We will send you a link so you can change your password.</span>
 
 
 
+
                </form>       
                </div>
              <!--Registration form end-->  
@@ -482,11 +483,13 @@ We will send you a link so you can change your password.</span>
                   <span ng-class="{nglink: details.displayPlain}" ng-click="details.displayPlain = false">Html</span> -- 
                   <span class="nglink" ng-click="details.showAudit = !details.showAudit">Status Audit</span>
                 </div>
-                Take Action: <span class="nglink" ng-click="StartAgentEmail()">Agent Email</span> -- 
-                <span class="nglink" ng-click="StartNote()">Create Note</span> -- 
-                <span class="nglink" ng-click="StartTicket()">Create Ticket</span> 
-                <span ng-show="CanSaveResolve()"> -- <span class="nglink" ng-click="StartSaveResolve()">Save & Resolve</span></span>
-                <span> -- <span class="nglink" ng-click="StartForwardEmail()">Forward Email</span></span>
+				<div ng-hide="true">
+					Take Action: <span class="nglink" ng-click="StartAgentEmail()">Agent Email</span> -- 
+					<span class="nglink" ng-click="StartNote()">Create Note</span> -- 
+					<span class="nglink" ng-click="StartTicket()">Create Ticket</span> 
+					<span ng-show="CanSaveResolve()"> -- <span class="nglink" ng-click="StartSaveResolve()">Save & Resolve</span></span>
+					<span> -- <span class="nglink" ng-click="StartForwardEmail()">Forward Email</span></span>
+				</div>
                 <div class="options-end"></div>
                 <div class="detail_audit" ng-show="details.showAudit">
                   <div class="interaction-status-audit">
