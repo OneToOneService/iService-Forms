@@ -69,24 +69,7 @@ $if -fieldregex'form'='^$'$
         </div>
         <div grey-out ng-show="loading()"></div>
     </section>
-    <!--$include -placeholder'common-javascript' -indent'  '$-->
-    <script src="js/fm.min.js"></script>
-    <script src="js/fm.websync.min.js"></script>
-    <script src="js/jstz.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.0/jquery-ui.min.js"></script>
-    <script src="https://cdn.ckeditor.com/4.5.3/full-all/ckeditor.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.19/angular.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.19/angular-sanitize.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.19/angular-route.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.11.2/moment.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-moment/1.0.0-beta.3/angular-moment.min.js"></script>
-    <script src="js/jquery.cookie.js"></script>
-    <script src="js/angular-ui-date.js"></script>
-    <script src="js/iService.util.js?v=7.4+-+2016.02.18+-+04%3a35%3a20"></script>
-    <script src="js/iService.ng.js?v=7.4+-+2016.02.18+-+04%3a35%3a20"></script>
-
-
+    $include -placeholder'common-javascript' -indent'  '$
     $include -placeholder'interaction-properties' -indent'  '$
     <script src="$value -rootpath$f/$value -formid$?form=js"></script>
     <script src="$value -rootpath$js/iService.directive.js?v=$value -version -urlencode$"></script>
