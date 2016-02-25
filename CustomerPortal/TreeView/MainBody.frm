@@ -316,9 +316,9 @@ $scope.SelectedPage = 1;
     });
     
     $rootScope.firstTopicID = topics[0].id;
-    
+    topfaq();
   }
-  topfaq();
+  LoadTopics();
   $scope.$watch('iservice.loggedIn.contactID', function(newValue, oldValue) {
     $scope.selectedTopic = undefined;
     $scope.selectedArticle = undefined;
@@ -328,7 +328,7 @@ $scope.SelectedPage = 1;
   function topfaq() {
     if (QueueArticleSearch(topfaq)) return;
     $scope.recursive = true;
-    iservice.FindAnswerArticles($http, 1, $scope.searchString, $scope.recursive, 1, 5, 'RATING_REVERSE', function (data) {
+    iservice.FindAnswerArticles($http, $rootScope.firstTopicID, $scope.searchString, $scope.recursive, 1, 5, 'RATING_REVERSE', function (data) {
       $scope.articleListFaq = data.interactions;
       $timeout(FinishedArticleSearch);
     });
