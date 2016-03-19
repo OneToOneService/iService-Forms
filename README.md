@@ -16,4 +16,4 @@ In order to keep consistency across forms, the following guidelines should be fo
 - Use single quotes wherever possible, and only use double quotes where absolutely necessary (such as in HTML elements).
 - Avoid commenting code, particularly comments that can be addressed in commit descriptions. 
    (iService Forms are not minimized, so any embedded comments will be pushed out to production)
-- CSS should be formatted with each entire directive on a single line.  Refer to static iService CSS files for an example.
+- CSS should be formatted with each entire directive on a single line.  Refer to [iService CSS file](https://1to1service.iservicecrm.com/css/iService.css) as an example.
