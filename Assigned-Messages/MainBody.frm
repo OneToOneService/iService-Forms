@@ -1,6 +1,6 @@
 $if -fieldregex'form'='^js$'$$header -filetype(js)$
 var rootPath = '$value -rootpath$',
-    app = angular.module('iService', ['ngSanitize', 'ngRoute', 'ui.date', "angularMoment"]),
+    app = angular.module('iService', ['ngSanitize', 'ngRoute', 'ui.date', 'angularMoment']),
     loggedIn = $json -loginloggedin$,
     canAgentLogin = $if -domainuser$true$else$false$endif$,
     messageList = {},
@@ -15,241 +15,241 @@ iservice.ProcessLogin(loggedIn);
 
 app.filter('formatInterval', function ()
 {
-    return function (wholeHours)
-    {
-        // wholeHours is a decimal number resembling hours with the fraction part as the minutes. We want to
-        // format it in the HH:mm format
-        var hours,
-            minutes;
+  return function (wholeHours)
+  {
+    // wholeHours is a decimal number resembling hours with the fraction part as the minutes. We want to
+    // format it in the HH:mm format
+    var hours,
+        minutes;
 
-        hours = Math.floor(wholeHours); // Get the hours part by removing the fractions
-        minutes = Math.round((wholeHours - hours) * 60).toString(); // Get the minutes by multiplying the fraction part by 60
+    hours = Math.floor(wholeHours); // Get the hours part by removing the fractions
+    minutes = Math.round((wholeHours - hours) * 60).toString(); // Get the minutes by multiplying the fraction part by 60
 
-        // If the minutes is a single digit number, pad it with a 0
-        if(minutes.length == 1)
-            minutes = "0" + minutes;
+    // If the minutes is a single digit number, pad it with a 0
+    if(minutes.length == 1)
+      minutes = '0' + minutes;
 
-        return hours.toString() + ":" + minutes;
-    };
+    return hours.toString() + ':' + minutes;
+  };
 });
 
 function onDataFetched(data)
 {
-    agentsByID = {};
-    agents = [];
-    nobody = null;
+  agentsByID = {};
+  agents = [];
+  nobody = null;
 
-    iservice.SanitizeHistoryRows(data.interactions);
+  iservice.SanitizeHistoryRows(data.interactions);
 
-    data.interactions.forEach(function (inter)
-    {
-        inter.hours = iservice.calculateWorkHours(inter.dateObj);
-    });
+  data.interactions.forEach(function (inter)
+  {
+    inter.hours = iservice.calculateWorkHours(inter.dateObj);
+  });
 
-    messageList.NewRows(data.interactions);
+  messageList.NewRows(data.interactions);
 
-    data.interactions.forEach(incrementAgent);
+  data.interactions.forEach(incrementAgent);
 
-    agents.forEach(function (ag)
-    {
-        ag.hours = iservice.calculateWorkHours(ag.oldestObj);
-    });
+  agents.forEach(function (ag)
+  {
+    ag.hours = iservice.calculateWorkHours(ag.oldestObj);
+  });
 
-    agentList.NewRows(agents);
+  agentList.NewRows(agents);
 
-    // TODO: Data should be refreshed using live socket connection
-    setTimeout(fetchData, 15 * 1000); // Refresh the data every 15 seconds
+  // TODO: Data should be refreshed using live socket connection
+  setTimeout(fetchData, 15 * 1000); // Refresh the data every 15 seconds
 }
 
 function fetchData()
 {
-    return iservice.MessageSearch(httpService, fetchParams, 0, 1000, null, onDataFetched);
+  return iservice.MessageSearch(httpService, fetchParams, 0, 1000, null, onDataFetched);
 }
 
 function incrementAgent(message)
 {
-    var id = message.assignedToID;
+  var id = message.assignedToID;
 
-    if(id)
+  if(id)
+  {
+    var agent = agentsByID[id];
+
+    if(agent)
     {
-        var agent = agentsByID[id];
+      agent.num++;
 
-        if(agent)
-        {
-            agent.num++;
+      if(message.dateObj < agent.oldestObj)
+      {
+        agent.oldestObj = message.dateObj;
+        agent.date = message.date;
+      }
 
-            if(message.dateObj < agent.oldestObj)
-            {
-                agent.oldestObj = message.dateObj;
-                agent.date = message.date;
-            }
-
-            return;
-        }
-
-        agent = { id: message.assignedToID, name: message.agentName, num: 1, oldest: message.date, oldestObj: message.dateObj };
-
-        agentsByID[id] = agent;
-        agents.push(agent);
-
-        return;
+      return;
     }
 
-    message.assignedToID = 'none';
+    agent = { id: message.assignedToID, name: message.agentName, num: 1, oldest: message.date, oldestObj: message.dateObj };
 
-    if(nobody)
+    agentsByID[id] = agent;
+    agents.push(agent);
+
+    return;
+  }
+
+  message.assignedToID = 'none';
+
+  if(nobody)
+  {
+    nobody.num++;
+
+    if(message.dateObj < nobody.oldestObj)
     {
-        nobody.num++;
-
-        if(message.dateObj < nobody.oldestObj)
-        {
-            nobody.oldestObj = message.dateObj;
-            nobody.date = message.date;
-        }
-
-        return;
+      nobody.oldestObj = message.dateObj;
+      nobody.date = message.date;
     }
 
-    nobody = { id: 'none', name: 'Unassigned', num: 1, oldest: message.date, oldestObj: message.dateObj };
+    return;
+  }
 
-    agents.push(nobody);
+  nobody = { id: 'none', name: 'Unassigned', num: 1, oldest: message.date, oldestObj: message.dateObj };
+
+  agents.push(nobody);
 }
 
 function ControllerMessageQueueSuperviseByAgent($scope, $http, $timeout)
 {
-    var statuses = [ $repeat -messagesearchfields(statuses)$ { id: '$value -Pjs -messagesearchfield(value)$', name: '$value -Pjs -messagesearchfield(name)$' } $if -more$,
+  var statuses = [ $repeat -messagesearchfields(statuses)$ { id: '$value -Pjs -messagesearchfield(value)$', name: '$value -Pjs -messagesearchfield(name)$' } $if -more$,
                      $endif$$endrepeat$ ],
-    unassigned,
-    queued;
+  unassigned,
+  queued;
 
-    for(var i = 0; i < statuses.length; i++)
-    {
-        var status = statuses[i];
+  for(var i = 0; i < statuses.length; i++)
+  {
+    var status = statuses[i];
 
-        if(status.name == 'Queued')
-            queued = status.id;
-        else if(status.name == 'Unassigned')
-            unassigned = status.id;
-    }
+    if(status.name == 'Queued')
+      queued = status.id;
+    else if(status.name == 'Unassigned')
+      unassigned = status.id;
+  }
 
-    var param = {
-        groups:
-          [{
-              fields:
-              [{ where: 'entire', fieldID: 'status', searchString: unassigned },
-                { where: 'entire', fieldID: 'status', searchString: queued }]
-          }]
-    };
+  var param = {
+    groups:
+      [{
+        fields:
+        [{ where: 'entire', fieldID: 'status', searchString: unassigned },
+          { where: 'entire', fieldID: 'status', searchString: queued }]
+      }]
+  };
 
-    $scope.agentList = agentList;
+  $scope.agentList = agentList;
 
-    InstallControllerSort(agentList, { column: 'num', ascend: false });
+  InstallControllerSort(agentList, { column: 'num', ascend: false });
 
-    $scope.messageList = messageList;
+  $scope.messageList = messageList;
 
-    InstallControllerSort(messageList, { column: 'dateObj', ascend: true });
+  InstallControllerSort(messageList, { column: 'dateObj', ascend: true });
 
-    $scope.showFor = null;
+  $scope.showFor = null;
 
-    $scope.showMessage = function (message)
-    {
-        return $scope.showFor && message.assignedToID == $scope.showFor.id;
-    }
+  $scope.showMessage = function (message)
+  {
+    return $scope.showFor && message.assignedToID == $scope.showFor.id;
+  }
 
-    function isAgentSelected(agent)
-    {
-        return $scope.showFor && agent.id == $scope.showFor.id;
-    }
+  function isAgentSelected(agent)
+  {
+    return $scope.showFor && agent.id == $scope.showFor.id;
+  }
 
-    $scope.isAgentSelected = isAgentSelected;
+  $scope.isAgentSelected = isAgentSelected;
 
-    httpService = $http;
-    fetchParams = param;
+  httpService = $http;
+  fetchParams = param;
 
-    $scope.SearchRunning = fetchData();
+  $scope.SearchRunning = fetchData();
 
-    $scope.selectAgent = function (agent)
-    {
-        $scope.showFor = isAgentSelected(agent) ? null : agent;
-    }
+  $scope.selectAgent = function (agent)
+  {
+    $scope.showFor = isAgentSelected(agent) ? null : agent;
+  }
 }
 
 function ControllerFALogin($scope, $http, $rootScope)
 {
-    $scope.toggleLogin = iservice.loggedIn.isLoggedIn;
-    $scope.toggleUserOption = false;
+  $scope.toggleLogin = iservice.loggedIn.isLoggedIn;
+  $scope.toggleUserOption = false;
+  $scope.forgot = false;
+
+  $scope.reset = function (login)
+  {
+    if(login)
+    {
+      login.$pristine = true
+      login.$valid = true
+      $scope.toggleLogin = !$scope.toggleLogin
+    }
+  };
+
+  $scope.forgetSend = function ()
+  {
+    var protocol = window.location.protocol,
+        host = window.location.host,
+        pathname = window.location.pathname,
+        dirname = pathname.substring(0, pathname.lastIndexOf('/') + 1),
+        resetUrl = protocol + '//' + host + dirname + rootPath + 'PasswordReset.aspx?confirm=$' + 'value -passwordreset(guid)$';
+
+    $scope.errors = [];
+
+    $scope.loading = iservice.PasswordResetSend($http, $scope.emailAddress, resetUrl, function (data)
+    {
+      $scope.errors = data.errors;
+
+      if(data.errors && data.errors.length)
+        return;
+
+      $scope.forgot = false;
+      $scope.sent = true;
+
+    });
+  };
+
+  $scope.forgotPassword = function ()
+  {
+    $scope.sent = false;
+    $scope.forgot = true;
+  };
+
+  $scope.forgetCancel = function ()
+  {
+    $scope.sent = false;
     $scope.forgot = false;
+  };
 
-    $scope.reset = function (login)
+  $scope.doLogin = function ()
+  {
+    $scope.submitted = true;
+    $scope.errors = [];
+    if(!$scope.login.$invalid)
     {
-        if(login)
-        {
-            login.$pristine = true
-            login.$valid = true
-            $scope.toggleLogin = !$scope.toggleLogin
-        }
-    };
+      $scope.loading = iservice.Login($http, $scope.emailAddress, $scope.password, function (data)
+      {
+        if(!data.loggedIn.isLoggedIn) { $scope.errors = ['The information you entered doesn\u0027t match our records. Please try again.']; return; }
+        if(data.errors && data.errors.length) return;
+        iservice.ProcessLogin(data.loggedIn);
+        fetchData();
+        $scope.toggleUserOption = false;
+      });
+    }
+  };
 
-    $scope.forgetSend = function ()
+  $scope.logout = function ()
+  {
+    $scope.errors = [];
+    $scope.loading = iservice.Logout($http, function (data)
     {
-        var protocol = window.location.protocol,
-            host = window.location.host,
-            pathname = window.location.pathname,
-            dirname = pathname.substring(0, pathname.lastIndexOf('/') + 1),
-            resetUrl = protocol + '//' + host + dirname + rootPath + "PasswordReset.aspx?confirm=$" + "value -passwordreset(guid)$";
-
-        $scope.errors = [];
-
-        $scope.loading = iservice.PasswordResetSend($http, $scope.emailAddress, resetUrl, function (data)
-        {
-            $scope.errors = data.errors;
-
-            if(data.errors && data.errors.length)
-                return;
-
-            $scope.forgot = false;
-            $scope.sent = true;
-
-        });
-    };
-
-    $scope.forgotPassword = function ()
-    {
-        $scope.sent = false;
-        $scope.forgot = true;
-    };
-
-    $scope.forgetCancel = function ()
-    {
-        $scope.sent = false;
-        $scope.forgot = false;
-    };
-
-    $scope.doLogin = function ()
-    {
-        $scope.submitted = true;
-        $scope.errors = [];
-        if(!$scope.login.$invalid)
-        {
-            $scope.loading = iservice.Login($http, $scope.emailAddress, $scope.password, function (data)
-            {
-                if(!data.loggedIn.isLoggedIn) { $scope.errors = ['The information you entered doesn\u0027t match our records. Please try again.']; return; }
-                if(data.errors && data.errors.length) return;
-                iservice.ProcessLogin(data.loggedIn);
-                fetchData();
-                $scope.toggleUserOption = false;
-            });
-        }
-    };
-
-    $scope.logout = function ()
-    {
-        $scope.errors = [];
-        $scope.loading = iservice.Logout($http, function (data)
-        {
-            iservice.ProcessLogin(data.loggedIn);
-        });
-    };
+      iservice.ProcessLogin(data.loggedIn);
+    });
+  };
 }
 
 var ControllerAgent = ControllerWithID('Agent'),
