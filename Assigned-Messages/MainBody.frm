@@ -1,8 +1,8 @@
 $if -fieldregex'form'='^js$'$$header -filetype(js)$
 var rootPath = '$value -rootpath$',
     app = angular.module('iService', ['ngSanitize', 'ngRoute', 'ui.date', 'angularMoment']),
-    loggedIn = $json -loginloggedin$,
-    canAgentLogin = $if -domainuser$true$else$false$endif$,
+    loggedIn = 
+    canAgentLogin = 
     messageList = {},
     agentList = {},
     agentsByID,
@@ -17,15 +17,12 @@ app.filter('formatInterval', function ()
 {
   return function (wholeHours)
   {
-    // wholeHours is a decimal number resembling hours with the fraction part as the minutes. We want to
-    // format it in the HH:mm format
     var hours,
         minutes;
 
-    hours = Math.floor(wholeHours); // Get the hours part by removing the fractions
-    minutes = Math.round((wholeHours - hours) * 60).toString(); // Get the minutes by multiplying the fraction part by 60
+    hours = Math.floor(wholeHours);
+    minutes = Math.round((wholeHours - hours) * 60).toString();
 
-    // If the minutes is a single digit number, pad it with a 0
     if(minutes.length == 1)
       minutes = '0' + minutes;
 
@@ -57,8 +54,7 @@ function onDataFetched(data)
 
   agentList.NewRows(agents);
 
-  // TODO: Data should be refreshed using live socket connection
-  setTimeout(fetchData, 15 * 1000); // Refresh the data every 15 seconds
+  setTimeout(fetchData, 15 * 1000);
 }
 
 function fetchData()
@@ -117,8 +113,7 @@ function incrementAgent(message)
 
 function ControllerMessageQueueSuperviseByAgent($scope, $http, $timeout)
 {
-  var statuses = [ $repeat -messagesearchfields(statuses)$ { id: '$value -Pjs -messagesearchfield(value)$', name: '$value -Pjs -messagesearchfield(name)$' } $if -more$,
-                     $endif$$endrepeat$ ],
+  var statuses = [ { id: '$value -Pjs -messagesearchfield(value)$', name: '$value -Pjs -messagesearchfield(name)$' }  ],
   unassigned,
   queued;
 
@@ -267,7 +262,6 @@ $if -fieldregex'form'='^$'$
     <link rel="stylesheet" href="$value -rootpath$f/$value -formid$?form=css" />
     <!-- The following styles are the CSS content of form 68, which in turn was including forms 82, 85 and 83 -->
     <style>
-                /*Form 82 */
                 body
                 {
                     font-family: 'Roboto', sans-serif;
@@ -440,13 +434,12 @@ $if -fieldregex'form'='^$'$
                 }
 
                 .nav__list input[type=checkbox]:checked + label + ul
-                { /* reset the height when checkbox is checked */
+                {
                     max-height: 1000px;
                 }
 
                 label > span
                 {
-                    /*float: right;*/
                     -webkit-transition: -webkit-transform .65s ease;
                     transition: transform .65s ease;
                 }
