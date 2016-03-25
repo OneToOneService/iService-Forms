@@ -1,5 +1,6 @@
 ; (function ()
 {
+<<<<<<< HEAD
     // In all the calculations here, the least unit counted is minutes
     // The calculations use JavaScript Date object conventions. For reference, view the MDN article about the
     // issue https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date
@@ -40,121 +41,105 @@
     // As the page fetches the data from the server every fixed amount of time, we need to keep the today date
     // object synchronized with the server time, so, we use setInterval to create a timer that updates it every second 
     setInterval(function ()
-    {
-        today.setMilliseconds(today.getMilliseconds() + 1000);
-    }, 1000);
+=======
+  var holidays = [
+    new Date(0, 0, 1)],
+    weeklyHolidays = [0, 6],
+    workShifts = [{
+      start: 9,
+      end: 17
+    }],
+      today = new Date('$value -isoutc -now$');
 
-    // Function that determines if the given date is a weekly or annual holiday
-    function isHoliday(date)
+  setInterval(function ()
+  {
+    today.setMilliseconds(today.getMilliseconds() + 1000);
+  }, 1000);
+
+  function isHoliday(date)
+  {
+    return weeklyHolidays.indexOf(date.getDay()) >= 0 ||
+           holidays.some(function (h)
+           {
+             return h.getMonth() == date.getMonth() &&
+                    h.getDate() == date.getDate();
+           });
+  }
+
+  iservice.calculateWorkHours = function calculateWorkHours(startDate)
+  {
+    if(today - startDate <= 0)
+      throw new Error('The provided date (' + startDate + ') is past the server date (' + today + ')');
+
+    var startDateTotalHours = startDate.getHours() + startDate.getMinutes() / 60,
+        endDateTotalHours = today.getHours() + today.getMinutes() / 60;
+
+    if(startDate.getFullYear() == today.getFullYear() &&
+       startDate.getMonth() == today.getMonth() &&
+       startDate.getDate() == today.getDate())
+>>>>>>> f1a5106c867e932f8525d319b20b143c3037be7f
     {
-        /// <param name="date" type="Date"></param>
-        // Search for the date in the weekly and annual holidays arrays, and return true if it matches, otherwise
-        // return false
-        return weeklyHolidays.indexOf(date.getDay()) >= 0 || // Weekly holidays are matched by week day
-               holidays.some(function (h)
-               {
-                   // Annual holidays are matched by day and month only
-                   return h.getMonth() == date.getMonth() &&
-                          h.getDate() == date.getDate();
-               });
+      return isHoliday(startDate) ? 0 : workShifts.reduce(function (previous, current)
+      {
+        if(current.end >= startDateTotalHours &&
+           current.start <= endDateTotalHours)
+        {
+          previous += (current.end > endDateTotalHours ? endDateTotalHours : current.end) -
+                      (current.start > startDateTotalHours ? current.start : startDateTotalHours);
+        }
+
+        return previous;
+      }, 0);
     }
 
-    // Attach calculateWorkHours to the global iservice object. The function is provided a Date object and returns
-    // the number of business hours between the provided date and the today date object
-    iservice.calculateWorkHours = function calculateWorkHours(startDate)
+    startDate = new Date(startDate.getTime());
+
+    var totalBusinessHours = 0,
+        dayTotalWorkHours = workShifts.reduce(function (previous, current)
+        {
+          return previous + current.end - current.start;
+        }, 0);
+
+    if(!isHoliday(startDate))
     {
-        /// <param name="startDate" type="Date"></param>
-        // If the provided date is in the future throw an exception as this is an invalid usage
-        if(today - startDate <= 0)
-            throw new Error("The provided date (" + startDate + ") is past the server date (" + today + ")");
-
-        // For startDate and today, get the hours and minutes as a decimal number. For example 3:30 becomes 3.5,
-        // and keep the values in startDateTotalHours and endDateTotalHours respectively
-        var startDateTotalHours = startDate.getHours() + startDate.getMinutes() / 60,
-            endDateTotalHours = today.getHours() + today.getMinutes() / 60;
-
-        if(startDate.getFullYear() == today.getFullYear() &&
-           startDate.getMonth() == today.getMonth() &&
-           startDate.getDate() == today.getDate())
+      totalBusinessHours += workShifts.reduce(function (previous, current)
+      {
+        if(current.end >= startDateTotalHours)
         {
-            // If both startDate and today are the same day and it's not a holiday, just calculate the business
-            // hours for it. If it's a holiday return 0
-            return isHoliday(startDate) ? 0 : workShifts.reduce(function (previous, current)
-            {
-                // For each shift, determine if it intersects with the interval [startDateTotalHours-endDateTotalHours]
-                // and if so, accumulate the intersection hours amount in the "previous" variable
-                if(current.end >= startDateTotalHours &&
-                   current.start <= endDateTotalHours)
-                {
-                    previous += (current.end > endDateTotalHours ? endDateTotalHours : current.end) -
-                                (current.start > startDateTotalHours ? current.start : startDateTotalHours);
-                }
-
-                return previous;
-            }, 0);
+          previous += current.end -
+                      (current.start > startDateTotalHours ? current.start : startDateTotalHours);
         }
 
-        // Clone the startDate object (because JS Date functions modifies the object they're called on, and we don't
-        // want to mess with the object the caller provided)
-        startDate = new Date(startDate.getTime());
+        return previous;
+      }, 0);
+    }
 
-        // totalBusinessHours is the variable in which we will accumulate the business hours
-        var totalBusinessHours = 0,
+    startDate.setDate(startDate.getDate() + 1);
 
-            // dayTotalWorkHours is the total amount of work hours in a work day
-            dayTotalWorkHours = workShifts.reduce(function (previous, current)
-            {
-                return previous + current.end - current.start;
-            }, 0);
+    while(startDate.getFullYear() != today.getFullYear() ||
+          startDate.getMonth() != today.getMonth() ||
+          startDate.getDate() != today.getDate())
+    {
+      if(!isHoliday(startDate))
+        totalBusinessHours += dayTotalWorkHours;
 
-        // If startDate is not a holiday, accumulate its work hours into totalBusinessHours
-        if(!isHoliday(startDate))
+      startDate.setDate(startDate.getDate() + 1);
+    }
+
+    if(!isHoliday(startDate))
+    {
+      totalBusinessHours = workShifts.reduce(function (previous, current)
+      {
+        if(current.start <= endDateTotalHours)
         {
-            totalBusinessHours += workShifts.reduce(function (previous, current)
-            {
-                // We add only hours of shifts whose end time is past startDateTotalHours
-                if(current.end >= startDateTotalHours)
-                {
-                    previous += current.end -
-                                (current.start > startDateTotalHours ? current.start : startDateTotalHours);
-                }
-
-                return previous;
-            }, 0);
+          previous += (current.end > endDateTotalHours ? endDateTotalHours : current.end) -
+                      current.start;
         }
 
-        // Move to the next day
-        startDate.setDate(startDate.getDate() + 1);
+        return previous;
+      }, totalBusinessHours);
+    }
 
-        // We will repeat until startDate reaches the day in the "today" variable
-        while(startDate.getFullYear() != today.getFullYear() ||
-              startDate.getMonth() != today.getMonth() ||
-              startDate.getDate() != today.getDate())
-        {
-            // Add full day hours if the day is not a holiday
-            if(!isHoliday(startDate))
-                totalBusinessHours += dayTotalWorkHours;
-
-            // Move to the next day
-            startDate.setDate(startDate.getDate() + 1);
-        }
-
-        // After we leave the loop, we need to calculate the work hours in today, if it's not a holiday
-        if(!isHoliday(startDate))
-        {
-            totalBusinessHours = workShifts.reduce(function (previous, current)
-            {
-                if(current.start <= endDateTotalHours)
-                {
-                    previous += (current.end > endDateTotalHours ? endDateTotalHours : current.end) -
-                                current.start;
-                }
-
-                return previous;
-            }, totalBusinessHours); // Notice that totalBusinessHours is the seed value here
-        }
-
-        // Return the calculated amount
-        return totalBusinessHours;
-    };
+    return totalBusinessHours;
+  };
 })();
