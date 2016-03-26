@@ -218,15 +218,18 @@ function ControllerFALogin($scope, $http, $rootScope)
 var ControllerAgent = ControllerWithID('Agent');
 var ControllerMessage = ControllerWithID('Message');
 
-(function ()
+iservice.assignedMessages = 
 {
-  var holidays = 
-  [ new Date(0, 0, 1)];
-  var weeklyHolidays = [0, 6];
-  var workShifts = 
+  holidays: [ new Date(0, 0, 1)],
+  weeklyHolidays: [0, 6],
+  workShifts:
   [ { start: 9,
       end: 17
-    } ];
+    } ]
+};
+
+(function ()
+{
   var today = new Date('$value -isoutc -now$');
   setInterval(function ()
   {
@@ -234,8 +237,8 @@ var ControllerMessage = ControllerWithID('Message');
   }, 1000);
   function isHoliday(date)
   {
-    return weeklyHolidays.indexOf(date.getDay()) >= 0 ||
-           holidays.some(function (h)
+    return iservice.assignedMessages.weeklyHolidays.indexOf(date.getDay()) >= 0 ||
+           iservice.assignedMessages.holidays.some(function (h)
            {
              return h.getMonth() == date.getMonth() &&
                     h.getDate() == date.getDate();
@@ -251,7 +254,7 @@ var ControllerMessage = ControllerWithID('Message');
        startDate.getMonth() == today.getMonth() &&
        startDate.getDate() == today.getDate())
     {
-      return isHoliday(startDate) ? 0 : workShifts.reduce(function (previous, current)
+      return isHoliday(startDate) ? 0 : iservice.assignedMessages.workShifts.reduce(function (previous, current)
       {
         if(current.end >= startDateTotalHours &&
            current.start <= endDateTotalHours)
@@ -264,13 +267,13 @@ var ControllerMessage = ControllerWithID('Message');
     }
     startDate = new Date(startDate.getTime());
     var totalBusinessHours = 0;
-    var dayTotalWorkHours = workShifts.reduce(function (previous, current)
+    var dayTotalWorkHours = iservice.assignedMessages.workShifts.reduce(function (previous, current)
     {
       return previous + current.end - current.start;
     }, 0);
     if(!isHoliday(startDate))
     {
-      totalBusinessHours += workShifts.reduce(function (previous, current)
+      totalBusinessHours += iservice.assignedMessages.workShifts.reduce(function (previous, current)
       {
         if(current.end >= startDateTotalHours)
         {
@@ -291,7 +294,7 @@ var ControllerMessage = ControllerWithID('Message');
     }
     if(!isHoliday(startDate))
     {
-      totalBusinessHours = workShifts.reduce(function (previous, current)
+      totalBusinessHours = iservice.assignedMessages.workShifts.reduce(function (previous, current)
       {
         if(current.start <= endDateTotalHours)
         {
