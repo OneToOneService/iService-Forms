@@ -8,7 +8,7 @@ $if -fieldregex'form'='^$'$
     <meta name="description" content="" />
     <meta name="keywords" content="" />
     $include -placeholder'common-head' -indent'  '$
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/foundation/6.1.1/foundation.min.css" />
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/foundation/6.2.0/foundation.min.css" />
     <link href="//fonts.googleapis.com/css?family=Roboto+Condensed:400,700,300" rel="stylesheet" type="text/css">
     <script>
         var rootPath = "$value -rootpath$";
@@ -17,22 +17,22 @@ $if -fieldregex'form'='^$'$
 <body>
     <section ng-cloak ng-controller="ControllerFALogin">
         <div ng-show="isLoggedIn">
-            <button type="button" ng-click="logout()">Logout</button> Welcome <strong>{{ contactName }}</strong>
+            <button type="button" class="alert tiny button" ng-click="logout()">Logout</button> Welcome <strong>{{ contactName }}</strong>
         </div>
         <div ng-hide="isLoggedIn || loginVisible || forgotPasswordVisible">
-            <button type="button" ng-click="showLogin()">Login</button> Welcome <strong>Guest</strong>
+            <button type="button" class="tiny button" ng-click="showLogin()">Login</button> Welcome <strong>Guest</strong>
         </div>
         <form name="login" ng-hide="isLoggedIn || !loginVisible" ng-submit="loginSend()">
             <input type="email" placeholder="Email address" ng-model="email" />
             <input type="password" placeholder="Password" ng-model="password" />
-            <button type="submit">Submit</button>
+            <button type="submit" class="success tiny button">Submit</button>
             <a ng-click="showForgotPassword()">Forgot password</a>
             <div ng-cloak ng-repeat="error in errors" class="error-messages">{{ error }} </div>
         </form>
         <form name="forgotPassword" ng-hide="isLoggedIn || !forgotPasswordVisible" ng-submit="forgotPasswordSend()">
             <input type="email" placeholder="Email address" ng-model="email" />
-            <button type="submit">Submit</button>
-            <button type="button" ng-click="showLogin()">Cancel</button>
+            <button type="submit" class="success tiny button">Submit</button>
+            <button type="button" ng-click="showLogin()" class="tiny button">Cancel</button>
             <div ng-cloak ng-repeat="error in errors" class="error-messages">{{ error }} </div>
         </form>
         <div ng-hide="isLoggedIn || !sent">
@@ -44,29 +44,85 @@ $if -fieldregex'form'='^$'$
     </section>
     <section ng-cloak ng-controller="ControllerFindAnswers">
         <header>Topic search</header>
-        <form ng-submit="loadArticles()" class="row">
+        <form ng-submit="search()" class="row">
             <div class="column small-7">
                 <input type="search" placeholder="Search terms" ng-model="searchText" />
             </div>
             <select placeholder="Select topic" class="column small-4" ng-model="topicId">
                 <option ng-repeat="topic in topics" value="{{ topic.id }}">{{ topic.name }} ({{ topic.countRecurse }})</option>
             </select>
-            <button type="submit" class="column small-1">Search</button>
+            <button type="submit" class="column small-1 success button">Search</button>
         </form>
         <div>
             <header class="row">
-                <strong class="column small-12 medium-9">Support</strong>
-                <strong class="column medium-1 show-for-medium">Rating</strong>
-                <strong class="column medium-1 show-for-medium">Viewed</strong>
-                <strong class="column medium-1 show-for-medium">Topic</strong>
+                <a class="column small-12 medium-9" ng-click="sort('subject')">
+                    <strong>Support</strong>
+                    <strong>{{ getSortGlyph("subject") }}</strong>
+                </a>
+                <a class="column medium-1 show-for-medium" ng-click="sort('rating')">
+                    <strong>Rating</strong>
+                    <strong>{{ getSortGlyph("rating") }}</strong>
+                </a>
+                <a class="column medium-1 show-for-medium" ng-click="sort('viewCount')">
+                    <strong>Viewed</strong>
+                    <strong>{{ getSortGlyph("viewCount") }}</strong>
+                </a>
+                <a class="column medium-1 show-for-medium" ng-click="sort('topicName')">
+                    <strong>Topic</strong>
+                    <strong>{{ getSortGlyph("topicName") }}</strong>
+                </a>
             </header>
-            <div class="row" ng-repeat="article in articles">
+            <div class="row" ng-repeat-start="article in articles" ng-click="select(article)">
                 <span class="column small-12 medium-9">{{ article.subject }}</span>
                 <span class="column medium-1 show-for-medium">{{ article.rating }}</span>
                 <span class="column medium-1 show-for-medium">{{ article.viewCount }}</span>
                 <span class="column medium-1 show-for-medium">{{ article.topicName }}</span>
             </div>
+            <div ng-if="selectedArticle == article" ng-repeat-end>
+                <span>Question:</span>
+                <div ng-bind-html="selectedArticle.questionSafe"></div>
+                <span>Answer:</span>
+                <div ng-bind-html="selectedArticle.answerSafe">
+                </div>
+                <div ng-show="selectedArticle.attachments.length">
+                    <span>Attachments:</span>
+                    <p ng-repeat="file in selectedArticle.attachments">
+                        <a href="$value -rootpath$File.aspx?interactionID={{selectedArticle.id}}&fileID={{file.attachmentID}}">{{file.name}}</a>
+                    </p>
+                </div>
+                <div>
+                    <span>Article Details</span>
+                    <div class="row">
+                        <div class="column small-6">
+                            Article ID - <span ng-bind-html="selectedArticle.articleIdSafe"></span>
+                        </div>
+                        <div class="column small-6">
+                            Date Updated - {{ selectedArticle.date|amDateFormat:'YYYY-MM-DD h:mm:ss A' }}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="column small-6">
+                            #Views - <span ng-bind-html="selectedArticle.viewSafe"></span>
+                        </div>
+                        <div class="column small-6">
+                            Article Creator - <span ng-bind-html="selectedArticle.createdBySafe" class="ng-binding"></span>
+                        </div>
+
+                    </div>
+                    <div>
+                        <button class="button tiny" ng-click="sharetoggle = !sharetoggle">Share link to article</button>
+                        <div ng-show="sharetoggle">
+                            <input type="text" value="{{ hosturl }}?topicID={{ article.topicID }}&articleID={{ article.id }}" readonly />
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
+        <nav class="row">
+            <button class="column small-1 tiny button" ng-class="{ disabled: currentPage == 1 }" ng-click="page(currentPage - 1)" ng-disabled="currentPage == 1">Previous</button>
+            <button class="column small-1 tiny button" ng-repeat="p in pages" ng-class="{ disabled: p == currentPage, hollow: p != currentPage }" ng-click="page(p)" ng-disabled="p == currentPage">{{ p }}</button>
+            <button class="column small-1 tiny button end" ng-class="{ disabled: currentPage == pagesCount }" ng-click="page(currentPage + 1)" ng-disabled="currentPage == pagesCount">Next</button>
+        </nav>
         <div grey-out ng-show="loading()"></div>
     </section>
     $include -placeholder'common-javascript' -indent'  '$
@@ -184,15 +240,57 @@ var app = angular.module("iService", ["angularMoment"]);
         });
     });
 
-    app.controller("ControllerFindAnswers", function ($scope, $http, $filter, orderByFilter)
+    app.controller("ControllerFindAnswers", function ($scope, $http, $filter, $sce, $location, orderByFilter)
     {
-        //$scope.pageSize = 8;
+        const recordsPerPage = 8,
+              pagingButtonsCount = 5;
 
-        $scope.sort = function (keyname)
+        var articles,
+            currentPagerPage = 1,
+            pagerButtonsPagesCount;
+
+        $scope.hosturl = $location.absUrl().split("?")[0];
+        $scope.pagesCount = 0;
+        $scope.sortField = "";
+        $scope.reverse = false;
+        $scope.currentPage = 1;
+
+        function getSortField()
         {
-            $scope.sortKey = keyname;   //set the sortKey to the param passed
-            $scope.reverse = !$scope.reverse; //if true make it false and vice versa
+            var sortField = $scope.sortField.toUpperCase();
+
+            if($scope.reverse)
+                sortField += "_REVERSE";
+
+            return sortField;
         }
+
+        $scope.sort = function (keyName)
+        {
+            if(keyName == $scope.sortField) // If the user sorts by the same current sort key, just reverse the direction
+                $scope.reverse = !$scope.reverse;
+            else
+                $scope.reverse = false; // Otherwise, reset the direction flag
+
+            $scope.sortField = keyName; // Set the sortField to the param passed
+
+            loadArticles();
+        };
+
+        $scope.page = function (pageNumber)
+        {
+            $scope.currentPage = pageNumber;
+
+            page();
+        };
+
+        $scope.getSortGlyph = function (keyName)
+        {
+            if(keyName == $scope.sortField)
+                return $scope.reverse ? "\u25BC" /* ▼ */ : "\u25B2" /* ▲ */;
+
+            return "";
+        };
 
         loadTopics = function ()
         {
@@ -225,85 +323,106 @@ var app = angular.module("iService", ["angularMoment"]);
             return $scope.loading();
         };
 
-        $scope.loadArticles= loadArticles = function ()
+        function page()
         {
-            $scope.loading = iservice.FindAnswerArticles($http, $scope.topicId, $scope.searchText, true, 1, 1000, null, function (data)
+            var pagerStart = (currentPagerPage - 1) * pagingButtonsCount + 1,
+                pagerEnd = currentPagerPage * pagingButtonsCount;
+
+            if(pagerEnd < $scope.currentPage)
+            {
+                currentPagerPage++;
+
+                pagerStart += pagingButtonsCount;
+                pagerEnd += pagingButtonsCount;
+
+            }
+            else if(pagerStart > $scope.currentPage)
+            {
+                currentPagerPage--;
+
+                pagerStart -= pagingButtonsCount;
+                pagerEnd -= pagingButtonsCount;
+            }
+
+            if(pagerEnd > $scope.pagesCount)
+                pagerEnd = $scope.pagesCount;
+
+            $scope.pages = new Array(pagerEnd - pagerStart + 1);
+
+            for(var i = 0; i < $scope.pages.length; i++)
+                $scope.pages[i] = pagerStart + i;
+
+            var currentPageStart = ($scope.currentPage - 1) * recordsPerPage,
+                currentPageEnd = currentPageStart + recordsPerPage,
+                currentPageRecords;
+
+            if(currentPageEnd > articles.length)
+                currentPageEnd = articles.length;
+
+            currentPageRecords = new Array(currentPageEnd - currentPageStart);
+
+            for(var j = 0; currentPageStart < currentPageEnd; currentPageStart++, j++)
+                currentPageRecords[j] = articles[currentPageStart];
+
+            $scope.articles = currentPageRecords;
+        }
+
+        $scope.search = function ()
+        {
+            currentPagerPage = 1;
+            $scope.currentPage = 1;
+
+            loadArticles();
+        }
+
+        $scope.loadArticles = loadArticles = function ()
+        {
+            $scope.loading = iservice.FindAnswerArticles($http, $scope.topicId, $scope.searchText, true, 1, 1000, getSortField(), function (data)
             {
                 iservice.SanitizeHistoryRows(data.interactions);
 
-                $scope.articles = data.interactions;
-                //$scope.articleListval = data.interactions.length;
+                articles = data.interactions;
 
-                //var p = 1;
-                //for(var j = 0 ; j < data.interactions.length ; j++)
-                //{
-                //    var x = (parseInt(p)) * $scope.pageSize;
-                //    if(x <= j)
-                //    {
-                //        p = parseInt(p) + 1;
-                //    }
-                //    if($scope.param == data.interactions[j].id)
-                //    {
-                //        $scope.SelectedPage = p;
-                //        break;
-                //    }
-                //}
+                $scope.pagesCount = Math.ceil(articles.length / recordsPerPage);
+                pagerButtonsPagesCount = Math.ceil($scope.pagesCount / pagingButtonsCount);
+
+                page();
             });
-
-            //$scope.selected = topic;
-            //$scope.isActive = function (topic)
-            //{
-            //    return $scope.selected === topic;
-            //};
-        }
-
-        function topfaq()
-        {
-            if(QueueArticleSearch(topfaq)) return;
-            $scope.recursive = true;
-            iservice.FindAnswerArticles($http, 1, $scope.searchString, $scope.recursive, 1, 5, "RATING_REVERSE", function (data)
-            {
-                $scope.articleListFaq = data.interactions;
-                $timeout(FinishedArticleSearch);
-            });
-        }
-
-
-
+        };
 
         function FixFilePath(article, member)
         {
             iservice.SanitizeInlineImageAttachments(article, member, article.attachments);
+
             article[member] = article[member].split('src="File.aspx?interactionID=').join('src="$value -rootpath$File.aspx?interactionID=');
         }
 
-        //$scope.ShowArticle = function (article, $index, init)
-        //{
-        //    $scope.sharetoggle = false;
-        //    $scope.selectedArticle = article;
-        //    if(init == "init")
-        //    {
-        //        articleID = article.id; change = 1; toggle = 0;
-        //    } else
-        //    {
-        //        if(articleID != article.id) { articleID = article.id; change = 1; toggle = 0; } else { change = 0; toggle = !toggle; if(toggle) { return false; } }
-        //    }
-        //    $scope.Searching = iservice.FindAnswerDetails($http, article.id, function (data)
-        //    {
-        //        $scope.selectedArticle.data = data;
-        //        FixFilePath(data, "question");
-        //        FixFilePath(data, "answer");
+        $scope.select = function (article)
+        {
+            if($scope.selectedArticle == article)
+                $scope.selectedArticle = null;
+            else if(article.articleIdSafe)
+                $scope.selectedArticle = article;
+            else
+            {
+                $scope.loading = iservice.FindAnswerDetails($http, article.id, function (data)
+                {
+                    $scope.selectedArticle = article;
 
-        //        data.questionSafe = $sce.trustAsHtml(data.question);
-        //        data.answerSafe = $sce.trustAsHtml(data.answer);
-        //        data.articleIdSafe = $sce.trustAsHtml(data.id);
-        //        data.createdBySafe = $sce.trustAsHtml(data.creatorName);
-        //        data.ratingSafe = $sce.trustAsHtml(data.rating);
-        //        data.dateSafe = $sce.trustAsHtml(data.date);
-        //        $scope.datet = data.date;
-        //        data.viewSafe = $sce.trustAsHtml(data.viewCount);
-        //    });
-        //}
+                    FixFilePath(data, "question");
+                    FixFilePath(data, "answer");
+
+                    article.date = data.date;
+                    article.attachments = data.attachments;
+                    article.questionSafe = $sce.trustAsHtml(data.question);
+                    article.answerSafe = $sce.trustAsHtml(data.answer);
+                    article.articleIdSafe = $sce.trustAsHtml(data.id);
+                    article.createdBySafe = $sce.trustAsHtml(data.creatorName);
+                    article.ratingSafe = $sce.trustAsHtml(data.rating);
+                    article.viewSafe = $sce.trustAsHtml(data.viewCount);
+                });
+            }
+        }
     });
 })();
 $endif$
