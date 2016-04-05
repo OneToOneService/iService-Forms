@@ -390,8 +390,8 @@
             </div>
           </div>
         </script>
-		</div>
+	</div>
         <div ng-cloak ng-show="Getting()">Loading</div>
         <div grey-out ng-show="Getting()"></div>
-     </div>
+    </div>
  </div>
