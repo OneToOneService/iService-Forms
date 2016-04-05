@@ -17,7 +17,7 @@ $if -fieldregex'form'='^$'$
   $include -placeholder'customerportal-standard-footer'$
   $include -placeholder'interaction-properties' -indent'  '$
   $include -placeholder'common-javascript' -indent'  '$
-  $include -placeholder'customerportal-treeview-bootstrap'$ <!-- bootstrap.ui.js with customizations -->
+  $include -placeholder'customerportal-treeview-bootstrap'$
   <script src="$value -rootpath$f/$value -formid$?form=js"></script>
   <script src="$value -rootpath$js/iService.directive.js?v=$value -version -urlencode$"></script>
 </body>
