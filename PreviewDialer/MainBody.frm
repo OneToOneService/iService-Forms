@@ -5,57 +5,41 @@ $if -fieldregex'form'='^$'$
 <meta charset="UTF-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> 
 <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
-
-  $include -placeholder'common-head' -indent'  '$
-  <link rel="stylesheet" href="$value -rootpath$f/$value -formid$?form=css" />
-  <script> 
-    var rootPath = '$value -rootpath$';
-    var activePage = '';
-    var o2o = {};
-  </script>
+$include -placeholder'common-head' -indent'  '$
+<link rel="stylesheet" href="$value -rootpath$f/$value -formid$?form=css" />
+<script> 
+	var rootPath = '$value -rootpath$';
+	var activePage = '';
+	var o2o = {};
+</script>
 </head>
 <body ng-controller="ControllerBody">
   $include -placeholder'common-logobar' -indent'  '$
   $include -placeholder'common-loginbar' -indent'  '$
   $include -placeholder'common-agentchat' -indent'  '$
-
   <div id="preview-dialer" ng-cloak ng-controller="ControllerPreviewDialer" ng-show="iservice.loggedIn.isLoggedIn">
-    
-     $include -placeholder'previewdialer-header-info'$
-      <div ng-cloak class="errors" ng-show="adminLoaded">
-      <span class="error-messages margin" ng-show="!noteTopic">Can't find topic with ID of '$form -id'topicID'$'</span>
-      <!-- <span class="warning-messages" ng-show="!propCallDate">Optional contact property 'Next Call Date' does not exist.</span>
-      <span class="warning-messages" ng-show="!propCloseReason">Optional contact property 'Close Reason' does not exist.</span>
-      <span class="warning-messages" ng-show="!propWebSite">Optional contact property 'Web Site' does not exist.</span>
-      <span class="warning-messages" ng-show="!propLinkedIn">Optional contact property 'LinkedIn' does not exist.</span>
-      <span class="warning-messages" ng-show="!propFollowUp">Optional contact property 'Follow Up' does not exist.</span>
-      <span class="warning-messages" ng-show="!propTimeZone">Optional contact property 'Time Zone' does not exist.</span>
-      <span class="warning-messages" ng-show="!propNextAction">Optional contact property 'NEXT ACTION*' does not exist.</span>-->
+      $include -placeholder'previewdialer-header-info'$
+     <div ng-cloak class="errors" ng-show="adminLoaded">
+     	 <span class="error-messages margin" ng-show="!noteTopic">Can't find topic with ID of '$form -id'topicID'$'</span>
     </div>
     <div id="contact" class="dialer-section contact-info">
       $include -placeholder'previewdialer-contact-info'$
-      
       $include -placeholder'previewdialer-script-content'$
     </div>
-    
-    $include -placeholder'previewdialer-contact-history-scripts'$
-    $include -placeholder'previewdialer-content-note'$
+   	  $include -placeholder'previewdialer-contact-history-scripts'$
+      $include -placeholder'previewdialer-content-note'$
     <div style="clear: both;"></div>
-    
-    $include -placeholder'previewdialer-contact-detail-content'$
+      $include -placeholder'previewdialer-contact-detail-content'$
    <div style="clear: both;"></div>
-  $include -placeholder'common-footer' -indent'  '$
-  $include -placeholder'common-javascript' -indent'  '$
-  <script src="$value -rootpath$f/$value -formid$?form=js&topicID=$form -id'topicID'$"></script>
-  <script src="$value -rootpath$js/iService.directive.js?v=$value -version -urlencode$"></script>
-  $include -placeholder'interaction-properties' -indent'  '$
+      $include -placeholder'common-footer' -indent'  '$
+      $include -placeholder'common-javascript' -indent'  '$
+<script src="$value -rootpath$f/$value -formid$?form=js&topicID=$form -id'topicID'$"></script>
+<script src="$value -rootpath$js/iService.directive.js?v=$value -version -urlencode$"></script>
+  	  $include -placeholder'interaction-properties' -indent'  '$
 </body>
 </html>
-
 $endif$$if -fieldregex'form'='^css$'$$header -filetype(css)$
 $include -placeholder'previewdialer-css'$
-
-
 $endif$$if -fieldregex'form'='^js$'$$header -filetype(js)$
 var app = angular.module('iService', ['ngSanitize', 'ngRoute', 'ui.date']);
 var loggedIn = $json -loginloggedin$; iservice.ProcessLogin(loggedIn);
@@ -63,10 +47,6 @@ var canAgentLogin = $if -domainuser$true$else$false$endif$;
 var tabUrls = $include -placeholder'urls'$;
 var query = ParseLocation();
 var contactID = query['contactID'];
-
-
-
-
 function ControllerPreviewDialer($scope,$timeout, $http, $rootScope) {
   SetIDPrefix($scope, 'Dialer');
   $scope.closereason = 'Open';
@@ -75,10 +55,8 @@ function ControllerPreviewDialer($scope,$timeout, $http, $rootScope) {
   $scope.classhistorytcontent = [];
   $scope.classnotecontent = [];
   $scope.classdetailcontent = [];
-  
   $scope.AdminLoading = iservice.AdminList($http, 'ListTopics', ['topics', 'contactProperties'], function (data) {
     $scope.adminLoaded = true;
-    
     $scope.toggleContactInfo = function() {
      if($scope.classinfocontent.indexOf('classinfocontent') == -1) {
          $scope.classinfocontent.push('classinfocontent');
@@ -114,21 +92,12 @@ function ControllerPreviewDialer($scope,$timeout, $http, $rootScope) {
          $scope.classdetailcontent.pop('classdetailcontent');
      }
    };
-  
-    
     for (var i = 0; i < data.topics.length; i++) {
       var topic = data.topics[i];
        if (topic.id == '$form -id'topicID'$') $scope.noteTopic = topic;
     }
     for (var i = 0; i < data.contactProperties.length; i++) {
       var property = data.contactProperties[i];
-     /* if (property.name == 'Next Call Date') $scope.propCallDate = property;
-      if (property.name == 'Close Reason') $scope.propCloseReason = property;
-      if (property.name == 'Web Site') $scope.propWebSite = property;
-      if (property.name == 'LinkedIn') $scope.propLinkedIn = property;
-      if (property.name == 'Follow Up') $scope.propFollowUp = property;
-      if (property.name == 'Time Zone') $scope.propTimeZone = property;
-      if (property.name == 'NEXT ACTION*') $scope.propNextAction = property;*/
     }
   });
   $scope.CreateNote = function(subject, idPrefix) {
@@ -137,7 +106,6 @@ function ControllerPreviewDialer($scope,$timeout, $http, $rootScope) {
     if ($scope.propCallDate && $scope.nextcalldate) {
       properties.push({ propertyID: $scope.propCallDate.id, values: [{ valueDate: iservice.EncodeMSJsonDate($scope.nextcalldate) }] });
     }
-
     if ($scope.propCloseReason && $scope.closereason) {
       properties.push({ propertyID: $scope.propCloseReason.id, values: [{ value: $scope.closereason }] });
     }
