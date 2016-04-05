@@ -1,9 +1,7 @@
 <div id="contact-details" class="dialer-section contact-detail-section">
-    
       <div class="header">
-      <h2>Contact Details</h2>
-      <span class="contact-info-show-box" ng-click="toggleDetail()"></span>
-      
+          <h2>Contact Details</h2>
+          <span class="contact-info-show-box" ng-click="toggleDetail()"></span>
       </div>
       <div ng-cloak class="customer-details contact-detail-content" ng-class="classdetailcontent" ng-controller="ControllerPreviewDialerCustInfo">
         <div class="interaction-property-list">
@@ -25,7 +23,6 @@
                 <input id="{{idPrefix}}name" type="text" value="" ng-model="login.name" class="text-no-desc">
                 <label><input id="{{idPrefix}}isEmail" type="checkbox" ng-model="login.isEmail" class="w30">Is Email</label>
                 <label><input id="{{idPrefix}}isBounced" type="checkbox" ng-model="login.isBounced" class="w30">Is Bounced</label> 
-                
               </div>
               <button class="add-login-" id="{{idPrefix}}addValue" type="button" ng-click="AddLoginClick(segment)">+</button>
             </div>
@@ -51,5 +48,4 @@
         <div grey-out ng-show="Saving()"></div>
       </div>
     </div>
-     
-   </div>
+</div>
