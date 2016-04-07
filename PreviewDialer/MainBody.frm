@@ -2,18 +2,6 @@ $if -fieldregex'form'='^$'$
 <!DOCTYPE html>
 <html xmlns:ng="http://angularjs.org" id="ng-app" ng-app="iService">
 <head>
-<<<<<<< HEAD
-<meta charset="UTF-8" />
-<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> 
-<meta name="viewport" content="width=device-width, initial-scale=1.0"> 
-$include -placeholder'common-head' -indent'  '$
-<link rel="stylesheet" href="$value -rootpath$f/$value -formid$?form=css" />
-<script> 
-	var rootPath = '$value -rootpath$';
-	var activePage = '';
-	var o2o = {};
-</script>
-=======
   <meta charset="UTF-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> 
   <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
@@ -220,37 +208,12 @@ $include -placeholder'common-head' -indent'  '$
     var o2o = {};
   </script>
   $include -placeholder'previewdialer-head' -indent'  '$
->>>>>>> OneToOneService/master
 </head>
 <body ng-controller="ControllerBody">
   $include -placeholder'common-logobar' -indent'  '$
   $include -placeholder'common-loginbar' -indent'  '$
   $include -placeholder'common-agentchat' -indent'  '$
   <div id="preview-dialer" ng-cloak ng-controller="ControllerPreviewDialer" ng-show="iservice.loggedIn.isLoggedIn">
-<<<<<<< HEAD
-      $include -placeholder'previewdialer-header-info'$
-     <div ng-cloak class="errors" ng-show="adminLoaded">
-     	 <span class="error-messages margin" ng-show="!noteTopic">Can't find topic with ID of '$form -id'topicID'$'</span>
-    </div>
-    <div id="contact" class="dialer-section contact-info">
-      $include -placeholder'previewdialer-contact-info'$
-      $include -placeholder'previewdialer-script-content'$
-    </div>
-   	  $include -placeholder'previewdialer-contact-history-scripts'$
-      $include -placeholder'previewdialer-content-note'$
-    <div style="clear: both;"></div>
-      $include -placeholder'previewdialer-contact-detail-content'$
-   <div style="clear: both;"></div>
-      $include -placeholder'common-footer' -indent'  '$
-      $include -placeholder'common-javascript' -indent'  '$
-<script src="$value -rootpath$f/$value -formid$?form=js&topicID=$form -id'topicID'$"></script>
-<script src="$value -rootpath$js/iService.directive.js?v=$value -version -urlencode$"></script>
-  	  $include -placeholder'interaction-properties' -indent'  '$
-</body>
-</html>
-$endif$$if -fieldregex'form'='^css$'$$header -filetype(css)$
-$include -placeholder'previewdialer-css'$
-=======
     <div ng-include="'previewdialer-header.html'"></div>
     <div ng-cloak class="errors" ng-show="adminLoaded">
       <span class="error-messages margin" ng-show="!noteTopic">Can't find topic with ID of '$form -id'topicID'$'</span>
@@ -583,7 +546,6 @@ $include -placeholder'previewdialer-css'$
 </body>
 </html>
 
->>>>>>> OneToOneService/master
 $endif$$if -fieldregex'form'='^js$'$$header -filetype(js)$
 var app = angular.module('iService', ['ngSanitize', 'ngRoute', 'ui.date']);
 var loggedIn = $json -loginloggedin$; iservice.ProcessLogin(loggedIn);
@@ -591,14 +553,11 @@ var canAgentLogin = $if -domainuser$true$else$false$endif$;
 var tabUrls = $include -placeholder'urls'$;
 var query = ParseLocation();
 var contactID = query['contactID'];
-<<<<<<< HEAD
-=======
 
 if (!iservice.previewdialer) iservice.previewdialer = { };
 if (!iservice.previewdialer.note) iservice.previewdialer.note = { };
 if (!iservice.previewdialer.note.properties) iservice.previewdialer.note.properties = [];
 
->>>>>>> OneToOneService/master
 function ControllerPreviewDialer($scope,$timeout, $http, $rootScope) {
   SetIDPrefix($scope, 'Dialer');
   $scope.closereason = 'Open';
@@ -607,13 +566,10 @@ function ControllerPreviewDialer($scope,$timeout, $http, $rootScope) {
   $scope.classhistorytcontent = [];
   $scope.classnotecontent = [];
   $scope.classdetailcontent = [];
-<<<<<<< HEAD
-=======
 
   $scope.note = iservice.previewdialer.note;
   $scope.note.body = '';
 
->>>>>>> OneToOneService/master
   $scope.AdminLoading = iservice.AdminList($http, 'ListTopics', ['topics', 'contactProperties'], function (data) {
     $scope.adminLoaded = true;
     $scope.toggleContactInfo = function() {
@@ -645,20 +601,6 @@ function ControllerPreviewDialer($scope,$timeout, $http, $rootScope) {
       }
     };
     $scope.toggleDetail= function() {
-<<<<<<< HEAD
-     if($scope.classdetailcontent.indexOf('classdetailcontent') == -1) {
-         $scope.classdetailcontent.push('classdetailcontent');
-     } else {
-         $scope.classdetailcontent.pop('classdetailcontent');
-     }
-   };
-    for (var i = 0; i < data.topics.length; i++) {
-      var topic = data.topics[i];
-       if (topic.id == '$form -id'topicID'$') $scope.noteTopic = topic;
-    }
-    for (var i = 0; i < data.contactProperties.length; i++) {
-      var property = data.contactProperties[i];
-=======
       if($scope.classdetailcontent.indexOf('classdetailcontent') == -1) {
         $scope.classdetailcontent.push('classdetailcontent');
       } else {
@@ -668,22 +610,11 @@ function ControllerPreviewDialer($scope,$timeout, $http, $rootScope) {
     for (var i = 0; i < data.topics.length; i++) {
       var topic = data.topics[i];
       if (topic.id == '$form -id'topicID'$') $scope.noteTopic = topic;
->>>>>>> OneToOneService/master
     }
   });
   $scope.CreateNote = function(subject, idPrefix) {
     if (!$scope.noteTopic) return;
-<<<<<<< HEAD
-    var properties = [];
-    if ($scope.propCallDate && $scope.nextcalldate) {
-      properties.push({ propertyID: $scope.propCallDate.id, values: [{ valueDate: iservice.EncodeMSJsonDate($scope.nextcalldate) }] });
-    }
-    if ($scope.propCloseReason && $scope.closereason) {
-      properties.push({ propertyID: $scope.propCloseReason.id, values: [{ value: $scope.closereason }] });
-    }
-=======
     var properties = iservice.CollectProperties([ $scope.note ]);
->>>>>>> OneToOneService/master
     var details = {
       contactID: contactID,
       topicID: $scope.noteTopic.id,
