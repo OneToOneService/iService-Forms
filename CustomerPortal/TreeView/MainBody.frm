@@ -9,6 +9,7 @@ $if -fieldregex'form'='^$'$
     var rootPath = '$value -rootpath$';
     var o2o = {};
   </script>
+<<<<<<< HEAD
   <link href='//fonts.googleapis.com/css?family=Roboto+Condensed:400,700,300' rel='stylesheet' type='text/css'>
   $include -placeholder'customerportal-treeview-head'$
 </head>
@@ -613,20 +614,39 @@ $if -fieldregex'form'='^$'$
   $include -placeholder'interaction-properties' -indent'  '$
   $include -placeholder'common-javascript' -indent'  '$
   <script src="$value -rootpath$js/angular-ui-bootstrap.js"></script>
+=======
+  <link href='//fonts.googleapis.com/css?family=Roboto+Condensed:400,700,300' rel='stylesheet' type='text/css'>  
+</head>
+<body ng-controller="ControllerBody">
+  $include -placeholder'customerportal-standard-header'$
+  $include -placeholder'customerportal-treeview-innerbody'$
+  $include -placeholder'customerportal-standard-footer'$
+  $include -placeholder'interaction-properties' -indent'  '$
+  $include -placeholder'common-javascript' -indent'  '$
+  $include -placeholder'customerportal-treeview-bootstrap'$
+>>>>>>> refs/remotes/jaswantchouhan/master
   <script src="$value -rootpath$f/$value -formid$?form=js"></script>
   <script src="$value -rootpath$js/iService.directive.js?v=$value -version -urlencode$"></script>
   $include -placeholder'customerportal-treeview-body'$
 </body>
 </html>
 $endif$$if -fieldregex'form'='^js$'$$header -filetype(js)$
+<<<<<<< HEAD
 var app = angular.module('iService', ['iService.ng', 'angularUtils.directives.dirPagination', 'ngRoute', 'ui.bootstrap', 'angularMoment' ]);
+=======
+var app = angular.module('iService',['angularUtils.directives.dirPagination','ngRoute','ui.bootstrap','angularMoment']);
+>>>>>>> refs/remotes/jaswantchouhan/master
 app.config(function ($routeProvider) {
   $routeProvider
   .when('/find-answers', {
     templateUrl: 'findanswer.html',  
     controller: 'ControllerFindAnswers',
   })
+<<<<<<< HEAD
   .when('/find-answers/:topicID/:articleID', {
+=======
+  .when('/find-answers/:topicID/:articleID"', {
+>>>>>>> refs/remotes/jaswantchouhan/master
     templateUrl: 'findanswer.html',  
     controller: 'ControllerFindAnswers',
   })
@@ -658,13 +678,20 @@ app.directive('onFinishRender', function ($timeout) {
   return {
     restrict: 'A',
     link: function (scope, element, attr) {
+<<<<<<< HEAD
       if (scope.$last === true) {
         scope.$evalAsync(attr.onFinishRender);
       }
+=======
+    if (scope.$last === true) {
+      scope.$evalAsync(attr.onFinishRender);
+    }
+>>>>>>> refs/remotes/jaswantchouhan/master
     }
   }
 });
 
+<<<<<<< HEAD
 app.controller('ControllerTab', ['$scope', '$location', '$rootScope', function ($scope, $location, $rootScope) {
   $scope.isActive = function (viewLocation) {
     return viewLocation === $location.path();
@@ -672,10 +699,23 @@ app.controller('ControllerTab', ['$scope', '$location', '$rootScope', function (
 }]);
 
 app.controller('ControllerFALogin', ['$scope', '$window', '$route', '$http', '$rootScope', function ($scope, $window, $route, $http, $rootScope) {
+=======
+app.controller('ControllerTab', function ($scope, $location,$rootScope) {
+  $scope.isActive = function (viewLocation) {
+    return viewLocation === $location.path();
+  };
+})
+
+function ControllerFALogin($scope,$window,$route, $http,$rootScope) {
+>>>>>>> refs/remotes/jaswantchouhan/master
   $scope.$window = $window;
   $scope.toggleLogin = true;
   $scope.toggleRegister = true;
   $scope.toggleUserOption = false;
+<<<<<<< HEAD
+=======
+
+>>>>>>> refs/remotes/jaswantchouhan/master
   $scope.loginOpen = function(){
     $scope.toggleLogin = !$scope.toggleLogin;
     $scope.toggleRegister = true;
@@ -686,6 +726,10 @@ app.controller('ControllerFALogin', ['$scope', '$window', '$route', '$http', '$r
     $scope.toggleRegister = !$scope.toggleRegister;
     $scope.toggleLogin = true;
   }
+<<<<<<< HEAD
+=======
+
+>>>>>>> refs/remotes/jaswantchouhan/master
   $scope.reset = function(login) {
     if (login) {
       login.$pristine = true
@@ -693,6 +737,10 @@ app.controller('ControllerFALogin', ['$scope', '$window', '$route', '$http', '$r
       $scope.toggleLogin = !$scope.toggleLogin
     }
   };
+<<<<<<< HEAD
+=======
+
+>>>>>>> refs/remotes/jaswantchouhan/master
   $scope.resetregister = function(registration) {
     if (registration) {
       registration.$pristine = true
@@ -700,6 +748,10 @@ app.controller('ControllerFALogin', ['$scope', '$window', '$route', '$http', '$r
       $scope.toggleRegister = !$scope.toggleRegister
     }
   };
+<<<<<<< HEAD
+=======
+
+>>>>>>> refs/remotes/jaswantchouhan/master
   $scope.toggleSearch = function () {
     $scope.toggleUserOption = !$scope.toggleUserOption;
     if ($scope.toggleUserOption) {
@@ -715,6 +767,7 @@ app.controller('ControllerFALogin', ['$scope', '$window', '$route', '$http', '$r
   function closeSearchWhenClickingElsewhere(event, callbackOnClose) {
     var clickedElement = event.target;
     if (!clickedElement) return;
+<<<<<<< HEAD
     var elementClasses = clickedElement.classList;
     var clickedOnSearchDrawer = elementClasses.contains('userOption') || elementClasses.contains('user-option') || (clickedElement.parentElement !== null && clickedElement.parentElement.classList.contains('userOption'));
     if (!clickedOnSearchDrawer) {
@@ -735,6 +788,28 @@ app.controller('ControllerFALogin', ['$scope', '$window', '$route', '$http', '$r
         iservice.ProcessLogin(data.loggedIn);
         $scope.toggleUserOption = false;
       });
+=======
+
+    var elementClasses = clickedElement.classList;
+    var clickedOnSearchDrawer = elementClasses.contains('userOption') || elementClasses.contains('user-option') ||   (clickedElement.parentElement !== null && clickedElement.parentElement.classList.contains('userOption'));
+
+    if (!clickedOnSearchDrawer) {
+      callbackOnClose();
+    return;
+    }
+  }
+
+  $scope.Login = function () {
+    $scope.submitted=true; 
+    $scope.errors = [];
+    if(!$scope.login.$invalid) {
+      $scope.Loading = iservice.Login($http, $scope.emailAddress, $scope.password, function (data) {
+        if(!data.loggedIn.isLoggedIn){$scope.errors = ['The information you entered doesn\u0027t match our records. Please try again.'];return;}
+        if (data.errors && data.errors.length) return;
+          iservice.ProcessLogin(data.loggedIn);
+          $scope.toggleUserOption = false;
+        });
+>>>>>>> refs/remotes/jaswantchouhan/master
     } 
   }
   $scope.Logout = function () {
@@ -748,12 +823,17 @@ app.controller('ControllerFALogin', ['$scope', '$window', '$route', '$http', '$r
     $scope.forgetshow = false;
     $scope.loginshow = true;
   }
+<<<<<<< HEAD
+=======
+
+>>>>>>> refs/remotes/jaswantchouhan/master
   $scope.showForget = function () {
     $scope.forgetshow = true;
     $scope.loginshow = false;
   }
   $scope.RegisterSubmit = function (selector) {
     $scope.submittedregister=true; 
+<<<<<<< HEAD
     if (!$scope.registration.$invalid) {
       var inputs = {};
       $(selector + ' :input').each(function (index) {
@@ -765,16 +845,35 @@ app.controller('ControllerFALogin', ['$scope', '$window', '$route', '$http', '$r
         }
         iservice.ProcessLogin(data.loggedIn);
         $scope.register = false;
+=======
+    if(!$scope.registration.$invalid) {
+      var inputs = {};
+      $(selector + ' :input').each(function (index) {
+        inputs[$(this).attr('name')] = $(this).val();
+    });
+    $scope.LoginRunning = iservice.LoginRegister($http, inputs, function (data) {
+      if (data.errors && data.errors.length){$scope.errorregister = data.errors;}
+      iservice.ProcessLogin(data.loggedIn);
+      $scope.register = false;
+>>>>>>> refs/remotes/jaswantchouhan/master
       });
     }
   }
   $scope.RegisterCancel = function () {
     $scope.register = false;
   }
+<<<<<<< HEAD
   $scope.ForgetSend = function () {
     $scope.submittedforget=true; 
     $scope.sent = false;
     if (!$scope.forgetPassword.$invalid) {
+=======
+
+  $scope.ForgetSend = function () {
+    $scope.submittedforget=true; 
+    $scope.sent = false;
+    if(!$scope.forgetPassword.$invalid) {
+>>>>>>> refs/remotes/jaswantchouhan/master
       var protocol = window.location.protocol;
       var host = window.location.host;
       var pathname = window.location.pathname;
@@ -792,6 +891,7 @@ app.controller('ControllerFALogin', ['$scope', '$window', '$route', '$http', '$r
   $scope.ForgetRefresh = function () {
     $window.location.reload();
   }
+<<<<<<< HEAD
 }]);
 var topics = 
 [ $repeat -topics(findanswer)${ 'id': '$value -Pjs -topic(id)$', 
@@ -801,6 +901,13 @@ var topics =
     'parentID': '$value -Pjs -topic(parentID)$', 
     'segmentName': '$value -Pjs -topic(segmentname)$' }$if -more$,
   $endif$$endrepeat$ ];
+=======
+}
+
+var topics = [ $repeat -topics(findanswer)${ "id": "$value -Pjs -topic(id)$", "name": "$value -Pjs -topic(name)$", "count": $value -Pjs -topic(messagecount)$, "countRecurse": $value -Pjs -topic(messagecount)$, "parentID": "$value -Pjs -topic(parentID)$", "segmentName": "$value -Pjs -topic(segmentname)$" }$if -more$,
+$endif$$endrepeat$ ];
+
+>>>>>>> refs/remotes/jaswantchouhan/master
 var articleListQueue = [];
 var runningQueued = false;
 function QueueArticleSearch(func) {
@@ -821,7 +928,12 @@ function FinishedArticleSearch() {
     articleListQueue[0]();
   }
 }
+<<<<<<< HEAD
 app.controller('ControllerFindAnswers', ['$scope', '$http', '$window', '$sce', '$rootScope', '$location', '$routeParams', '$timeout', '$filter', 'orderByFilter', function ($scope, $http, $window, $sce, $rootScope, $location, $routeParams, $timeout, $filter, orderByFilter) { 
+=======
+
+function ControllerFindAnswers($scope, $http,$window, $sce, $rootScope,$location,$routeParams,$timeout,$filter,orderByFilter) { 
+>>>>>>> refs/remotes/jaswantchouhan/master
   $scope.pageSize = 8;
   $scope.param = $routeParams.articleID;
   $scope.param2 = $routeParams.topicID;
@@ -853,6 +965,7 @@ app.controller('ControllerFindAnswers', ['$scope', '$http', '$window', '$sce', '
       $scope.topics = topics;
       $scope.topicArrya = [];
       $scope.topicsubarray = [];
+<<<<<<< HEAD
       for (var i = 0; i < $scope.topics.length; i++) {
         $scope.newarray = [];
         $scope.objtoarray = []; 
@@ -862,10 +975,27 @@ app.controller('ControllerFindAnswers', ['$scope', '$http', '$window', '$sce', '
             $scope.subarray = [];
             for (var k = 0; k < $scope.topics.length; k++) {  
               if ($scope.topics[j]['id'] == $scope.topics[k]['parentID']) {
+=======
+      for(var i=0; i<$scope.topics.length; i++)
+      {
+        $scope.newarray = [];
+        $scope.objtoarray = []; 
+        for(var j=0;j<$scope.topics.length;j++)
+        { 
+          $scope.temparray=[]; 
+          if($scope.topics[i]['id'] == $scope.topics[j]['parentID'])
+          {
+            $scope.subarray=[];
+            for(var k=0;k<$scope.topics.length;k++)
+            {  
+              if($scope.topics[j]['id'] == $scope.topics[k]['parentID'])
+              {
+>>>>>>> refs/remotes/jaswantchouhan/master
                 $scope.subarray.push($scope.topics[k]);
               }
             }
             $scope.topics[j]['subarray'] = $scope.subarray;
+<<<<<<< HEAD
             $scope.newarray.push($scope.topics[j]);
           }
         } 
@@ -881,6 +1011,25 @@ app.controller('ControllerFindAnswers', ['$scope', '$http', '$window', '$sce', '
           });
         } 
         if ($scope.objtoarray.length > 0) {
+=======
+
+            $scope.newarray.push($scope.topics[j]);
+
+          }
+        } 
+        if($scope.topics[i]['parentID'] == ''){
+          $scope.objtoarray.push({
+            id: $scope.topics[i]['id'],
+            name:$scope.topics[i]['name'],
+            count:$scope.topics[i]['count'],
+            countRecurse:$scope.topics[i]['countRecurse'],
+            segmentName:$scope.topics[i]['segmentName'],
+            parentID:$scope.topics[i]['parentID'],
+            subarray:$scope.newarray
+          });
+        } 
+        if($scope.objtoarray.length > 0){
+>>>>>>> refs/remotes/jaswantchouhan/master
           $scope.topicArrya.push($scope.objtoarray);
         } 
       }
@@ -896,6 +1045,7 @@ app.controller('ControllerFindAnswers', ['$scope', '$http', '$window', '$sce', '
     $scope.articleList = undefined;
     LoadTopics();
   });
+
   function topfaq() {
     if (QueueArticleSearch(topfaq)) return;
     $scope.recursive = true;
@@ -904,20 +1054,35 @@ app.controller('ControllerFindAnswers', ['$scope', '$http', '$window', '$sce', '
       $timeout(FinishedArticleSearch);
     });
   }
+<<<<<<< HEAD
+=======
+
+>>>>>>> refs/remotes/jaswantchouhan/master
   $scope.ShowTopic = function (topic) {
     if (QueueArticleSearch(function () { 
       $scope.ShowTopic(topic); 
     })) return;
     $scope.selectedTopic = topic;
-    $scope.Searching = iservice.FindAnswerArticles($http, topic.id, $scope.searchString, $scope.recursive, 1, 1000, null, function (data) {
+    $scope.Searching = iservice.FindAnswerArticles($http, topic.id, $scope.searchString, $scope.recursive, 1, 1000, null, function (data)    {
       iservice.SanitizeHistoryRows(data.interactions);
       $scope.articleList = data.interactions;
       $scope.articleListval = data.interactions.length;
+<<<<<<< HEAD
       var p =1;
       for (var j = 0; j < data.interactions.length; j++) {
         var x = (parseInt(p)) * $scope.pageSize;
         if (x <= j) {
           p = parseInt(p) + 1;
+=======
+      if(data.interactions.length <= 0) {
+
+      }
+      var p =1;
+      for (var j=0 ; j< data.interactions.length ; j++) {
+        var x = (parseInt(p))*$scope.pageSize;
+        if(x <= j) {
+          p = parseInt(p)+1;
+>>>>>>> refs/remotes/jaswantchouhan/master
         }
         if ($scope.param == data.interactions[j].id) {
           $scope.SelectedPage = p;
@@ -926,15 +1091,25 @@ app.controller('ControllerFindAnswers', ['$scope', '$http', '$window', '$sce', '
       }
       $timeout(FinishedArticleSearch);
     });
+<<<<<<< HEAD
+=======
+
+>>>>>>> refs/remotes/jaswantchouhan/master
     $scope.selected = topic; 
     $scope.isActive = function(topic) {
       return $scope.selected === topic;
     };
   }
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> refs/remotes/jaswantchouhan/master
   function FixFilePath(article, member) {
     iservice.SanitizeInlineImageAttachments(article, member, article.attachments);
     article[member] = article[member].split('src="File.aspx?interactionID=').join('src="$value -rootpath$File.aspx?interactionID=');
   }
+<<<<<<< HEAD
   $scope.toggle = function() {
     if ($scope.myClass.indexOf('nav2') == -1) {
       $scope.myClass.push('nav2');
@@ -984,11 +1159,45 @@ app.controller('ControllerFindAnswers', ['$scope', '$http', '$window', '$sce', '
           return false;
         }
       }
+=======
+
+  $scope.toggle = function() {
+    if($scope.myClass.indexOf('nav2') == -1) {
+      $scope.myClass.push('nav2');
+      $scope.myClassFaq.pop('nav2')
+    } else {
+
+      $scope.myClass.pop('nav2');
+    }
+  };
+
+  $scope.togglefaq = function() {
+    if($scope.myClassFaq.indexOf('nav2') == -1) {
+      $scope.myClassFaq.push('nav2');
+      $scope.myClass.pop('nav2');
+    } else {
+      $scope.myClassFaq.pop('nav2');
+    }
+  };
+  $scope.SeeArticle = function (article,$index) {if($scope.selectedArticle === article) {if(articleID == article.id && change ==1){return true;} if(articleID == article.id){ return !toggle;} return true;} else return false; }
+  $scope.ShowArticle = function (article,$index,init) {
+    $scope.sharetoggle = false;
+    $scope.selectedArticle = article;
+    if(init == 'init') 
+    {
+      articleID = article.id;change  = 1;toggle = 0;
+    }else{
+      if(articleID != article.id){ articleID = article.id;change  = 1;toggle = 0; }else{change = 0; toggle = !toggle; if(toggle){return false;}} 
+>>>>>>> refs/remotes/jaswantchouhan/master
     }
     $scope.Searching = iservice.FindAnswerDetails($http, article.id, function (data) {
       $scope.selectedArticle.data = data;
       FixFilePath(data, 'question');
       FixFilePath(data, 'answer');
+<<<<<<< HEAD
+=======
+
+>>>>>>> refs/remotes/jaswantchouhan/master
       data.questionSafe = $sce.trustAsHtml(data.question);
       data.answerSafe = $sce.trustAsHtml(data.answer);
       data.articleIdSafe = $sce.trustAsHtml(data.id); 
@@ -1001,16 +1210,31 @@ app.controller('ControllerFindAnswers', ['$scope', '$http', '$window', '$sce', '
   }
   $scope.hosturl = $location.absUrl().split('?')[0];
   $scope.showArticleInt = function() {
+<<<<<<< HEAD
     if ($scope.match != 1) { 
       if (topics[0].id != '') {
+=======
+    if($scope.match !=1)
+    { 
+      if(topics[0].id != ''){
+>>>>>>> refs/remotes/jaswantchouhan/master
         $timeout(function() {
           $scope.ShowTopic(topics[0]);
         }, 0);
       } 
     }
+<<<<<<< HEAD
   }
 }]);
 app.controller('ControllerAskAQuestion', ['$scope', '$http', '$rootScope', function ($scope, $http, $rootScope) {
+=======
+
+  }
+}
+
+
+function ControllerAskAQuestion($scope, $http,$rootScope) {
+>>>>>>> refs/remotes/jaswantchouhan/master
   $scope.topicList = [];
   $rootScope.details = { topicID: '' };
   function LoadTopics() {
@@ -1034,10 +1258,18 @@ app.controller('ControllerAskAQuestion', ['$scope', '$http', '$rootScope', funct
     LoadTopics();
     $scope.destEmail = iservice.loggedIn.logins[0].name;
   });
+<<<<<<< HEAD
   $scope.Submit = function () {
     $scope.errors = [];
     $scope.askquestionsubmitted = true;
     if (!$scope.askquestionform.$invalid) { 
+=======
+
+  $scope.Submit = function () {
+    $scope.errors = [];
+    $scope.askquestionsubmitted = true;
+    if(!$scope.askquestionform.$invalid) { 
+>>>>>>> refs/remotes/jaswantchouhan/master
       $scope.details.properties = iservice.CollectProperties($scope.properties);
       $scope.Searching = iservice.FindAnswerAAQSubmit($http, $scope.destEmail, $scope.details, function (data) {
         $scope.errors = data.errors;
@@ -1064,8 +1296,21 @@ app.controller('ControllerMyHistory', ['$scope', '$http', '$rootScope', function
   $scope.$watch('iservice.loggedIn.contactID', function (newValue, oldValue) {
     LoadHistory();
   });
+<<<<<<< HEAD
 }]);
 app.controller('ControllerMyDetails', ['$scope', '$route', '$http', '$rootScope', function ($scope, $route, $http, $rootScope) {
+=======
+}
+
+function ControllerMyDetails($scope,$route, $http,$rootScope) {
+  $scope.detailcontent = true;
+  if($route.current.controller != 'ControllerMyDetails'){
+    $scope.detailcontent = false;
+  } 
+  $scope.showContDetail = function () {
+    $scope.detailcontent = $scope.detailcontent ? false : true;
+  }
+>>>>>>> refs/remotes/jaswantchouhan/master
   SetIDPrefix($scope, 'Details');
   $scope.detailcontent = true;
   if ($route.current.controller != 'ControllerMyDetails'){
@@ -1093,8 +1338,21 @@ app.controller('ControllerMyDetails', ['$scope', '$route', '$http', '$rootScope'
     $scope.Saving = iservice.FindAnswerMyDetailsSet($http, properties, function (data) {
     });
   };
+<<<<<<< HEAD
 }]);
 app.controller('ControllerMySubscriptions', ['$scope', '$route', '$http', '$rootScope', function ($scope, $route, $http, $rootScope) {
+=======
+}
+
+function ControllerMySubscriptions($scope,$route, $http,$rootScope) {
+  $scope.subscontent = true;
+  if($route.current.controller != 'ControllerMySubscriptions'){
+    $scope.subscontent = false;
+  }
+  $scope.showSubs = function () {
+    $scope.subscontent = $scope.subscontent ? false : true;
+  }
+>>>>>>> refs/remotes/jaswantchouhan/master
   SetIDPrefix($scope, 'Subscriptions');
   $scope.subscontent = true;
   if ($route.current.controller != 'ControllerMySubscriptions') {
@@ -1128,10 +1386,18 @@ app.controller('ControllerMySubscriptions', ['$scope', '$route', '$http', '$root
       $scope.articles = data.articles;
     });
   };
+<<<<<<< HEAD
 }]);
 ControllerWithID(app, 'ControllerList', 'List');
 ControllerWithID(app, 'ControllerCampaign', 'Campaign');
 ControllerWithID(app, 'ControllerArticle', 'Article');
+=======
+}
+var ControllerList = ControllerWithID('List');
+var ControllerCampaign = ControllerWithID('Campaign');
+var ControllerArticle = ControllerWithID('Article');
+
+>>>>>>> refs/remotes/jaswantchouhan/master
 (function() {
   var moduleName = 'angularUtils.directives.dirPagination';
   var DEFAULT_ID = '__default';
@@ -1148,6 +1414,7 @@ ControllerWithID(app, 'ControllerArticle', 'Article');
   .filter('itemsPerPage', ['paginationService', itemsPerPageFilter])
   .service('paginationService', paginationService)
   .provider('paginationTemplate', paginationTemplateProvider)
+<<<<<<< HEAD
   .run(['$templateCache', dirPaginationControlsTemplateInstaller]);
   function dirPaginateDirective($compile, $parse, paginationService) {
     return {
@@ -1247,6 +1514,117 @@ ControllerWithID(app, 'ControllerArticle', 'Article');
       return currentPageGetter;
     }
   }
+=======
+  .run(['$templateCache',dirPaginationControlsTemplateInstaller]);
+  function dirPaginateDirective($compile, $parse, paginationService) {
+    return  {
+    terminal: true,
+    multiElement: true,
+    compile: dirPaginationCompileFn
+  };
+  function dirPaginationCompileFn(tElement, tAttrs){
+
+    var expression = tAttrs.dirPaginate;
+    var match = expression.match(/^\s*([\s\S]+?)\s+in\s+([\s\S]+?)(?:\s+track\s+by\s+([\s\S]+?))?\s*$/);
+
+    var filterPattern = /\|\s*itemsPerPage\s*:[^|]*/;
+    if (match[2].match(filterPattern) === null) {
+      throw 'pagination directive: the \'itemsPerPage\' filter must be set.';
+    }  
+    var itemsPerPageFilterRemoved = match[2].replace(filterPattern, '');
+    var collectionGetter = $parse(itemsPerPageFilterRemoved);
+
+    addNoCompileAttributes(tElement);
+    var rawId = tAttrs.paginationId || DEFAULT_ID;
+    paginationService.registerInstance(rawId);
+
+    return function dirPaginationLinkFn(scope, element, attrs){
+
+    var paginationId = $parse(attrs.paginationId)(scope) || attrs.paginationId || DEFAULT_ID;
+    paginationService.registerInstance(paginationId);
+
+    var repeatExpression = getRepeatExpression(expression, paginationId);
+    addNgRepeatToElement(element, attrs, repeatExpression);
+
+    removeTemporaryAttributes(element);
+    var compiled =  $compile(element);
+
+    var currentPageGetter = makeCurrentPageGetterFn(scope, attrs, paginationId);
+    paginationService.setCurrentPageParser(paginationId, currentPageGetter, scope);
+
+    if (typeof attrs.totalItems !== 'undefined') {
+      paginationService.setAsyncModeTrue(paginationId);
+      scope.$watch(function() {
+        return $parse(attrs.totalItems)(scope);
+        }, function (result) {
+          if (0 <= result) {
+            paginationService.setCollectionLength(paginationId, result);
+          }
+        });
+      } else {
+        scope.$watchCollection(function() {
+        return collectionGetter(scope);
+        }, function(collection) {
+          if (collection) {
+            paginationService.setCollectionLength(paginationId, collection.length);
+          }
+        });
+      }
+
+      compiled(scope);
+    };
+  }
+  function getRepeatExpression(expression, paginationId) {
+    var repeatExpression,
+    idDefinedInFilter = !!expression.match(/(\|\s*itemsPerPage\s*:[^|]*:[^|]*)/);
+
+    if (paginationId !== DEFAULT_ID && !idDefinedInFilter) {
+      repeatExpression = expression.replace(/(\|\s*itemsPerPage\s*:[^|]*)/, "$1 : '" + paginationId + "'");
+    } else {
+      repeatExpression = expression;
+    }
+
+    return repeatExpression;
+  }  
+  function addNgRepeatToElement(element, attrs, repeatExpression) {
+    if (element[0].hasAttribute('dir-paginate-start') || element[0].hasAttribute('data-dir-paginate-start')) {
+      // using multiElement mode (dir-paginate-start, dir-paginate-end)
+      attrs.$set('ngRepeatStart', repeatExpression);
+      element.eq(element.length - 1).attr('ng-repeat-end', true);
+    } else {
+      attrs.$set('ngRepeat', repeatExpression);
+    }
+  }
+
+  function addNoCompileAttributes(tElement) {
+    angular.forEach(tElement, function(el) {
+      if (el.nodeType === Node.ELEMENT_NODE) {
+        angular.element(el).attr('dir-paginate-no-compile', true);
+      }
+    });
+  }
+  function removeTemporaryAttributes(element) {
+    angular.forEach(element, function(el) {
+      if (el.nodeType === Node.ELEMENT_NODE) {
+        angular.element(el).removeAttr('dir-paginate-no-compile');
+      }
+    });
+        element.eq(0).removeAttr('dir-paginate-start').removeAttr('dir-paginate').removeAttr('data-dir-paginate-start').removeAttr('data-dir-paginate');
+    element.eq(element.length - 1).removeAttr('dir-paginate-end').removeAttr('data-dir-paginate-end');
+  }
+  function makeCurrentPageGetterFn(scope, attrs, paginationId) {
+    var currentPageGetter;
+    if (attrs.currentPage) {
+      currentPageGetter = $parse(attrs.currentPage);
+    } else {
+      var defaultCurrentPage = paginationId + '__currentPage';
+      scope[defaultCurrentPage] = 1;
+      currentPageGetter = $parse(defaultCurrentPage);
+    }
+    return currentPageGetter;
+    }
+  }
+>>>>>>> refs/remotes/jaswantchouhan/master
   function noCompileDirective() {
     return {
       priority: 5000,
@@ -1257,6 +1635,7 @@ ControllerWithID(app, 'ControllerArticle', 'Article');
     $templateCache.put('angularUtils.directives.dirPagination.template', '<ul class="pagination" ng-if="1 < pages.length"><li ng-if="boundaryLinks" ng-class="{ disabled : pagination.current == 1 }"><a href="" ng-click="setCurrent(1)">PREVIOUS</a></li><li ng-if="directionLinks" ng-class="{ disabled : pagination.current == 1 }"><a href="" ng-click="setCurrent(pagination.current - 1)">PREVIOUS</a></li><li ng-repeat="pageNumber in pages track by $index" ng-class="{ active : pagination.current == pageNumber, disabled : pageNumber == \'...\' }"><a href="" ng-click="setCurrent(pageNumber)">{{ pageNumber }}</a></li><li ng-if="directionLinks" ng-class="{ disabled : pagination.current == pagination.last }"><a href="" ng-click="setCurrent(pagination.current + 1)">NEXT</a></li><li ng-if="boundaryLinks"  ng-class="{ disabled : pagination.current == pagination.last }"><a href="" ng-click="setCurrent(pagination.last)">NEXT</a></li></ul>');
   }
   function dirPaginationControlsDirective(paginationService, paginationTemplate) {
+<<<<<<< HEAD
     var numberRegex = /^\d+$/;
     return {
       restrict: 'AE',
@@ -1413,6 +1792,176 @@ ControllerWithID(app, 'ControllerArticle', 'Article');
       }
       if (!paginationService.isRegistered(paginationId)) {
 
+=======
+
+    var numberRegex = /^\d+$/;
+
+    return {
+      restrict: 'AE',
+      templateUrl: function(elem, attrs) {
+       return attrs.templateUrl || paginationTemplate.getPath();
+    },
+    scope: {
+      maxSize: '=?',
+      onPageChange: '&?',
+      paginationId: '=?'
+    },
+    link: dirPaginationControlsLinkFn
+  };
+
+  function dirPaginationControlsLinkFn(scope, element, attrs) {
+
+    var rawId = attrs.paginationId ||  DEFAULT_ID;
+    var paginationId = scope.paginationId || attrs.paginationId ||  DEFAULT_ID;
+
+    if (!paginationService.isRegistered(paginationId) && !paginationService.isRegistered(rawId)) {
+      var idMessage = (paginationId !== DEFAULT_ID) ? ' (id: ' + paginationId + ') ' : ' ';
+      throw 'pagination directive: the pagination controls' + idMessage + 'cannot be used without the corresponding pagination directive.';
+    }
+
+    if (!scope.maxSize) { scope.maxSize = 9; }
+    scope.directionLinks = angular.isDefined(attrs.directionLinks) ? scope.$parent.$eval(attrs.directionLinks) : true;
+    scope.boundaryLinks = angular.isDefined(attrs.boundaryLinks) ? scope.$parent.$eval(attrs.boundaryLinks) : false;
+
+    var paginationRange = Math.max(scope.maxSize, 5);
+    scope.pages = [];
+    scope.pagination = {
+      last: 1,
+      current: 1
+    };
+    scope.range = {
+      lower: 1,
+      upper: 1,
+      total: 1
+    };
+
+    scope.$watch(function() {
+      return (paginationService.getCollectionLength(paginationId) + 1) * paginationService.getItemsPerPage(paginationId);
+    }, function(length) {
+      if (0 < length) {
+        generatePagination();
+      }
+    });
+
+    scope.$watch(function() {
+      return (paginationService.getItemsPerPage(paginationId));
+    }, function(current, previous) {
+        if (current != previous && typeof previous !== 'undefined') {
+        goToPage(scope.pagination.current);
+      }
+    });
+
+    scope.$watch(function() {
+      return paginationService.getCurrentPage(paginationId);
+      }, function(currentPage, previousPage) {
+        if (currentPage != previousPage) {
+          goToPage(currentPage);
+      }
+    });
+
+    scope.setCurrent = function(num) {
+      if (isValidPageNumber(num)) {
+        num = parseInt(num, 10);
+        paginationService.setCurrentPage(paginationId, num);
+      }
+    };
+
+    function goToPage(num) {
+      if (isValidPageNumber(num)) {
+        scope.pages = generatePagesArray(num, paginationService.getCollectionLength(paginationId),                   paginationService.getItemsPerPage(paginationId), paginationRange);
+        scope.pagination.current = num;
+        updateRangeValues();
+        if (scope.onPageChange) {
+          scope.onPageChange({ newPageNumber : num });
+        }
+      }
+    }
+
+    function generatePagination() {
+      var page = parseInt(paginationService.getCurrentPage(paginationId)) || 1;
+
+      scope.pages = generatePagesArray(page, paginationService.getCollectionLength(paginationId),   paginationService.getItemsPerPage(paginationId), paginationRange);
+      scope.pagination.current = page;
+      scope.pagination.last = scope.pages[scope.pages.length - 1];
+      if (scope.pagination.last < scope.pagination.current) {
+        scope.setCurrent(scope.pagination.last);
+      } else {
+        updateRangeValues();
+      }
+    }  
+    function updateRangeValues() {
+      var currentPage = paginationService.getCurrentPage(paginationId),
+      itemsPerPage = paginationService.getItemsPerPage(paginationId),
+      totalItems = paginationService.getCollectionLength(paginationId);
+    
+      scope.range.lower = (currentPage - 1) * itemsPerPage + 1;
+      scope.range.upper = Math.min(currentPage * itemsPerPage, totalItems);
+      scope.range.total = totalItems;
+    }
+
+    function isValidPageNumber(num) {
+      return (numberRegex.test(num) && (0 < num && num <= scope.pagination.last));
+    }
+  }
+  function generatePagesArray(currentPage, collectionLength, rowsPerPage, paginationRange) {
+    var pages = [];
+    var totalPages = Math.ceil(collectionLength / rowsPerPage);
+    var halfWay = Math.ceil(paginationRange / 2);
+    var position;
+
+    if (currentPage <= halfWay) {
+      position = 'start';
+    } else if (totalPages - halfWay < currentPage) {
+      position = 'end';
+    } else {
+      position = 'middle';
+    }
+
+    var ellipsesNeeded = paginationRange < totalPages;
+    var i = 1;
+    while (i <= totalPages && i <= paginationRange) {
+      var pageNumber = calculatePageNumber(i, currentPage, paginationRange, totalPages);
+
+      var openingEllipsesNeeded = (i === 2 && (position === 'middle' || position === 'end'));
+      var closingEllipsesNeeded = (i === paginationRange - 1 && (position === 'middle' || position === 'start'));
+      if (ellipsesNeeded && (openingEllipsesNeeded || closingEllipsesNeeded)) {
+        pages.push('...');
+      } else {
+        pages.push(pageNumber);
+      }
+      i ++;
+    }
+    return pages;
+  }
+
+  function calculatePageNumber(i, currentPage, paginationRange, totalPages) {
+    var halfWay = Math.ceil(paginationRange/2);
+    if (i === paginationRange) {
+      return totalPages;
+    } else if (i === 1) {
+      return i;
+    } else if (paginationRange < totalPages) {
+      if (totalPages - halfWay < currentPage) {
+        return totalPages - paginationRange + i;
+      } else if (halfWay < currentPage) {
+        return currentPage - halfWay + i;
+    } else {
+      return i;
+    }
+      } else {
+        return i;
+      }
+    }
+  }
+  function itemsPerPageFilter(paginationService) {
+
+    return function(collection, itemsPerPage, paginationId) {
+      if (typeof (paginationId) === 'undefined') {
+        paginationId = DEFAULT_ID;
+      }
+      if (!paginationService.isRegistered(paginationId)) {
+
+>>>>>>> refs/remotes/jaswantchouhan/master
         throw 'pagination directive: the itemsPerPage id argument (id: ' + paginationId + ') does not match a registered pagination-id.';
       }
       var end;
@@ -1428,8 +1977,12 @@ ControllerWithID(app, 'ControllerArticle', 'Article');
         paginationService.setItemsPerPage(paginationId, itemsPerPage);
 
         return collection.slice(start, end);
+<<<<<<< HEAD
       } 
       else {
+=======
+      } else {
+>>>>>>> refs/remotes/jaswantchouhan/master
         return collection;
       }
     };
@@ -1494,8 +2047,14 @@ ControllerWithID(app, 'ControllerArticle', 'Article');
       };
     };
   }
+<<<<<<< HEAD
 })();
 $endif$$if -fieldregex'form'='^css$'$$header -filetype(css)$
+=======
+  })();
+$endif$$if -fieldregex'form'='^css$'$$header -filetype(css)$
+$include -placeholder'customerportal-treeview-css'$
+>>>>>>> refs/remotes/jaswantchouhan/master
 
 body { font-family: 'Roboto', sans-serif; font-size: 14px; paddig: 0; margin: 0; }
 body { background: url(data:image/jpeg;base64,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AAxjcm9wUmVjdExlZnRsb25nAAAAAAAAAA1jcm9wUmVjdFJpZ2h0bG9uZwAAAAAAAAALY3JvcFJlY3RUb3Bsb25nAAAAAAA4QklNA+0AAAAAABAASAAAAAEAAQBIAAAAAQABOEJJTQQmAAAAAAAOAAAAAAAAAAAAAD+AAAA4QklNBA0AAAAAAAQAAAB4OEJJTQQZAAAAAAAEAAAAHjhCSU0D8wAAAAAACQAAAAAAAAAAAQA4QklNJxAAAAAAAAoAAQAAAAAAAAABOEJJTQP1AAAAAABIAC9mZgABAGxmZgAGAAAAAAABAC9mZgABAKGZmgAGAAAAAAABADIAAAABAFoAAAAGAAAAAAABADUAAAABAC0AAAAGAAAAAAABOEJJTQP4AAAAAABwAAD/////////////////////////////A+gAAAAA/////////////////////////////wPoAAAAAP////////////////////////////8D6AAAAAD/////////////////////////////A+gAADhCSU0EAAAAAAAAAgAAOEJJTQQCAAAAAAACAAA4QklNBDAAAAAAAAEBADhCSU0ELQAAAAAABgABAAAAAjhCSU0ECAAAAAAAEAAAAAEAAAJAAAACQAAAAAA4QklNBB4AAAAAAAQAAAAAOEJJTQQaAAAAAANJAAAABgAAAAAAAAAAAAAAPQAAAEMAAAAKAFUAbgB0AGkAdABsAGUAZAAtADIAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAEMAAAA9AAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAEAAAAAAABudWxsAAAAAgAAAAZib3VuZHNPYmpjAAAAAQAAAAAAAFJjdDEAAAAEAAAAAFRvcCBsb25nAAAAAAAAAABMZWZ0bG9uZwAAAAAAAAAAQnRvbWxvbmcAAAA9AAAAAFJnaHRsb25nAAAAQwAAAAZzbGljZXNWbExzAAAAAU9iamMAAAABAAAAAAAFc2xpY2UAAAASAAAAB3NsaWNlSURsb25nAAAAAAAAAAdncm91cElEbG9uZwAAAAAAAAAGb3JpZ2luZW51bQAAAAxFU2xpY2VPcmlnaW4AAAANYXV0b0dlbmVyYXRlZAAAAABUeXBlZW51bQAAAApFU2xpY2VUeXBlAAAAAEltZyAAAAAGYm91bmRzT2JqYwAAAAEAAAAAAABSY3QxAAAABAAAAABUb3AgbG9uZwAAAAAAAAAATGVmdGxvbmcAAAAAAAAAAEJ0b21sb25nAAAAPQAAAABSZ2h0bG9uZwAAAEMAAAADdXJsVEVYVAAAAAEAAAAAAABudWxsVEVYVAAAAAEAAAAAAABNc2dlVEVYVAAAAAEAAAAAAAZhbHRUYWdURVhUAAAAAQAAAAAADmNlbGxUZXh0SXNIVE1MYm9vbAEAAAAIY2VsbFRleHRURVhUAAAAAQAAAAAACWhvcnpBbGlnbmVudW0AAAAPRVNsaWNlSG9yekFsaWduAAAAB2RlZmF1bHQAAAAJdmVydEFsaWduZW51bQAAAA9FU2xpY2VWZXJ0QWxpZ24AAAAHZGVmYXVsdAAAAAtiZ0NvbG9yVHlwZWVudW0AAAARRVNsaWNlQkdDb2xvclR5cGUAAAAATm9uZQAAAAl0b3BPdXRzZXRsb25nAAAAAAAAAApsZWZ0T3V0c2V0bG9uZwAAAAAAAAAMYm90dG9tT3V0c2V0bG9uZwAAAAAAAAALcmlnaHRPdXRzZXRsb25nAAAAAAA4QklNBCgAAAAAAAwAAAACP/AAAAAAAAA4QklNBBQAAAAAAAQAAAADOEJJTQQMAAAAAALXAAAAAQAAAEMAAAA9AAAAzAAAMJwAAAK7ABgAAf/Y/+0ADEFkb2JlX0NNAAH/7gAOQWRvYmUAZIAAAAAB/9sAhAAMCAgICQgMCQkMEQsKCxEVDwwMDxUYExMVExMYEQwMDAwMDBEMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMAQ0LCw0ODRAODhAUDg4OFBQODg4OFBEMDAwMDBERDAwMDAwMEQwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAz/wAARCAA9AEMDASIAAhEBAxEB/90ABAAF/8QBPwAAAQUBAQEBAQEAAAAAAAAAAwABAgQFBgcICQoLAQABBQEBAQEBAQAAAAAAAAABAAIDBAUGBwgJCgsQAAEEAQMCBAIFBwYIBQMMMwEAAhEDBCESMQVBUWETInGBMgYUkaGxQiMkFVLBYjM0coLRQwclklPw4fFjczUWorKDJkSTVGRFwqN0NhfSVeJl8rOEw9N14/NGJ5SkhbSVxNTk9KW1xdXl9VZmdoaWprbG1ub2N0dXZ3eHl6e3x9fn9xEAAgIBAgQEAwQFBgcHBgU1AQACEQMhMRIEQVFhcSITBTKBkRShsUIjwVLR8DMkYuFygpJDUxVjczTxJQYWorKDByY1wtJEk1SjF2RFVTZ0ZeLys4TD03Xj80aUpIW0lcTU5PSltcXV5fVWZnaGlqa2xtbm9ic3R1dnd4eXp7fH/9oADAMBAAIRAxEAPwD1NJJL/WUlK/1lL/WEv9YS80lK80kkklKS/wBZS/1lL/WElK+SSUpJKf/Q9T/1lL/WEv8AWEvNJSvNJJJJSkv9ZS/1lL/WElK/1hLzS80klL6pJkklP//R9T80kkklKS/1lL/WUv8AWElK/wBYS80vNJJSkkkv9ZSUr5pJfJJJT//S9TS/1lL8qX5ElK/1hLzSS/1CSlJJJflSUr/WUv8AWEvyJJKVKSdJJT//2QA4QklNBCEAAAAAAFUAAAABAQAAAA8AQQBkAG8AYgBlACAAUABoAG8AdABvAHMAaABvAHAAAAATAEEAZABvAGIAZQAgAFAAaABvAHQAbwBzAGgAbwBwACAAQwBTADYAAAABADhCSU0EBgAAAAAABwAEAAAAAQEA/+EOwGh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8APD94cGFja2V0IGJlZ2luPSLvu78iIGlkPSJXNU0wTXBDZWhpSHpyZVN6TlRjemtjOWQiPz4gPHg6eG1wbWV0YSB4bWxuczp4PSJhZG9iZTpuczptZXRhLyIgeDp4bXB0az0iQWRvYmUgWE1QIENvcmUgNS4zLWMwMTEgNjYuMTQ1NjYxLCAyMDEyLzAyLzA2LTE0OjU2OjI3ICAgICAgICAiPiA8cmRmOlJERiB4bWxuczpyZGY9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkvMDIvMjItcmRmLXN5bnRheC1ucyMiPiA8cmRmOkRlc2NyaXB0aW9uIHJkZjphYm91dD0iIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtbG5zOnhtcE1NPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvbW0vIiB4bWxuczpzdEV2dD0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL3NUeXBlL1Jlc291cmNlRXZlbnQjIiB4bWxuczpwaG90b3Nob3A9Imh0dHA6Ly9ucy5hZG9iZS5jb20vcGhvdG9zaG9wLzEuMC8iIHhtbG5zOmRjPSJodHRwOi8vcHVybC5vcmcvZGMvZWxlbWVudHMvMS4xLyIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M2IChXaW5kb3dzKSIgeG1wOkNyZWF0ZURhdGU9IjIwMTUtMTItMDVUMTc6MTA6MTUrMDU6MzAiIHhtcDpNZXRhZGF0YURhdGU9IjIwMTUtMTItMDVUMTc6MTA6MTUrMDU6MzAiIHhtcDpNb2RpZnlEYXRlPSIyMDE1LTEyLTA1VDE3OjEwOjE1KzA1OjMwIiB4bXBNTTpJbnN0YW5jZUlEPSJ4bXAuaWlkOjE2NUUxRUJENDM5QkU1MTFBRjBBODU3RTI5RjVCOUVFIiB4bXBNTTpEb2N1bWVudElEPSJ4bXAuZGlkOjE1NUUxRUJENDM5QkU1MTFBRjBBODU3RTI5RjVCOUVFIiB4bXBNTTpPcmlnaW5hbERvY3VtZW50SUQ9InhtcC5kaWQ6MTU1RTFFQkQ0MzlCRTUxMUFGMEE4NTdFMjlGNUI5RUUiIHBob3Rvc2hvcDpDb2xvck1vZGU9IjMiIHBob3Rvc2hvcDpJQ0NQcm9maWxlPSJzUkdCIElFQzYxOTY2LTIuMSIgZGM6Zm9ybWF0PSJpbWFnZS9qcGVnIj4gPHhtcE1NOkhpc3Rvcnk+IDxyZGY6U2VxPiA8cmRmOmxpIHN0RXZ0OmFjdGlvbj0iY3JlYXRlZCIgc3RFdnQ6aW5zdGFuY2VJRD0ieG1wLmlpZDoxNTVFMUVCRDQzOUJFNTExQUYwQTg1N0UyOUY1QjlFRSIgc3RFdnQ6d2hlbj0iMjAxNS0xMi0wNVQxNzoxMDoxNSswNTozMCIgc3RFdnQ6c29mdHdhcmVBZ2VudD0iQWRvYmUgUGhvdG9zaG9wIENTNiAoV2luZG93cykiLz4gPHJkZjpsaSBzdEV2dDphY3Rpb249InNhdmVkIiBzdEV2dDppbnN0YW5jZUlEPSJ4bXAuaWlkOjE2NUUxRUJENDM5QkU1MTFBRjBBODU3RTI5RjVCOUVFIiBzdEV2dDp3aGVuPSIyMDE1LTEyLTA1VDE3OjEwOjE1KzA1OjMwIiBzdEV2dDpzb2Z0d2FyZUFnZW50PSJBZG9iZSBQaG90b3Nob3AgQ1M2IChXaW5kb3dzKSIgc3RFdnQ6Y2hhbmdlZD0iLyIvPiA8L3JkZjpTZXE+IDwveG1wTU06SGlzdG9yeT4gPHBob3Rvc2hvcDpEb2N1bWVudEFuY2VzdG9ycz4gPHJkZjpCYWc+IDxyZGY6bGk+YWRvYmU6ZG9jaWQ6cGhvdG9zaG9wOjQ4M2NkNjk0LThjOGEtMTFlNS05NzgyLWU4YjEwNjgxY2U5OTwvcmRmOmxpPiA8cmRmOmxpPmFkb2JlOmRvY2lkOnBob3Rvc2hvcDplNzc1MzZmNS04YzhmLTExZTUtOTk1Zi1kZmI4YjJkNmFmNzk8L3JkZjpsaT4gPC9yZGY6QmFnPiA8L3Bob3Rvc2hvcDpEb2N1bWVudEFuY2VzdG9ycz4gPC9yZGY6RGVzY3JpcHRpb24+IDwvcmRmOlJERj4gPC94OnhtcG1ldGE+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgPD94cGFja2V0IGVuZD0idyI/Pv/iDFhJQ0NfUFJPRklMRQABAQAADEhMaW5vAhAAAG1udHJSR0IgWFlaIAfOAAIACQAGADEAAGFjc3BNU0ZUAAAAAElFQyBzUkdCAAAAAAAAAAAAAAABAAD21gABAAAAANMtSFAgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEWNwcnQAAAFQAAAAM2Rlc2MAAAGEAAAAbHd0cHQAAAHwAAAAFGJrcHQAAAIEAAAAFHJYWVoAAAIYAAAAFGdYWVoAAAIsAAAAFGJYWVoAAAJAAAAAFGRtbmQAAAJUAAAAcGRtZGQAAALEAAAA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);}
