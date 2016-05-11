@@ -115,22 +115,23 @@ $if -fieldregex'form'='^$'$
                           <span class="validation_error" ng-show="submittedregister && registration.inputrequiredcontactproperty1firstname.$error.required">First Name Required</span>
                         </span>
                         <span class="l_row control-group"  ng-class="{true: 'error'}[submittedregister && registration.inputrequiredcontactproperty3lastname.$invalid]">
-                          <input id="inputrequiredcontactproperty3lastname" name="inputrequiredcontactproperty3lastname" type="text" value="" class="text uname" placeholder="Last Name" required>
+                          <input id="inputrequiredcontactproperty3lastname" name="inputrequiredcontactproperty3lastname" type="text" value="" class="text uname" ng-model="lastName" placeholder="Last Name" required>
                           <span class="validation_error" ng-show="submittedregister && registration.inputrequiredcontactproperty3lastname.$error.required">Last Name Required</span>
                         </span>
                         <span class="l_row control-group"  ng-class="{true: 'error'}[submittedregister && registration.inputemailrequired.$invalid]">
-                          <input id="inputemailrequired" name="inputemailrequired" type="text" value="" class="text uemail" placeholder="Email" required>
+                          <input id="inputemailrequired" name="inputemailrequired" ng-model="inputemailrequired" type="text" value="" class="text uemail" placeholder="Email" required>
                           <span class="validation_error" ng-show="submittedregister && registration.inputemailrequired.$error.required">Email Required</span>
                         </span>
                         <div class="clear"></div>
                         <span class="l_row control-group"  ng-class="{true: 'error'}[submittedregister && registration.inputpasswordrequired.$invalid]">
-                          <input id="inputpasswordrequired" name="inputpasswordrequired" type="password" value="" class="text upassword" placeholder="Password" required>
+                          <input id="inputpasswordrequired" name="inputpasswordrequired"  ng-model="inputpasswordrequired" type="password" value="" class="text upassword" placeholder="Password" required>
                           <span class="validation_error" ng-show="submittedregister && registration.inputpasswordrequired.$error.required">Password Required</span>
                         </span>
                         <span class="l_row control-group"  ng-class="{true: 'error'}[submittedregister && registration.inputpasswordrequired1.$invalid]">
-                          <input id="inputpasswordrequired1" name="inputpasswordrequired1" type="password" value="" class="text upassword" placeholder="Confirm Password" required>
+                          <input id="inputpasswordrequired1" name="inputpasswordrequired1" ng-model="inputpasswordrequired1" type="password" value="" class="text upassword" placeholder="Confirm Password" required>
                           <span class="validation_error" ng-show="submittedregister && registration.inputpasswordrequired1.$error.required">Confirm Required</span>
                         </span>
+                        <span class="validation_error" ng-show="submittedregister && (registration.inputpasswordrequired1 == registration.inputpasswordrequired)">Confirm password must match</span>
                         <span class="l_btn_row">
                           <input type="submit" id="{{idPrefix}}registerSend" class="btn_okay" ng-click="RegisterSubmit('div.register-account-user-form')" value="Register Now"> 
                           <input type="button"  class="btn_cancel" value="Cancel" ng-click="resetregister(registration)" />
@@ -363,7 +364,7 @@ $if -fieldregex'form'='^$'$
     <div class="hitory_content contact-history-section">
       <div ng-show="!iservice.loggedIn.isLoggedIn">
         <p>
-          Login to view your previous questions and answers. If you don&rsquo;t have an account in our support portal Sign Up now
+          Please login to view your message history. If you don;t have an account you can <a href="javascript:void(0)" ng-click="registerOpen();">Sign Up now.</a>
         </p>
       </div>
       <div class="page" ng-controller="ControllerMyHistory" ng-show="iservice.loggedIn.isLoggedIn">
@@ -508,6 +509,24 @@ $if -fieldregex'form'='^$'$
     </div>
   </script>
 
+
+  <script type="text/ng-template" id="child-details-body-history.html">
+    <div class="child-details-body">
+      <textarea ng-show="details.displayPlain" id="{{idPrefix}}plain" class="body-plain" ng-model="details.bodyPlain"></textarea>
+      <div ng-show="!details.displayPlain" id="{{idPrefix}}html" class="body-html" bind-html-compile="details.bodyHtml"></div>
+      <div ng-show="details.note">Agent Notes:<br />
+        <textarea id="{{idPrefix}}note" class="note" ng-model="details.note"></textarea>
+      </div>
+    </div>
+  </script>
+  <script type="text/ng-template" id="child-details-body-search.html">
+    <div class="bodies">
+      <textarea ng-show="details.displayPlain" id="{{idPrefix}}plain" class="body-plain" ng-model="details.bodyPlain"></textarea>
+      <div class="bodyhtml" ng-show="!details.displayPlain" id="{{idPrefix}}html" bind-html-compile="details.bodyHtml"></div>
+      <div class="note" ng-show="details.note">Agent Notes:<br /><textarea ng-model="details.note"></textarea></div>
+    </div>
+  </script>
+
   <script type="text/ng-template" id="contact-details.html">
     <div class="setting-container">   
       <div ng-show="!iservice.loggedIn.isLoggedIn">
@@ -519,6 +538,7 @@ $if -fieldregex'form'='^$'$
         <h2 ng-click="showContDetail()"  ng-class="{active: detailcontent}">My Details</h2>
         <div ng-show="detailcontent">
           <div ng-cloak ng-repeat="segment in segments" ng-controller="ControllerPropertyGroup" class="segment" ng-class="{ 'not-first': $index }">
+		    <div ng-show="contactmsg" class="submitedsuccess" >{{contactmsg}}</div>
             <h3>{{ segment.name }}</h3>
             <div class="properties-left" ng-conroller="ControllerPropertiesLeft">
               <div ng-repeat="property in segment.properties" class="interaction-property" ng-class="InteractionPropertyClass(property)" ng-controller="ControllerPropertyProperty" ng-include="PropertyUrl(property)"></div>
@@ -548,6 +568,7 @@ $if -fieldregex'form'='^$'$
         <h2 ng-click="showSubs()"  ng-class="{active: subscontent}">My Subscriptions</h2>
         <div ng-show="subscontent">
           <div class="s-container" >
+		    <div ng-show="subscriptionmsg" class="submitedsuccess" >{{subscriptionmsg}}</div>
             <h3 ng-cloak>Mailing Lists</h3>
             <div ng-cloak >
               <div class="table-row table-row-head">
@@ -608,7 +629,6 @@ $if -fieldregex'form'='^$'$
       </div>
     </div>
   </script>
-
   $include -placeholder'customerportal-footer'$
   $include -placeholder'interaction-properties' -indent'  '$
   $include -placeholder'common-javascript' -indent'  '$
@@ -1072,6 +1092,7 @@ app.controller('ControllerMyDetails', ['$scope', '$route', '$http', '$rootScope'
     $scope.detailcontent = false;
   } 
   $scope.showContDetail = function () {
+    $scope.contactmsg = false;
     $scope.detailcontent = $scope.detailcontent ? false : true;
   }
   function LoadDetails() {
@@ -1091,6 +1112,8 @@ app.controller('ControllerMyDetails', ['$scope', '$route', '$http', '$rootScope'
       logins: iservice.CollectLogins($scope.segments)
     };
     $scope.Saving = iservice.FindAnswerMyDetailsSet($http, properties, function (data) {
+    if (data.errors && data.errors.length) {
+        }else{ $scope.contactmsg = 'Your changes have been saved';}
     });
   };
 }]);
@@ -1101,6 +1124,7 @@ app.controller('ControllerMySubscriptions', ['$scope', '$route', '$http', '$root
     $scope.subscontent = false;
   }
   $scope.showSubs = function () {
+    $scope.subscriptionmsg = false;
     $scope.subscontent = $scope.subscontent ? false : true;
   }
   function LoadSubscriptions() {
@@ -1122,7 +1146,10 @@ app.controller('ControllerMySubscriptions', ['$scope', '$route', '$http', '$root
       articleIDs: iservice.CollectItemIDs($scope.articles, 'id', 'isOnList')
     };
     $scope.Saving = iservice.FindAnswerMySubscriptionsSet($http, subscriptions, function (data) {
-      if (data.errors && data.errors.length) return;
+      if (data.errors && data.errors.length) {
+          return;
+        }else{ $scope.subscriptionmsg = 'Your changes have been saved';}
+       
       $scope.lists = data.lists;
       $scope.campaigns = data.campaigns;
       $scope.articles = data.articles;
@@ -1406,6 +1433,8 @@ app.controller('ControllerArticle', ['$scope', ControllerWithID('Article')]);
       }
     }
   }
+
+
   function itemsPerPageFilter(paginationService) {
     return function(collection, itemsPerPage, paginationId) {
       if (typeof (paginationId) === 'undefined') {
@@ -1831,9 +1860,12 @@ nav.nav.topiclist .active, nav.topiclist .subtopics:hover,.subsubtopics .panel-b
 .box { width: 90%;}
 .box_wrap .l_row { width: 33%; float: left;}
 .box_wrap .l_btn_row { width: 34%; float: left;}
+.child-details-info .ui-button{position:relative !important; font-family: "Roboto",sans-serif; font-size:14px; font-weight:normal;float:left;padding: 2px 2px;top:0 !important; border-radius:8px;}
 .uemail { background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA8AAAAMCAYAAAHKRddyAAAACXBIWXMAAAsTAAALEwEAmpwYAAAABGdBTUEAALGOfPtRkwAAACBjSFJNAAB6JQAAgIMAAPn/AACA6QAAdTAAAOpgAAA6mAAAF2+SX8VGAAABWUlEQVR42mLs6+ubx8DAYAgQQCxAwg2IuQACiBEoch7IYAAIIJCIAYgBEEAgkRQgrQzEFSA+QADBlUDBO4AAAik1BOL/QDwbiM8CBBALlPMdiFNBGCCAQFqKgIxeBuygDyCAmIBEGZQDsowRigOA+C8QFwEEEEgBG1TBHKjxILwBiJlBggABBLLiCpD+jcV4VoAAYoGq0sYi+RQggEBGOwOxHBA/ggq+h3pJFSCAQDqfAvFRINYDYj4gfgK11w8ggFigqq2B+AMQ34UGExgABBATmj3KyByAAAK59hWQFmUgAwAEEMhkMaiDQYF2nYD650DcA8T6IIsBAgik+S0Q7wXiX0BsBA1pRSCeDPXcOiA2g4pLAfEJIJ4GxH8AAogJGqmqQDwBygbFwmIgPgLEplCFlUD8Eyq3BhpAzAABxILDeTZQjBcABBBI824g9sIRxbgAKM1cBQgwAOupQYCHSww4AAAAAElFTkSuQmCC) no-repeat scroll 5px center #fff; }
 .c_text{ font-size: 12px; display: block; color: #535353; margin-bottom: 12px; float: left;}
 .sublink { width:100%;display:inline-block; padding-top: 10px;}
+.ui-button-text-icon-primary .ui-button-text, .ui-button-text-icons .ui-button-text { padding: 0 1em 0 1.6em; }
+
 @media (max-width: 1179px) {
 
 }
@@ -1937,4 +1969,3 @@ nav.nav.topiclist .active, nav.topiclist .subtopics:hover,.subsubtopics .panel-b
   }
 }
 $endif$
-
