@@ -18,6 +18,7 @@ $if -fieldregex'form'='^$'$
   <div ng-controller="ControllerBody" class="mainbody">
     <div  class="main_container" ng-cloak>
       <div ng-cloak class="page loginsection" ng-controller="ControllerFALogin">
+        <div class="submitedsuccess" ng-show="successregister">{{successregister}}</div>
         <div ng-show="iservice.loggedIn.isLoggedIn" class="login_container">
           <span ng-click="toggleSearch()" class="userOption"> 
             <span class="loggedinuname"> Hello </span>{{ iservice.loggedIn.contactName }}          
@@ -150,6 +151,7 @@ $if -fieldregex'form'='^$'$
           </div>
         </div>
         <div class="clear"></div>
+        
         <div class="content_section"  ng-controller="ControllerTab">
           <ul class="tabs" data-persist="true">
             <li class="" ng-class="{ active: isActive('/find-answers')}" ng-click="showfindanswer()" ><a href="#/find-answers" class="findanswer"  ng-href="#/find-answers">FIND ANSWERS </a></li>
@@ -364,7 +366,7 @@ $if -fieldregex'form'='^$'$
     <div class="hitory_content contact-history-section">
       <div ng-show="!iservice.loggedIn.isLoggedIn">
         <p>
-          Please login to view your message history. If you don;t have an account you can <a href="javascript:void(0)" ng-click="registerOpen();">Sign Up now.</a>
+          Please login to view your message history. If you don&#39;t have an account you can <a href="javascript:void(0)" ng-click="registerOpen();">Sign Up now.</a>
         </p>
       </div>
       <div class="page" ng-controller="ControllerMyHistory" ng-show="iservice.loggedIn.isLoggedIn">
@@ -510,6 +512,8 @@ $if -fieldregex'form'='^$'$
   </script>
 
 
+
+
   <script type="text/ng-template" id="child-details-body-history.html">
     <div class="child-details-body">
       <textarea ng-show="details.displayPlain" id="{{idPrefix}}plain" class="body-plain" ng-model="details.bodyPlain"></textarea>
@@ -531,7 +535,7 @@ $if -fieldregex'form'='^$'$
     <div class="setting-container">   
       <div ng-show="!iservice.loggedIn.isLoggedIn">
         <p>
-          Required Login to view your details. If you don&rsquo;t have an account in our support portal Sign Up now
+          Required Login to view your details. If you don&rsquo;t have an account in our support portal <a href="javascript:void(0)" ng-click="registerOpen();">Sign Up now.</a>
         </p>
       </div>
       <div class="page my-details interaction-property-list" ng-controller="ControllerMyDetails" ng-show="iservice.loggedIn.isLoggedIn">
@@ -691,7 +695,7 @@ app.controller('ControllerTab', ['$scope', '$location', '$rootScope', function (
   };
 }]);
 
-app.controller('ControllerFALogin', ['$scope', '$window', '$route', '$http', '$rootScope', function ($scope, $window, $route, $http, $rootScope) {
+app.controller('ControllerFALogin', ['$scope', '$window', '$route', '$http','$timeout', '$rootScope', function ($scope, $window, $route, $http,$timeout, $rootScope) {
   $scope.$window = $window;
   $scope.toggleLogin = true;
   $scope.toggleRegister = true;
@@ -761,6 +765,7 @@ app.controller('ControllerFALogin', ['$scope', '$window', '$route', '$http', '$r
     $scope.errors = [];
     $scope.Loading = iservice.Logout($http, function (data) {
       iservice.ProcessLogin(data.loggedIn);
+      $scope.toggleRegister = true;
     }); 
   }
   $scope.loginshow = true;
@@ -782,6 +787,9 @@ app.controller('ControllerFALogin', ['$scope', '$window', '$route', '$http', '$r
       $scope.LoginRunning = iservice.LoginRegister($http, inputs, function (data) {
         if (data.errors && data.errors.length) {
           $scope.errorregister = data.errors;
+        }else{
+          $scope.successregister = "Your account has been created.";
+          $timeout(function () { $scope.successregister = ''; }, 4000); 
         }
         iservice.ProcessLogin(data.loggedIn);
         $scope.register = false;
@@ -1283,6 +1291,7 @@ app.controller('ControllerArticle', ['$scope', ControllerWithID('Article')]);
   function dirPaginationControlsTemplateInstaller($templateCache) {
     $templateCache.put('angularUtils.directives.dirPagination.template', '<ul class="pagination" ng-if="1 < pages.length"><li ng-if="boundaryLinks" ng-class="{ disabled : pagination.current == 1 }"><a href="" ng-click="setCurrent(1)">PREVIOUS</a></li><li ng-if="directionLinks" ng-class="{ disabled : pagination.current == 1 }"><a href="" ng-click="setCurrent(pagination.current - 1)">PREVIOUS</a></li><li ng-repeat="pageNumber in pages track by $index" ng-class="{ active : pagination.current == pageNumber, disabled : pageNumber == \'...\' }"><a href="" ng-click="setCurrent(pageNumber)">{{ pageNumber }}</a></li><li ng-if="directionLinks" ng-class="{ disabled : pagination.current == pagination.last }"><a href="" ng-click="setCurrent(pagination.current + 1)">NEXT</a></li><li ng-if="boundaryLinks"  ng-class="{ disabled : pagination.current == pagination.last }"><a href="" ng-click="setCurrent(pagination.last)">NEXT</a></li></ul>');
   }
+
   function dirPaginationControlsDirective(paginationService, paginationTemplate) {
     var numberRegex = /^\d+$/;
     return {
