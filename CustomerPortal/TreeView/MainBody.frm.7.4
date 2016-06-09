@@ -420,39 +420,6 @@ $if -fieldregex'form'='^$'$
       </div> 
     </div>
   </script>  
-  <script type="text/ng-template" id="child-details-info.html">
-  <div class="interaction-property-list interaction-details-properties" ng-controller="ControllerHistoryInfo">
-    <a class="print-button ui-button ui-widget ui-state-default ui-corner-all ui-button-text-icon-primary" target="_blank" href="{{rootPath}}f/interaction-print?interactionId={{ details.id }}">
-      <span class="ui-button-icon-primary ui-icon ui-icon-print"></span>
-      <span class="ui-button-text">Print</span>
-    </a>
-    <p ng-show="details.id"><span class="label">Interaction ID:</span> {{ details.id }}</p>
-    <p ng-show="details.type"><span class="label">Type:</span> {{ details.type }}</p>
-    <p ng-show="details.fromAddress"><span class="label">From:</span> {{ details.fromAddress }}</p>
-    <p ng-show="details.toAddress"><span class="label">To:</span> {{ details.toAddress }}</p>
-    <p ng-show="details.cc"><span class="label">CC:</span> {{ details.cc }}</p>
-    <p ng-show="details.bcc"><span class="label">BCC:</span> {{ details.bcc }}</p>
-    <p ng-show="details.segmentName"><span class="label">Segment:</span> {{ details.segmentName }}</p>
-    <p ng-show="details.topicName"><span class="label">Topic:</span> {{ details.topicName }}</p>
-    <p ng-show="details.operatorName"><span class="label">Operator Name:</span> {{ details.operatorName }}</p>
-    <p ng-show="details.status"><span class="label">Status:</span> {{ details.status }}</p>
-    <div ng-show="details.attachments.length" class="attachments">
-      <span class="label">Attachments:</span>
-      <p ng-repeat="file in details.attachments"><a href="{{rootPath}}File.aspx?interactionID={{details.id}}&fileID={{file.attachmentID}}">{{file.name}}</a></p>
-    </div>
-    <div class="interaction-properties">
-      <div ng-repeat="group in PropertyGroups(details)" ng-controller="ControllerPropertyGroup">
-        <div class="interaction-property" ng-class="InteractionPropertyClass(property)" ng-repeat="property in group.properties" ng-controller="ControllerPropertyProperty" ng-include="PropertyUrl(property)"></div>
-      </div>
-      <div class="property-actions" ng-show="ShowEdit(details)">
-        <span class="nglink" ng-show="CanStartEdit(details)" ng-click="EditProperties(details)">Edit Properties</span>
-        <span class="nglink" ng-show="details.editingProperties" ng-click="SaveProperties(details)">Save</span><span ng-show="details.editingProperties"> -- </span>
-        <span class="nglink" ng-show="details.editingProperties" ng-click="details.editingProperties = false">Cancel</span>
-      </div>
-      <div grey-out ng-show="HistoryPropertySetRunning()"></div>
-    </div>
-  </div>
-</script>
  
   <script type="text/ng-template" id="history-thread-open.html">
     <div class="thread-root interaction-type-history" ng-class="InteractionType(thread.type)" ng-click="ThreadExpandClick(thread)">
