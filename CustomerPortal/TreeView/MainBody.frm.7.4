@@ -207,7 +207,7 @@ $if -fieldregex'form'='^$'$
           </article>
           <article class="list_container topfaq"  >
             <div class="showtopfaq" ng-click="togglefaq()">&nbsp;</div>
-            <h2 class="">Top FAQ</h2>
+            <h2 class="">Top FAQs</h2>
             <nav class="nav topfaqlist" role="navigation" ng-class="myClassFaq">
               <ul class="nav__list">
                 <li ng-repeat="articles in articleListFaq" ng-if="$index < 5">
@@ -354,6 +354,7 @@ $if -fieldregex'form'='^$'$
             <div class="interaction-property-list" ng-repeat="group in properties" ng-controller="ControllerPropertyGroup">
               <div class="interaction-property" ng-class="InteractionPropertyClass(property)" ng-repeat="property in group.properties" ng-controller="ControllerPropertyProperty" ng-include="PropertyUrl(property)"></div>
             </div>
+			<div class="clear"></div>
             <button type="submit" id="submit" class="asksubmitbtn" ng-show="!result" ng-click="Submit()">Submit</button>
           </div>
         </form>
@@ -418,7 +419,41 @@ $if -fieldregex'form'='^$'$
         </div>
       </div> 
     </div>
-  </script>   
+  </script>  
+  <script type="text/ng-template" id="child-details-info.html">
+  <div class="interaction-property-list interaction-details-properties" ng-controller="ControllerHistoryInfo">
+    <a class="print-button ui-button ui-widget ui-state-default ui-corner-all ui-button-text-icon-primary" target="_blank" href="{{rootPath}}f/interaction-print?interactionId={{ details.id }}">
+      <span class="ui-button-icon-primary ui-icon ui-icon-print"></span>
+      <span class="ui-button-text">Print</span>
+    </a>
+    <p ng-show="details.id"><span class="label">Interaction ID:</span> {{ details.id }}</p>
+    <p ng-show="details.type"><span class="label">Type:</span> {{ details.type }}</p>
+    <p ng-show="details.fromAddress"><span class="label">From:</span> {{ details.fromAddress }}</p>
+    <p ng-show="details.toAddress"><span class="label">To:</span> {{ details.toAddress }}</p>
+    <p ng-show="details.cc"><span class="label">CC:</span> {{ details.cc }}</p>
+    <p ng-show="details.bcc"><span class="label">BCC:</span> {{ details.bcc }}</p>
+    <p ng-show="details.segmentName"><span class="label">Segment:</span> {{ details.segmentName }}</p>
+    <p ng-show="details.topicName"><span class="label">Topic:</span> {{ details.topicName }}</p>
+    <p ng-show="details.operatorName"><span class="label">Operator Name:</span> {{ details.operatorName }}</p>
+    <p ng-show="details.status"><span class="label">Status:</span> {{ details.status }}</p>
+    <div ng-show="details.attachments.length" class="attachments">
+      <span class="label">Attachments:</span>
+      <p ng-repeat="file in details.attachments"><a href="{{rootPath}}File.aspx?interactionID={{details.id}}&fileID={{file.attachmentID}}">{{file.name}}</a></p>
+    </div>
+    <div class="interaction-properties">
+      <div ng-repeat="group in PropertyGroups(details)" ng-controller="ControllerPropertyGroup">
+        <div class="interaction-property" ng-class="InteractionPropertyClass(property)" ng-repeat="property in group.properties" ng-controller="ControllerPropertyProperty" ng-include="PropertyUrl(property)"></div>
+      </div>
+      <div class="property-actions" ng-show="ShowEdit(details)">
+        <span class="nglink" ng-show="CanStartEdit(details)" ng-click="EditProperties(details)">Edit Properties</span>
+        <span class="nglink" ng-show="details.editingProperties" ng-click="SaveProperties(details)">Save</span><span ng-show="details.editingProperties"> -- </span>
+        <span class="nglink" ng-show="details.editingProperties" ng-click="details.editingProperties = false">Cancel</span>
+      </div>
+      <div grey-out ng-show="HistoryPropertySetRunning()"></div>
+    </div>
+  </div>
+</script>
+ 
   <script type="text/ng-template" id="history-thread-open.html">
     <div class="thread-root interaction-type-history" ng-class="InteractionType(thread.type)" ng-click="ThreadExpandClick(thread)">
       <div class="column-expand thread-expander-history">
@@ -937,12 +972,20 @@ app.controller('ControllerFindAnswers', ['$scope', '$http', '$window', '$sce', '
       $scope.ShowTopic(topic); 
     })) return;
     $scope.selectedTopic = topic;
+    
     $scope.Searching = iservice.FindAnswerArticles($http, topic.id, $scope.searchString, $scope.recursive, 1, 1000, null, function (data) {
       iservice.SanitizeHistoryRows(data.interactions);
       $scope.articleList = data.interactions;
+      $scope.newJson = [];
+      for (var j = 0; j < data.interactions.length; j++) {
+        $scope.newJson.push({ "id":data.interactions[j].id, "subject": data.interactions[j].subject, "date": data.interactions[j].date, "topicID": data.interactions[j].topicID, "topicName": data.interactions[j].topicName, "rating": data.interactions[j].rating, "viewCount":parseInt(data.interactions[j].viewCount), "public": data.interactions[j].public });
+      }
+      $scope.articleList = $scope.newJson;
       $scope.articleListval = data.interactions.length;
+      
       var p =1;
       for (var j = 0; j < data.interactions.length; j++) {
+        
         var x = (parseInt(p)) * $scope.pageSize;
         if (x <= j) {
           p = parseInt(p) + 1;
@@ -1874,6 +1917,12 @@ nav.nav.topiclist .active, nav.topiclist .subtopics:hover,.subsubtopics .panel-b
 .c_text{ font-size: 12px; display: block; color: #535353; margin-bottom: 12px; float: left;}
 .sublink { width:100%;display:inline-block; padding-top: 10px;}
 .ui-button-text-icon-primary .ui-button-text, .ui-button-text-icons .ui-button-text { padding: 0 1em 0 1.6em; }
+.sharelink{position:relative;}
+.sharelink .slink { background: #f5f5f5 none repeat scroll 0 0; border: 1px solid #ccc; border-radius: 13px; cursor: pointer;  margin-top: 5px; padding: 5px 7px; }
+.sharelink span{float:left;}
+.sharelinkcontainer{ padding: 20px; border-radius: 7px; border:1px solid #ccc; margin-top:5px; width:199%; background:#f3f2f2;}
+.sharelinkcontainer input{border-radius: 3px; border:1px solid #999; width:200px;color:#999; width:100%;height:32px;padding:0px 8px 0px 8px;}
+.child-details-body .body-plain{ background: #fff none repeat scroll 0 0;    border: 1px solid #e6e4e4;    border-radius: 5px;    float: left;    margin-top: 10px;    min-height: 80px;    padding: 5px;    width: 97%;}
 
 @media (max-width: 1179px) {
 
