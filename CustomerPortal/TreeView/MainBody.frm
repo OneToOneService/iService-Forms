@@ -18,6 +18,7 @@ $if -fieldregex'form'='^$'$
   <div ng-controller="ControllerBody" class="mainbody">
     <div  class="main_container" ng-cloak>
       <div ng-cloak class="page loginsection" ng-controller="ControllerFALogin">
+        <div class="submitedsuccess" ng-show="successregister">{{successregister}}</div>
         <div ng-show="iservice.loggedIn.isLoggedIn" class="login_container">
           <span ng-click="toggleSearch()" class="userOption"> 
             <span class="loggedinuname"> Hello </span>{{ iservice.loggedIn.contactName }}          
@@ -27,7 +28,7 @@ $if -fieldregex'form'='^$'$
               <img class="user-option-arrow" width="22" height="18" title="" alt="" src="data:image/png;base64,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" />
               <ul>        
                 <li><a href="#/details" class="profile"  ng-href="#/details">User Profile</a></li>
-                <li><a href="#/subscription" ng-href="#/subscription" class="subscription">My Subscription</a></li>
+                <li><a href="#/subscription" ng-href="#/subscription" class="subscription">My Subscriptions</a></li>
                 <li><a href="javascript:void(0)" class="logout" ng-click="Logout()">Logout</a></li>
               </ul>
             </div>
@@ -115,22 +116,23 @@ $if -fieldregex'form'='^$'$
                           <span class="validation_error" ng-show="submittedregister && registration.inputrequiredcontactproperty1firstname.$error.required">First Name Required</span>
                         </span>
                         <span class="l_row control-group"  ng-class="{true: 'error'}[submittedregister && registration.inputrequiredcontactproperty3lastname.$invalid]">
-                          <input id="inputrequiredcontactproperty3lastname" name="inputrequiredcontactproperty3lastname" type="text" value="" class="text uname" placeholder="Last Name" required>
+                          <input id="inputrequiredcontactproperty3lastname" name="inputrequiredcontactproperty3lastname" type="text" value="" class="text uname" ng-model="lastName" placeholder="Last Name" required>
                           <span class="validation_error" ng-show="submittedregister && registration.inputrequiredcontactproperty3lastname.$error.required">Last Name Required</span>
                         </span>
                         <span class="l_row control-group"  ng-class="{true: 'error'}[submittedregister && registration.inputemailrequired.$invalid]">
-                          <input id="inputemailrequired" name="inputemailrequired" type="text" value="" class="text uemail" placeholder="Email" required>
+                          <input id="inputemailrequired" name="inputemailrequired" ng-model="inputemailrequired" type="text" value="" class="text uemail" placeholder="Email" required>
                           <span class="validation_error" ng-show="submittedregister && registration.inputemailrequired.$error.required">Email Required</span>
                         </span>
                         <div class="clear"></div>
                         <span class="l_row control-group"  ng-class="{true: 'error'}[submittedregister && registration.inputpasswordrequired.$invalid]">
-                          <input id="inputpasswordrequired" name="inputpasswordrequired" type="password" value="" class="text upassword" placeholder="Password" required>
+                          <input id="inputpasswordrequired" name="inputpasswordrequired"  ng-model="inputpasswordrequired" type="password" value="" class="text upassword" placeholder="Password" required>
                           <span class="validation_error" ng-show="submittedregister && registration.inputpasswordrequired.$error.required">Password Required</span>
                         </span>
                         <span class="l_row control-group"  ng-class="{true: 'error'}[submittedregister && registration.inputpasswordrequired1.$invalid]">
-                          <input id="inputpasswordrequired1" name="inputpasswordrequired1" type="password" value="" class="text upassword" placeholder="Confirm Password" required>
+                          <input id="inputpasswordrequired1" name="inputpasswordrequired1" ng-model="inputpasswordrequired1" type="password" value="" class="text upassword" placeholder="Confirm Password" required>
                           <span class="validation_error" ng-show="submittedregister && registration.inputpasswordrequired1.$error.required">Confirm Required</span>
                         </span>
+                        <span class="validation_error" ng-show="submittedregister && (registration.inputpasswordrequired1 == registration.inputpasswordrequired)">Confirm password must match</span>
                         <span class="l_btn_row">
                           <input type="submit" id="{{idPrefix}}registerSend" class="btn_okay" ng-click="RegisterSubmit('div.register-account-user-form')" value="Register Now"> 
                           <input type="button"  class="btn_cancel" value="Cancel" ng-click="resetregister(registration)" />
@@ -149,6 +151,7 @@ $if -fieldregex'form'='^$'$
           </div>
         </div>
         <div class="clear"></div>
+        
         <div class="content_section"  ng-controller="ControllerTab">
           <ul class="tabs" data-persist="true">
             <li class="" ng-class="{ active: isActive('/find-answers')}" ng-click="showfindanswer()" ><a href="#/find-answers" class="findanswer"  ng-href="#/find-answers">FIND ANSWERS </a></li>
@@ -204,7 +207,7 @@ $if -fieldregex'form'='^$'$
           </article>
           <article class="list_container topfaq"  >
             <div class="showtopfaq" ng-click="togglefaq()">&nbsp;</div>
-            <h2 class="">Top FAQ</h2>
+            <h2 class="">Top FAQs</h2>
             <nav class="nav topfaqlist" role="navigation" ng-class="myClassFaq">
               <ul class="nav__list">
                 <li ng-repeat="articles in articleListFaq" ng-if="$index < 5">
@@ -351,6 +354,7 @@ $if -fieldregex'form'='^$'$
             <div class="interaction-property-list" ng-repeat="group in properties" ng-controller="ControllerPropertyGroup">
               <div class="interaction-property" ng-class="InteractionPropertyClass(property)" ng-repeat="property in group.properties" ng-controller="ControllerPropertyProperty" ng-include="PropertyUrl(property)"></div>
             </div>
+			<div class="clear"></div>
             <button type="submit" id="submit" class="asksubmitbtn" ng-show="!result" ng-click="Submit()">Submit</button>
           </div>
         </form>
@@ -363,7 +367,7 @@ $if -fieldregex'form'='^$'$
     <div class="hitory_content contact-history-section">
       <div ng-show="!iservice.loggedIn.isLoggedIn">
         <p>
-          Login to view your previous questions and answers. If you don&rsquo;t have an account in our support portal Sign Up now
+          Please login to view your message history. If you don&#39;t have an account you can <a href="javascript:void(0)" ng-click="registerOpen();">Sign Up now.</a>
         </p>
       </div>
       <div class="page" ng-controller="ControllerMyHistory" ng-show="iservice.loggedIn.isLoggedIn">
@@ -415,7 +419,8 @@ $if -fieldregex'form'='^$'$
         </div>
       </div> 
     </div>
-  </script>   
+  </script>  
+ 
   <script type="text/ng-template" id="history-thread-open.html">
     <div class="thread-root interaction-type-history" ng-class="InteractionType(thread.type)" ng-click="ThreadExpandClick(thread)">
       <div class="column-expand thread-expander-history">
@@ -508,17 +513,38 @@ $if -fieldregex'form'='^$'$
     </div>
   </script>
 
+
+
+
+  <script type="text/ng-template" id="child-details-body-history.html">
+    <div class="child-details-body">
+      <textarea ng-show="details.displayPlain" id="{{idPrefix}}plain" class="body-plain" ng-model="details.bodyPlain"></textarea>
+      <div ng-show="!details.displayPlain" id="{{idPrefix}}html" class="body-html" bind-html-compile="details.bodyHtml"></div>
+      <div ng-show="details.note">Agent Notes:<br />
+        <textarea id="{{idPrefix}}note" class="note" ng-model="details.note"></textarea>
+      </div>
+    </div>
+  </script>
+  <script type="text/ng-template" id="child-details-body-search.html">
+    <div class="bodies">
+      <textarea ng-show="details.displayPlain" id="{{idPrefix}}plain" class="body-plain" ng-model="details.bodyPlain"></textarea>
+      <div class="bodyhtml" ng-show="!details.displayPlain" id="{{idPrefix}}html" bind-html-compile="details.bodyHtml"></div>
+      <div class="note" ng-show="details.note">Agent Notes:<br /><textarea ng-model="details.note"></textarea></div>
+    </div>
+  </script>
+
   <script type="text/ng-template" id="contact-details.html">
     <div class="setting-container">   
       <div ng-show="!iservice.loggedIn.isLoggedIn">
         <p>
-          Required Login to view your details. If you don&rsquo;t have an account in our support portal Sign Up now
+          Required Login to view your details. If you don&rsquo;t have an account in our support portal <a href="javascript:void(0)" ng-click="registerOpen();">Sign Up now.</a>
         </p>
       </div>
       <div class="page my-details interaction-property-list" ng-controller="ControllerMyDetails" ng-show="iservice.loggedIn.isLoggedIn">
         <h2 ng-click="showContDetail()"  ng-class="{active: detailcontent}">My Details</h2>
         <div ng-show="detailcontent">
           <div ng-cloak ng-repeat="segment in segments" ng-controller="ControllerPropertyGroup" class="segment" ng-class="{ 'not-first': $index }">
+		    <div ng-show="contactmsg" class="submitedsuccess" >{{contactmsg}}</div>
             <h3>{{ segment.name }}</h3>
             <div class="properties-left" ng-conroller="ControllerPropertiesLeft">
               <div ng-repeat="property in segment.properties" class="interaction-property" ng-class="InteractionPropertyClass(property)" ng-controller="ControllerPropertyProperty" ng-include="PropertyUrl(property)"></div>
@@ -548,6 +574,7 @@ $if -fieldregex'form'='^$'$
         <h2 ng-click="showSubs()"  ng-class="{active: subscontent}">My Subscriptions</h2>
         <div ng-show="subscontent">
           <div class="s-container" >
+		    <div ng-show="subscriptionmsg" class="submitedsuccess" >{{subscriptionmsg}}</div>
             <h3 ng-cloak>Mailing Lists</h3>
             <div ng-cloak >
               <div class="table-row table-row-head">
@@ -608,7 +635,6 @@ $if -fieldregex'form'='^$'$
       </div>
     </div>
   </script>
-
   $include -placeholder'customerportal-footer'$
   $include -placeholder'interaction-properties' -indent'  '$
   $include -placeholder'common-javascript' -indent'  '$
@@ -671,7 +697,7 @@ app.controller('ControllerTab', ['$scope', '$location', '$rootScope', function (
   };
 }]);
 
-app.controller('ControllerFALogin', ['$scope', '$window', '$route', '$http', '$rootScope', function ($scope, $window, $route, $http, $rootScope) {
+app.controller('ControllerFALogin', ['$scope', '$window', '$route', '$http','$timeout', '$rootScope', function ($scope, $window, $route, $http,$timeout, $rootScope) {
   $scope.$window = $window;
   $scope.toggleLogin = true;
   $scope.toggleRegister = true;
@@ -741,6 +767,7 @@ app.controller('ControllerFALogin', ['$scope', '$window', '$route', '$http', '$r
     $scope.errors = [];
     $scope.Loading = iservice.Logout($http, function (data) {
       iservice.ProcessLogin(data.loggedIn);
+      $scope.toggleRegister = true;
     }); 
   }
   $scope.loginshow = true;
@@ -762,6 +789,9 @@ app.controller('ControllerFALogin', ['$scope', '$window', '$route', '$http', '$r
       $scope.LoginRunning = iservice.LoginRegister($http, inputs, function (data) {
         if (data.errors && data.errors.length) {
           $scope.errorregister = data.errors;
+        }else{
+          $scope.successregister = "Your account has been created.";
+          $timeout(function () { $scope.successregister = ''; }, 4000); 
         }
         iservice.ProcessLogin(data.loggedIn);
         $scope.register = false;
@@ -909,12 +939,20 @@ app.controller('ControllerFindAnswers', ['$scope', '$http', '$window', '$sce', '
       $scope.ShowTopic(topic); 
     })) return;
     $scope.selectedTopic = topic;
+    
     $scope.Searching = iservice.FindAnswerArticles($http, topic.id, $scope.searchString, $scope.recursive, 1, 1000, null, function (data) {
       iservice.SanitizeHistoryRows(data.interactions);
       $scope.articleList = data.interactions;
+      $scope.newJson = [];
+      for (var j = 0; j < data.interactions.length; j++) {
+        $scope.newJson.push({ "id":data.interactions[j].id, "subject": data.interactions[j].subject, "date": data.interactions[j].date, "topicID": data.interactions[j].topicID, "topicName": data.interactions[j].topicName, "rating": data.interactions[j].rating, "viewCount":parseInt(data.interactions[j].viewCount), "public": data.interactions[j].public });
+      }
+      $scope.articleList = $scope.newJson;
       $scope.articleListval = data.interactions.length;
+      
       var p =1;
       for (var j = 0; j < data.interactions.length; j++) {
+        
         var x = (parseInt(p)) * $scope.pageSize;
         if (x <= j) {
           p = parseInt(p) + 1;
@@ -1072,6 +1110,7 @@ app.controller('ControllerMyDetails', ['$scope', '$route', '$http', '$rootScope'
     $scope.detailcontent = false;
   } 
   $scope.showContDetail = function () {
+    $scope.contactmsg = false;
     $scope.detailcontent = $scope.detailcontent ? false : true;
   }
   function LoadDetails() {
@@ -1091,6 +1130,8 @@ app.controller('ControllerMyDetails', ['$scope', '$route', '$http', '$rootScope'
       logins: iservice.CollectLogins($scope.segments)
     };
     $scope.Saving = iservice.FindAnswerMyDetailsSet($http, properties, function (data) {
+    if (data.errors && data.errors.length) {
+        }else{ $scope.contactmsg = 'Your changes have been saved';}
     });
   };
 }]);
@@ -1101,6 +1142,7 @@ app.controller('ControllerMySubscriptions', ['$scope', '$route', '$http', '$root
     $scope.subscontent = false;
   }
   $scope.showSubs = function () {
+    $scope.subscriptionmsg = false;
     $scope.subscontent = $scope.subscontent ? false : true;
   }
   function LoadSubscriptions() {
@@ -1122,7 +1164,10 @@ app.controller('ControllerMySubscriptions', ['$scope', '$route', '$http', '$root
       articleIDs: iservice.CollectItemIDs($scope.articles, 'id', 'isOnList')
     };
     $scope.Saving = iservice.FindAnswerMySubscriptionsSet($http, subscriptions, function (data) {
-      if (data.errors && data.errors.length) return;
+      if (data.errors && data.errors.length) {
+          return;
+        }else{ $scope.subscriptionmsg = 'Your changes have been saved';}
+       
       $scope.lists = data.lists;
       $scope.campaigns = data.campaigns;
       $scope.articles = data.articles;
@@ -1256,6 +1301,7 @@ ControllerWithID(app, 'ControllerArticle', 'Article');
   function dirPaginationControlsTemplateInstaller($templateCache) {
     $templateCache.put('angularUtils.directives.dirPagination.template', '<ul class="pagination" ng-if="1 < pages.length"><li ng-if="boundaryLinks" ng-class="{ disabled : pagination.current == 1 }"><a href="" ng-click="setCurrent(1)">PREVIOUS</a></li><li ng-if="directionLinks" ng-class="{ disabled : pagination.current == 1 }"><a href="" ng-click="setCurrent(pagination.current - 1)">PREVIOUS</a></li><li ng-repeat="pageNumber in pages track by $index" ng-class="{ active : pagination.current == pageNumber, disabled : pageNumber == \'...\' }"><a href="" ng-click="setCurrent(pageNumber)">{{ pageNumber }}</a></li><li ng-if="directionLinks" ng-class="{ disabled : pagination.current == pagination.last }"><a href="" ng-click="setCurrent(pagination.current + 1)">NEXT</a></li><li ng-if="boundaryLinks"  ng-class="{ disabled : pagination.current == pagination.last }"><a href="" ng-click="setCurrent(pagination.last)">NEXT</a></li></ul>');
   }
+
   function dirPaginationControlsDirective(paginationService, paginationTemplate) {
     var numberRegex = /^\d+$/;
     return {
@@ -1406,6 +1452,8 @@ ControllerWithID(app, 'ControllerArticle', 'Article');
       }
     }
   }
+
+
   function itemsPerPageFilter(paginationService) {
     return function(collection, itemsPerPage, paginationId) {
       if (typeof (paginationId) === 'undefined') {
@@ -1831,9 +1879,18 @@ nav.nav.topiclist .active, nav.topiclist .subtopics:hover,.subsubtopics .panel-b
 .box { width: 90%;}
 .box_wrap .l_row { width: 33%; float: left;}
 .box_wrap .l_btn_row { width: 34%; float: left;}
+.child-details-info .ui-button{position:relative !important; font-family: "Roboto",sans-serif; font-size:14px; font-weight:normal;float:left;padding: 2px 2px;top:0 !important; border-radius:8px;}
 .uemail { background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA8AAAAMCAYAAAHKRddyAAAACXBIWXMAAAsTAAALEwEAmpwYAAAABGdBTUEAALGOfPtRkwAAACBjSFJNAAB6JQAAgIMAAPn/AACA6QAAdTAAAOpgAAA6mAAAF2+SX8VGAAABWUlEQVR42mLs6+ubx8DAYAgQQCxAwg2IuQACiBEoch7IYAAIIJCIAYgBEEAgkRQgrQzEFSA+QADBlUDBO4AAAik1BOL/QDwbiM8CBBALlPMdiFNBGCCAQFqKgIxeBuygDyCAmIBEGZQDsowRigOA+C8QFwEEEEgBG1TBHKjxILwBiJlBggABBLLiCpD+jcV4VoAAYoGq0sYi+RQggEBGOwOxHBA/ggq+h3pJFSCAQDqfAvFRINYDYj4gfgK11w8ggFigqq2B+AMQ34UGExgABBATmj3KyByAAAK59hWQFmUgAwAEEMhkMaiDQYF2nYD650DcA8T6IIsBAgik+S0Q7wXiX0BsBA1pRSCeDPXcOiA2g4pLAfEJIJ4GxH8AAogJGqmqQDwBygbFwmIgPgLEplCFlUD8Eyq3BhpAzAABxILDeTZQjBcABBBI824g9sIRxbgAKM1cBQgwAOupQYCHSww4AAAAAElFTkSuQmCC) no-repeat scroll 5px center #fff; }
 .c_text{ font-size: 12px; display: block; color: #535353; margin-bottom: 12px; float: left;}
 .sublink { width:100%;display:inline-block; padding-top: 10px;}
+.ui-button-text-icon-primary .ui-button-text, .ui-button-text-icons .ui-button-text { padding: 0 1em 0 1.6em; }
+.sharelink{position:relative;}
+.sharelink .slink { background: #f5f5f5 none repeat scroll 0 0; border: 1px solid #ccc; border-radius: 13px; cursor: pointer;  margin-top: 5px; padding: 5px 7px; }
+.sharelink span{float:left;}
+.sharelinkcontainer{ padding: 20px; border-radius: 7px; border:1px solid #ccc; margin-top:5px; width:199%; background:#f3f2f2;}
+.sharelinkcontainer input{border-radius: 3px; border:1px solid #999; width:200px;color:#999; width:100%;height:32px;padding:0px 8px 0px 8px;}
+.child-details-body .body-plain{ background: #fff none repeat scroll 0 0;    border: 1px solid #e6e4e4;    border-radius: 5px;    float: left;    margin-top: 10px;    min-height: 80px;    padding: 5px;    width: 97%;}
+
 @media (max-width: 1179px) {
 
 }
@@ -1937,4 +1994,3 @@ nav.nav.topiclist .active, nav.topiclist .subtopics:hover,.subsubtopics .panel-b
   }
 }
 $endif$
-
