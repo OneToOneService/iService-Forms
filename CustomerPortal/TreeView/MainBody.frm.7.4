@@ -180,7 +180,7 @@ $if -fieldregex'form'='^$'$
                   <div accordion-group="" ng-class="{isOpen: status.isOpen}"  ng-repeat="topic in topicarraylist" ng-init="status = {isOpen: true}" is-open="status.isOpen"  >
                     <div accordion-heading="">
                       <div class="xa" ng-class="{active: isActive(topic)}">
-                        <div ng-class="{isOpen: status.isOpen}" ng-click="ShowTopic(topic)" id="{{topic.id}}" ng-init="(topic.id==param2) ? ShowTopic(topic) : ''"  >{{topic.name}}({{topic.countRecurse}})</div>
+                        <div ng-class="{isOpen: status.isOpen}" ng-click="ShowTopic(topic)" id="{{topic.id}}">{{topic.name}}({{topic.countRecurse}})</div>
                       </div>
                     </div>
                     <div accordion="" close-others="false">
@@ -190,11 +190,11 @@ $if -fieldregex'form'='^$'$
                             <div ng-class="{isOpen: status.isOpen}" class="subsubtopiclist" ng-class="{active: isActive(subtopic)}" ng-click="ShowTopic(subtopic)" id="{{subsubtopic.id}}" >{{topic.subarray[$index].name}}({{topic.subarray[$index].countRecurse}})</div>
                           </div>
                           <ul>
-                            <li ng-repeat="subsubtopic in topic.subarray[$index].subarray" ng-click="ShowTopic(subsubtopic)" id="{{subsubtopic.id}}"  ng-init="(subsubtopic==param2) ? ShowTopic(subsubtopic) : ''" ng-class="{active: isActive(subsubtopic)}"> {{subsubtopic.name}}({{subsubtopic.countRecurse}})
+                            <li ng-repeat="subsubtopic in topic.subarray[$index].subarray" ng-click="ShowTopic(subsubtopic)" id="{{subsubtopic.id}}" ng-class="{active: isActive(subsubtopic)}"> {{subsubtopic.name}}({{subsubtopic.countRecurse}})
                             </li>
                           </ul>
                         </div>
-                        <div class="subtopics" ng-if="topic.subarray[$index].subarray.length <= 0" ng-click="ShowTopic(subtopic)" id="{{topic.subarray[$index].id}}"  ng-init="(topic.subarray[$index].id==param2) ? ShowTopic(subtopic) : ''"  ng-class="{active: isActive(subtopic)}" >
+                        <div class="subtopics" ng-if="topic.subarray[$index].subarray.length <= 0" ng-click="ShowTopic(subtopic)" id="{{topic.subarray[$index].id}}"  ng-class="{active: isActive(subtopic)}" >
                           {{topic.subarray[$index].name}}({{topic.subarray[$index].countRecurse}}) 
                         </div>  
                       </div>
@@ -242,7 +242,7 @@ $if -fieldregex'form'='^$'$
               </article>
             </section>
             <section class="search_results" >
-              <div class="t_content"   dir-paginate="article in articleList|orderBy:sortKey:reverse|filter:search|itemsPerPage:8" current-page="SelectedPage" ng-init="(article.id==param) ? ShowArticle(article,$index,'init') : ''" >
+              <div class="t_content"   dir-paginate="article in articleList|orderBy:sortKey:reverse|filter:search|itemsPerPage:8" current-page="SelectedPage" ng-init="(param != undefined)?(article.id==param) ? ShowArticle(article,$index,'init') : '':''" >
                 <div class="question" id="articleID{{article.id}}"  ng-click="ShowArticle(article,$index,'')">
                   <aside class="col1">
                     {{article.subject}}
@@ -873,6 +873,7 @@ app.controller('ControllerFindAnswers', ['$scope', '$http', '$window', '$sce', '
         topicByID[topics[i].id] = topics[i]; 
         if (topics[i].id == $scope.param2) { 
           $scope.match = 1;
+          $rootScope.initTopic = topics[i];
         }
       }
       for (var i = topics.length - 1; i >= 0; i--) {
@@ -924,7 +925,7 @@ app.controller('ControllerFindAnswers', ['$scope', '$http', '$window', '$sce', '
     $scope.selectedTopic = undefined;
     $scope.selectedArticle = undefined;
     $scope.articleList = undefined;
-    LoadTopics();
+    //LoadTopics();
   });
   function topfaq() {
     if (QueueArticleSearch(topfaq)) return;
@@ -1040,12 +1041,16 @@ app.controller('ControllerFindAnswers', ['$scope', '$http', '$window', '$sce', '
   $scope.hosturl = $location.absUrl().split('?')[0];
   $scope.showArticleInt = function() {
     if ($scope.match != 1) { 
-      if (topics[0].id != '') {
+      if (topics[0].id != '' && $scope.param2 == undefined) {
         $timeout(function() {
           $scope.ShowTopic(topics[0]);
         }, 0);
+      }
+    }else{
+        $timeout(function() {
+          $scope.ShowTopic($rootScope.initTopic);
+        }, 0);
       } 
-    }
   }
 }]);
 app.controller('ControllerAskAQuestion', ['$scope', '$http', '$rootScope', function ($scope, $http, $rootScope) {
