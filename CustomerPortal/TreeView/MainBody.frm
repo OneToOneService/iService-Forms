@@ -177,25 +177,25 @@ $if -fieldregex'form'='^$'$
             <nav class="nav topiclist" role="navigation" ng-class="myClass" >
               <div uib-accordion="" close-others="false">
                 <div ng-repeat="topicarraylist in topicArrya" on-finish-render="showArticleInt()">
-                  <div uib-accordion-group="" heading='{{topic.name}}({{topic.countRecurse}})'   ng-repeat="topic in topicarraylist" ng-init="status = {isOpen: true}" is-open="status.isOpen"  >
+                  <div uib-accordion-group="" heading='{{topic.name}}(<span id="udata_{{topic.id}}">{{topic.countRecurse}}</span>)'   ng-repeat="topic in topicarraylist" ng-init="status = {isOpen: true}" is-open="status.isOpen"  >
                     <div uib-accordion-heading="">
-                      <div class="xa" ng-class="{active: isActive(topic)}">
-                        <div  ng-click="ShowTopic(topic)" id="{{topic.id}}" ng-init="(topic.id==param2) ? ShowTopic(topic) : ''"  >{{topic.name}}({{topic.countRecurse}})</div>
+                      <div class="xa" >
+                        <div  ng-click="ShowTopic(topic)" class="topicheading" id="{{topic.id}}" ng-class="{active: isActive(topic) || activeid(topic)}" ng-init="(topic.id==param2) ? ShowTopic(topic) : ''"  >{{topic.name}}(<span id="udata_{{topic.id}}">{{topic.countRecurse}}</span>)</div>
                       </div>
                     </div>
-                    <div uib-accordion="" close-others="false">
+                    <div uib-accordion="" close-others="false"> 
                       <div ng-repeat="subtopic in topic.subarray" >
                         <div class="subsubtopics"  ng-if="topic.subarray[$index].subarray.length > 0" uib-accordion-group="nested" heading='ddddddd' ng-init="status = {isOpen: true}" is-open="status.isOpen">
                           <div uib-accordion-heading="" >
-                            <div  class="subsubtopiclist" ng-class="{active: isActive(subtopic)}" ng-click="ShowTopic(subtopic)" id="{{subsubtopic.id}}" >{{topic.subarray[$index].name}}({{topic.subarray[$index].countRecurse}})</div>
+                            <div  class="subsubtopiclist" ng-class="{active: isActive(subtopic)}" ng-click="ShowTopic(subtopic)" id="{{topic.subarray[$index].id}}" >{{topic.subarray[$index].name}}(<span id="udata_{{topic.subarray[$index].id}}">{{topic.subarray[$index].countRecurse}}</span>)</div>
                           </div>
                           <ul>
-                            <li ng-repeat="subsubtopic in topic.subarray[$index].subarray" ng-click="ShowTopic(subsubtopic)" id="{{subsubtopic.id}}"  ng-init="(subsubtopic==param2) ? ShowTopic(subsubtopic) : ''" ng-class="{active: isActive(subsubtopic)}"> {{subsubtopic.name}}({{subsubtopic.countRecurse}})
+                            <li ng-repeat="subsubtopic in topic.subarray[$index].subarray" ng-click="ShowTopic(subsubtopic)" id="{{subsubtopic.id}}"  ng-init="(subsubtopic==param2) ? ShowTopic(subsubtopic) : ''" ng-class="{active: isActive(subsubtopic)}"> {{subsubtopic.name}}(<span id="udata_{{subsubtopic.id}}">{{subsubtopic.countRecurse}}</span>)
                             </li>
                           </ul>
                         </div>
                         <div class="subtopics" ng-if="topic.subarray[$index].subarray.length <= 0" ng-click="ShowTopic(subtopic)" id="{{topic.subarray[$index].id}}"  ng-init="(topic.subarray[$index].id==param2) ? ShowTopic(subtopic) : ''"  ng-class="{active: isActive(subtopic)}" >
-                          {{topic.subarray[$index].name}}({{topic.subarray[$index].countRecurse}}) 
+                          {{topic.subarray[$index].name}}(<span id="udata_{{topic.subarray[$index].id}}">{{topic.subarray[$index].countRecurse}}</span>) 
                         </div>  
                       </div>
                     </div>
@@ -211,7 +211,7 @@ $if -fieldregex'form'='^$'$
             <nav class="nav topfaqlist" role="navigation" ng-class="myClassFaq">
               <ul class="nav__list">
                 <li ng-repeat="articles in articleListFaq" ng-if="$index < 5">
-                  <label ><span class="fa fa-angle-right"></span><a href="#/find-answers?articleID={{articles.id}}">{{articles.subject}}</a></label>
+                  <label ><span class="fa fa-angle-right"></span><a href="#/find-answers?topicID={{articles.topicID}}&articleID={{articles.id}}">{{articles.subject}}</a></label>
                 </li>
               </ul>
             </nav>
@@ -960,22 +960,24 @@ app.controller('ControllerFindAnswers', ['$scope', '$http', '$window', '$sce', '
       $timeout(FinishedArticleSearch);
     });
   }
-  $scope.ShowTopic = function (topic) {
+  $scope.ShowTopic = function (topic, ini) {
+    if(ini === 1){$scope.activeid = function(topicval){ if(topic.id == topicval.id) return true;}}else{$scope.activeid = function(topicval){ return false;}}
     if (QueueArticleSearch(function () { 
-      $scope.ShowTopic(topic); 
+      $scope.ShowTopic(topic,ini); 
     })) return;
     $scope.selectedTopic = topic;
     
     $scope.Searching = iservice.FindAnswerArticles($http, topic.id, $scope.searchString, $scope.recursive, 1, 1000, null, function (data) {
       iservice.SanitizeHistoryRows(data.interactions);
       $scope.articleList = data.interactions;
+      document.getElementById("udata_"+topic.id).innerHTML = data.interactions.length;
       $scope.newJson = [];
       for (var j = 0; j < data.interactions.length; j++) {
         $scope.newJson.push({ "id":data.interactions[j].id, "subject": data.interactions[j].subject, "date": data.interactions[j].date, "topicID": data.interactions[j].topicID, "topicName": data.interactions[j].topicName, "rating": data.interactions[j].rating, "viewCount":parseInt(data.interactions[j].viewCount), "public": data.interactions[j].public });
       }
       $scope.articleList = $scope.newJson;
       $scope.articleListval = data.interactions.length;
-      
+      $scope.t = '';
       var p =1;
       for (var j = 0; j < data.interactions.length; j++) {
         
@@ -1076,7 +1078,7 @@ app.controller('ControllerFindAnswers', ['$scope', '$http', '$window', '$sce', '
     if ($scope.match != 1) { 
       if (topics[0].id != '' && $scope.param2 == undefined) {
         $timeout(function() {
-          $scope.ShowTopic(topics[0]);
+          $scope.ShowTopic(topics[0],1);
         }, 0);
       }
     }else{
@@ -1590,6 +1592,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
 blockquote, q { quotes: none; }
 blockquote:before, blockquote:after, q:before, q:after { content: ''; content: none}
 li { display: list-item }
+
 head { display: none }
 table { display: table }
 tr { display: table-row }
@@ -1910,7 +1913,7 @@ nav.topiclist .subtopics { padding: 10px 10px 10px 54px;border-bottom: 1px solid
 .subtopics .subtopiclist { padding: 10px 10px 10px 54px; border-bottom: 1px solid #dfdede;}
 .subsubtopics .panel-heading { padding: 10px 30px;}
 .subsubtopics .panel-body ul li { padding: 10px 10px 10px 75px; border-bottom: 1px solid #dfdede;}
-nav.nav.topiclist .active, nav.topiclist .subtopics:hover,.subsubtopics .panel-body ul li:hover { color: #6c7ae0; background:none;}
+nav.nav.topiclist .active, nav.topiclist .subtopics:hover, .topicheading:hover, .subsubtopiclist:hover, .subsubtopics .panel-body ul li:hover { color: #6c7ae0; background:none;}
 .mainbody { width: 100%; float: left; margin-bottom: 50px; margin-top: 14px; min-height: 500px;}
 .menu_arrow { display:none; }
 [grey-out] div.cover-button { position:fixed !important;}
