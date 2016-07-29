@@ -1,3 +1,4 @@
+
 $if -fieldregex'form'='^$'$
 <!DOCTYPE html>
 <html xmlns:ng="http://angularjs.org" id="ng-app" ng-app="iService">
@@ -77,7 +78,7 @@ $if -fieldregex'form'='^$'$
                       </span>
                     </span>
                     <span class="l_btn_row">
-                      <input type="submit" id="{{idPrefix}}forgotSend"   class="btn_okay" value="Submit"  />
+                      <input type="submit" ng-attr-id="{{idPrefix}}forgotSend"   class="btn_okay" value="Submit"  />
                       <input type="button"  class="btn_cancel" value="Cancel" ng-click="reset(login)" />
                     </span>
                     <span class="box-title" >
@@ -89,7 +90,7 @@ $if -fieldregex'form'='^$'$
                       <div class="password-reset-main-content">
                         Password reset confirmation email has been sent to the address:<br>
                         <div class="reset-address">{{reset.email}}</div>
-                        Please follow the included instructions, then click to <span id="{{idPrefix}}forgotRefresh" class="nglink" ng-click="ForgetRefresh()">Refresh</span> this page.
+                        Please follow the included instructions, then click to <span ng-attr-id="{{idPrefix}}forgotRefresh" class="nglink" ng-click="ForgetRefresh()">Refresh</span> this page.
                       </div>        
                       <div class="fade"></div>
                     </div>
@@ -134,7 +135,7 @@ $if -fieldregex'form'='^$'$
                         </span>
                         <span class="validation_error" ng-show="submittedregister && (registration.inputpasswordrequired1 == registration.inputpasswordrequired)">Confirm password must match</span>
                         <span class="l_btn_row">
-                          <input type="submit" id="{{idPrefix}}registerSend" class="btn_okay" value="Register Now"> 
+                          <input type="submit" ng-attr-id="{{idPrefix}}registerSend" class="btn_okay" value="Register Now"> 
                           <input type="button"  class="btn_cancel" value="Cancel" ng-click="resetregister(registration)" />
                         </span>
                         &nbsp;
@@ -176,30 +177,26 @@ $if -fieldregex'form'='^$'$
             <h2 class="">Topic List</h2>
             <nav class="nav topiclist" role="navigation" ng-class="myClass" >
               <div uib-accordion="" close-others="false">
-                <div ng-repeat="topicarraylist in topicArrya" on-finish-render="showArticleInt()">
-                  <div uib-accordion-group="" heading='{{topic.name}}(<span id="udata_{{topic.id}}">{{topic.countRecurse}}</span>)'   ng-repeat="topic in topicarraylist" ng-init="status = {isOpen: true}" is-open="status.isOpen"  >
+                <div ng-repeat="rootTopic in rootTopics">
+                  <div uib-accordion-group="" heading="{{rootTopic.name}}({{rootTopic.countRecurse}})" is-open="!rootTopic.collapsed">
                     <div uib-accordion-heading="">
-                      <div class="xa" >
-                        <div  ng-click="ShowTopic(topic)" class="topicheading" id="{{topic.id}}" ng-class="{active: isActive(topic) || activeid(topic)}" ng-init="(topic.id==param2) ? ShowTopic(topic) : ''"  >{{topic.name}}(<span id="udata_{{topic.id}}">{{topic.countRecurse}}</span>)</div>
+                      <div class="xa" ng-class="{active: isActive(rootTopic)}">
+                        <div ng-click="ShowTopic(rootTopic)" ng-attr-id="{{rootTopic.id}}" class="topic-link">{{rootTopic.name}}({{rootTopic.countRecurse}})</div>
                       </div>
                     </div>
-                    <div uib-accordion="" close-others="false"> 
-                      <div ng-repeat="subtopic in topic.subarray" >
-                        <div class="subsubtopics"  ng-if="topic.subarray[$index].subarray.length > 0" uib-accordion-group="nested" heading='ddddddd' ng-init="status = {isOpen: true}" is-open="status.isOpen">
+                    <div uib-accordion="" close-others="false">
+                      <div ng-repeat="childTopic in rootTopic.children" >
+                        <div class="subsubtopics" ng-if="childTopic.subchildren.length" uib-accordion-group="nested" heading='ddddddd' is-open="!childTopic.collapsed">
                           <div uib-accordion-heading="" >
-                            <div  class="subsubtopiclist" ng-class="{active: isActive(subtopic)}" ng-click="ShowTopic(subtopic)" id="{{topic.subarray[$index].id}}" >{{topic.subarray[$index].name}}(<span id="udata_{{topic.subarray[$index].id}}">{{topic.subarray[$index].countRecurse}}</span>)</div>
+                            <div class="subsubtopiclist topic-link" ng-class="{active: isActive(childTopic)}" ng-click="ShowTopic(childTopic)" ng-attr-id="{{childTopic.id}}" >{{childTopic.name}}({{childTopic.countRecurse}})</div>
                           </div>
                           <ul>
-                            <li ng-repeat="subsubtopic in topic.subarray[$index].subarray" ng-click="ShowTopic(subsubtopic)" id="{{subsubtopic.id}}"  ng-init="(subsubtopic==param2) ? ShowTopic(subsubtopic) : ''" ng-class="{active: isActive(subsubtopic)}"> {{subsubtopic.name}}(<span id="udata_{{subsubtopic.id}}">{{subsubtopic.countRecurse}}</span>)
-                            </li>
+                            <li ng-repeat="subTopic in childTopic.subchildren" ng-click="ShowTopic(subTopic)" ng-attr-id="{{subTopic.id}}" ng-class="{active: isActive(subTopic)}">{{subTopic.name}}({{subTopic.countRecurse}})</li>
                           </ul>
                         </div>
-                        <div class="subtopics" ng-if="topic.subarray[$index].subarray.length <= 0" ng-click="ShowTopic(subtopic)" id="{{topic.subarray[$index].id}}"  ng-init="(topic.subarray[$index].id==param2) ? ShowTopic(subtopic) : ''"  ng-class="{active: isActive(subtopic)}" >
-                          {{topic.subarray[$index].name}}(<span id="udata_{{topic.subarray[$index].id}}">{{topic.subarray[$index].countRecurse}}</span>) 
-                        </div>  
+                        <div class="subtopics topic-link" ng-if="!childTopic.subchildren.length" ng-click="ShowTopic(childTopic)" ng-attr-id="{{childTopic.id}}" ng-class="{active: isActive(childTopic)}">{{childTopic.name}}({{childTopic.countRecurse}})</div>  
                       </div>
                     </div>
-
                   </div>
                 </div>
               </div>
@@ -210,8 +207,8 @@ $if -fieldregex'form'='^$'$
             <h2 class="">Top FAQs</h2>
             <nav class="nav topfaqlist" role="navigation" ng-class="myClassFaq">
               <ul class="nav__list">
-                <li ng-repeat="articles in articleListFaq" ng-if="$index < 5">
-                  <label ><span class="fa fa-angle-right"></span><a href="#/find-answers?topicID={{articles.topicID}}&articleID={{articles.id}}">{{articles.subject}}</a></label>
+                <li ng-repeat="article in articleListFaq" ng-if="$index < 5">
+                  <label ><span class="fa fa-angle-right"></span><a href="#/find-answers?topicID={{article.topicID}}&articleID={{article.id}}">{{article.subject}}</a></label>
                 </li>
               </ul>
             </nav>
@@ -242,8 +239,8 @@ $if -fieldregex'form'='^$'$
               </article>
             </section>
             <section class="search_results" >
-              <div class="t_content"   dir-paginate="article in articleList|orderBy:sortKey:reverse|filter:search|itemsPerPage:8" current-page="SelectedPage" ng-init="(param != undefined)?(article.id==param) ? ShowArticle(article,$index,'init') : '':''" >
-                <div class="question" id="articleID{{article.id}}"  ng-click="ShowArticle(article,$index,'')">
+              <div class="t_content" dir-paginate="article in articleList|orderBy:sortKey:reverse|filter:search|itemsPerPage:8" current-page="SelectedPage">
+                <div class="question" id="articleID{{article.id}}" ng-click="ShowArticle(article)">
                   <aside class="col1">
                     {{article.subject}}
                   </aside>
@@ -260,54 +257,60 @@ $if -fieldregex'form'='^$'$
                     {{article.rating}}
                   </aside>
                 </div>
-                <div class="article-details" ng-cloak ng-show="SeeArticle(article,$index)">
-                  <div id="first_ans" class="ans article-details" ng-cloak style="display: block;" >
-                    <aside class="ans_in">
-                      <img class="ans_arrow" width="22" height="18" title="" alt="" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABYAAAASCAMAAABo+94fAAAAz1BMVEX////MzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzd3d3Z2dni4uLW1tbm5ubMzMzr6+vPz8/Q0NDQ0NDPz8/w8PDMzMzOzs7MzMzMzMz09PTNzc3MzMzMzMzMzMzNzc3Nzc34+PjMzMzMzMzMzMz8/PzMzMzMzMzMzMzMzMzMzMz///+D0GoAAAAARHRSTlMAAQIECAoPERMXGyEoLDU9TFVXW2BrdXmAiJaZoamwsre6vL/AwMPDxcjOzs/Q0NPW2NnZ2tvc3d/g5Ovs7fHy9vn9/qTS6xoAAACfSURBVBjTbc9HAoIwFEXR2Ltib1iBIKKIxF6w/f2vyUgQE/AOz+g9hKaOhP70IIdqPMrXE7k0ozyzwF12UmHuKQCuLSdD3MBAHQ8zIhdt+IQnBYETd49B25cE3xHm+rbC89hgDMamxnFX8RnIuf5jyYTA561gaPYYMD3Q/3LsBpybctr3lcU54FGe8UDjGdR1zuO2KjDoThm9aAsI+fMNUo8uTB28rI4AAAAASUVORK5CYII=" />
-                      <span class="label">Question:</span>
-                      <div class="article-body" ng-bind-html="selectedArticle.data.questionSafe"></div>
-                      <span class="label">Answer:</span>
-                      <div class="article-body" ng-bind-html="selectedArticle.data.answerSafe"></div>
-                      <span ng-show="selectedArticle.data.attachments.length" class="attachments">
-                        <span class="label">Attachments:</span>
-                        <p ng-repeat="file in selectedArticle.data.attachments"><a href="{{rootPath}}File.aspx?interactionID={{selectedArticle.id}}&fileID={{file.attachmentID}}">{{file.name}}</a></p>
-                      </span>
-                      <aside class="articleDetail">
-                        <span class="label">Article Details</span>
-                        <aside class="detail">
-                          <aside class="row">
-                            <aside class="dcol">
-                              Article ID - <span ng-bind-html="selectedArticle.data.articleIdSafe"></span>
-                            </aside> 
-                            <aside class="dcol">
-                              Date Updated -<span>{{datet|amDateFormat:'YYYY-MM-DD h:mm:ss A'}}</span>
-                            </aside> 
-                            <aside class="dcol">
-                              #Views - <span ng-bind-html="selectedArticle.data.viewSafe"></span>
-                            </aside> 
-                            <aside class="dcol">
-                              Article Creator - <span ng-bind-html="selectedArticle.data.createdBySafe"></span>
-                            </aside> 
-                            <aside class="dcol sharelink">
-                              <span ng-click="sharetoggle = !sharetoggle" class="slink" ng-class="{linkactive:sharetoggle}">Share link to article</span>
-                              <span class="sharelinkcontainer" ng-show="sharetoggle">
-                                <input type="text" value="{{hosturl}}?topicID={{article.topicID}}&articleID={{article.id}}">
-                              </span>
-                            </aside> 
-                          </aside> 
-                        </aside>
-                      </aside>  
-                    </div>
-                  </div>
-                </div>
-                <span ng-show="!articleList.length"  ng-cloak >No Articles</span>
-              </section>
-            </div>
-            <div grey-out ng-show="Searching()"></div>
-         </div>
+                <div class="article-details" ng-cloak ng-include="ArticleDetailsUrl(article)"></div>
+              </div>
+              <span ng-show="!articleList.length"  ng-cloak >No Articles</span>
+            </section>
+          </div>
+          <div grey-out ng-show="Searching()"></div>
+        </div>
       </section>
     </div>
   </script>
+
+  <script type="text/ng-template" id="article-details.html">
+    <div class="article-details">
+      <div id="first_ans" class="ans article-details" ng-cloak style="display: block;" >
+        <aside class="ans_in">
+          <img class="ans_arrow" width="22" height="18" title="" alt="" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABYAAAASCAMAAABo+94fAAAAz1BMVEX////MzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzd3d3Z2dni4uLW1tbm5ubMzMzr6+vPz8/Q0NDQ0NDPz8/w8PDMzMzOzs7MzMzMzMz09PTNzc3MzMzMzMzMzMzNzc3Nzc34+PjMzMzMzMzMzMz8/PzMzMzMzMzMzMzMzMzMzMz///+D0GoAAAAARHRSTlMAAQIECAoPERMXGyEoLDU9TFVXW2BrdXmAiJaZoamwsre6vL/AwMPDxcjOzs/Q0NPW2NnZ2tvc3d/g5Ovs7fHy9vn9/qTS6xoAAACfSURBVBjTbc9HAoIwFEXR2Ltib1iBIKKIxF6w/f2vyUgQE/AOz+g9hKaOhP70IIdqPMrXE7k0ozyzwF12UmHuKQCuLSdD3MBAHQ8zIhdt+IQnBYETd49B25cE3xHm+rbC89hgDMamxnFX8RnIuf5jyYTA561gaPYYMD3Q/3LsBpybctr3lcU54FGe8UDjGdR1zuO2KjDoThm9aAsI+fMNUo8uTB28rI4AAAAASUVORK5CYII=" />
+          <span class="label">Question:</span>
+          <div class="article-body" ng-bind-html="selectedArticle.data.questionSafe"></div>
+          <span class="label">Answer:</span>
+          <div class="article-body" ng-bind-html="selectedArticle.data.answerSafe"></div>
+          <span ng-show="selectedArticle.data.attachments.length" class="attachments">
+            <span class="label">Attachments:</span>
+            <p ng-repeat="file in selectedArticle.data.attachments"><a href="{{rootPath}}File.aspx?interactionID={{selectedArticle.id}}&fileID={{file.attachmentID}}">{{file.name}}</a></p>
+          </span>
+          <aside class="articleDetail">
+            <span class="label">Article Details</span>
+            <aside class="detail">
+              <aside class="row">
+                <aside class="dcol">
+                  Article ID - {{selectedArticle.data.id}}
+                </aside> 
+                <aside class="dcol">
+                  Date Updated -<span>{{selectedArticle.data.date|amDateFormat:'YYYY-MM-DD h:mm:ss A'}}</span>
+                </aside> 
+                <aside class="dcol">
+                  #Views - {{selectedArticle.data.viewCount}}
+                </aside> 
+                <aside class="dcol">
+                  Article Creator - {{selectedArticle.data.creatorName}}
+                </aside> 
+                <aside class="dcol sharelink">
+                  <span ng-click="selectedArticle.data.sharetoggle = !selectedArticle.data.sharetoggle" class="slink" ng-class="{linkactive:selectedArticle.data.sharetoggle}">Share link to article</span>
+                  <span class="sharelinkcontainer" ng-show="selectedArticle.data.sharetoggle">
+                    <input type="text" value="{{hosturl}}?topicID={{selectedArticle.topicID}}&articleID={{selectedArticle.id}}">
+                  </span>
+                </aside> 
+              </aside> 
+            </aside>
+          </aside>
+        </aside>  
+      </div>
+    </div>
+  </script>
+
   <script type="text/ng-template" id="askquestion.html">
     <div class="askquestion_content" >
       <div class="page askqu">
@@ -375,7 +378,7 @@ $if -fieldregex'form'='^$'$
           <div class="page-links pagination">
             <ul>
               <li ng-repeat="page in pageNums" ng-controller="ControllerPageLink">
-                <span id="{{idPrefix}}link" ng-class="PageLinkClass(page)" ng-click="SelectPage(page)">{{page}}</span> 
+                <span ng-attr-id="{{idPrefix}}link" ng-class="PageLinkClass(page)" ng-click="SelectPage(page)">{{page}}</span> 
               </li>
             </ul>   
           </div>
@@ -408,7 +411,7 @@ $if -fieldregex'form'='^$'$
             <div class="list-history-row-container"> 
               <div class="thread-root interaction-type-history" ng-class="InteractionType(thread.type)"  ng-click="ThreadExpandClick(thread)">
                 <div class="column-expand thread-expander-history">
-                  <div id="{{idPrefix}}expand" class="expander-image list-expand" ng-click="ThreadExpandClick(thread)"></div>
+                  <div ng-attr-id="{{idPrefix}}expand" class="expander-image list-expand" ng-click="ThreadExpandClick(thread)"></div>
                 </div>
                 <div class="column-subject thread-subject-history">{{ thread.subject }}</div>
                 <div class="column-type thread-type-history">{{ thread.type }}</div>
@@ -424,7 +427,7 @@ $if -fieldregex'form'='^$'$
   <script type="text/ng-template" id="history-thread-open.html">
     <div class="thread-root interaction-type-history" ng-class="InteractionType(thread.type)" ng-click="ThreadExpandClick(thread)">
       <div class="column-expand thread-expander-history">
-        <div id="{{idPrefix}}expand" class="expander-image list-contract" ng-click="ThreadExpandClick(thread)"></div>
+        <div ng-attr-id="{{idPrefix}}expand" class="expander-image list-contract" ng-click="ThreadExpandClick(thread)"></div>
       </div>
       <div class="column-subject thread-subject-history">{{ thread.subject }}</div>
       <div class="column-type thread-type-history"></div>
@@ -437,7 +440,7 @@ $if -fieldregex'form'='^$'$
   <script type="text/ng-template" id="history-child-closed.html">
     <div  ng-click="ChildExpandClick(child)" class="sublink">
       <div class="child-expander" >
-        <div id="{{idPrefix}}expand" class="expander-image list-expand"></div>
+        <div ng-attr-id="{{idPrefix}}expand" class="expander-image list-expand"></div>
         <div grey-out ng-show="ChildExpandRunning()"></div>
       </div>
       <div class="column-subject child-subject">{{ child.subject }}</div>
@@ -446,13 +449,13 @@ $if -fieldregex'form'='^$'$
     </div>
   </script> 
   <script type="text/ng-template" id="history-child-open.html">
-    <div ng-repeat="details in [child.details]" ng-controller="ControllerHistoryChildOpen" class="child-details-container">
+    <div ng-repeat="details in [child.details]" ng-controller="ControllerInteractionDetails" class="child-details-container">
       <div class="child-details" ng-class="ActionClass()">
         <div>
           <div class="child-header">
             <div class="child-open-header" ng-click="ChildExpandClick(child)">
               <div class="child-open-expander">
-                <div id="{{idPrefix}}expand" class="expander-image list-contract" ></div>
+                <div ng-attr-id="{{idPrefix}}expand" class="expander-image list-contract" ></div>
               </div>
               <div class="column-subject-h child-open-subject">{{ child.subject }}</div>
               <div class="column-type-h child-open-type">{{ child.type }}</div>
@@ -468,26 +471,19 @@ $if -fieldregex'form'='^$'$
             <div ng-include="InfoUrl()"></div>
           </div>
         </div>
-        <div class="child-details-actions">
+        <div class="interaction-details-actions">
           <div ng-include="ActionsUrl()"></div>
         </div>
       </div>
       <div grey-out ng-show="ActionRunning()"></div>
     </div>
   </script>
-  <script type="text/ng-template" id="child-details-actions.html">
-    <div class="child-details-actions">
+  <script type="text/ng-template" id="interaction-details-actions.html">
+    <div class="interaction-details-actions">
       <div class="options">
         <span ng-class="{nglink: !details.displayPlain}" ng-click="details.displayPlain = true">Plain</span> -- 
         <span ng-class="{nglink: details.displayPlain}" ng-click="details.displayPlain = false">Html</span> -- 
         <span class="nglink" ng-click="details.showAudit = !details.showAudit">Status Audit</span>
-      </div>
-      <div ng-hide="true">
-        Take Action: <span class="nglink" ng-click="StartAgentEmail()">Agent Email</span> -- 
-        <span class="nglink" ng-click="StartNote()">Create Note</span> -- 
-        <span class="nglink" ng-click="StartTicket()">Create Ticket</span> 
-        <span ng-show="CanSaveResolve()"> -- <span class="nglink" ng-click="StartSaveResolve()">Save & Resolve</span></span>
-        <span> -- <span class="nglink" ng-click="StartForwardEmail()">Forward Email</span></span>
       </div>
       <div class="options-end"></div>
       <div class="detail_audit" ng-show="details.showAudit">
@@ -516,23 +512,15 @@ $if -fieldregex'form'='^$'$
 
 
 
-  <script type="text/ng-template" id="child-details-body-history.html">
+  <script type="text/ng-template" id="interaction-details-body.html">
     <div class="child-details-body">
-      <textarea ng-show="details.displayPlain" id="{{idPrefix}}plain" class="body-plain" ng-model="details.bodyPlain"></textarea>
-      <div ng-show="!details.displayPlain" id="{{idPrefix}}html" class="body-html" bind-html-compile="details.bodyHtml"></div>
+      <textarea ng-show="details.displayPlain" ng-attr-id="{{idPrefix}}plain" class="body-plain" ng-model="details.bodyPlain"></textarea>
+      <div ng-show="!details.displayPlain" ng-attr-id="{{idPrefix}}html" class="body-html" bind-html-compile="details.bodyHtml"></div>
       <div ng-show="details.note">Agent Notes:<br />
-        <textarea id="{{idPrefix}}note" class="note" ng-model="details.note"></textarea>
+        <textarea ng-attr-id="{{idPrefix}}note" class="note" ng-model="details.note"></textarea>
       </div>
     </div>
   </script>
-  <script type="text/ng-template" id="child-details-body-search.html">
-    <div class="bodies">
-      <textarea ng-show="details.displayPlain" id="{{idPrefix}}plain" class="body-plain" ng-model="details.bodyPlain"></textarea>
-      <div class="bodyhtml" ng-show="!details.displayPlain" id="{{idPrefix}}html" bind-html-compile="details.bodyHtml"></div>
-      <div class="note" ng-show="details.note">Agent Notes:<br /><textarea ng-model="details.note"></textarea></div>
-    </div>
-  </script>
-
   <script type="text/ng-template" id="contact-details.html">
     <div class="setting-container">   
       <div ng-show="!iservice.loggedIn.isLoggedIn">
@@ -553,15 +541,15 @@ $if -fieldregex'form'='^$'$
               <h3>Logins:</h3>
               <div class="loginc">
                 <div ng-repeat="login in segment.logins" ng-controller="ControllerPropertyLogin" class="login">
-                  <input id="{{idPrefix}}name" type="text" value="" ng-model="login.name" class="text-no-desc">
-                  <label><input id="{{idPrefix}}isEmail" type="checkbox" ng-model="login.isEmail">Is Email</label>
-                  <label><input id="{{idPrefix}}isBounced" type="checkbox" ng-model="login.isBounced">Is Bounced</label>
+                  <input ng-attr-id="{{idPrefix}}name" type="text" value="" ng-model="login.name" class="text-no-desc">
+                  <label><input ng-attr-id="{{idPrefix}}isEmail" type="checkbox" ng-model="login.isEmail">Is Email</label>
+                  <label><input ng-attr-id="{{idPrefix}}isBounced" type="checkbox" ng-model="login.isBounced">Is Bounced</label>
                 </div>
-                <button class="add-login" id="{{idPrefix}}addValue" type="button" ng-click="AddLoginClick(segment)">+</button>
+                <button class="add-login" ng-attr-id="{{idPrefix}}addValue" type="button" ng-click="AddLoginClick(segment)">+</button>
               </div>
             </div>
           </div>
-          <button ng-cloak class="save" id="{{idPrefix}}save" type="button" ng-click="SaveClick()">Save Details</button>
+          <button ng-cloak class="save" ng-attr-id="{{idPrefix}}save" type="button" ng-click="SaveClick()">Save Details</button>
 		  <div ng-show="contactmsg" class="submitedsuccess m20 inlin" >{{contactmsg}}</div>
           <div class="errors">
             <div ng-cloak ng-repeat="error in iservice.errors" class="error-messages">{{ error }}</div>
@@ -586,7 +574,7 @@ $if -fieldregex'form'='^$'$
               <div ng-repeat="list in lists" ng-controller="ControllerList" class="table-row">
                 <div class="list-name">{{ list.name }}</div>
                 <div class="list-desc">{{ list.description }}</div>
-                <div class="member-of"><input id="{{idPrefix}}IsOn" type="checkbox" ng-model="list.isOnList"></div>
+                <div class="member-of"><input ng-attr-id="{{idPrefix}}IsOn" type="checkbox" ng-model="list.isOnList"></div>
               </div>
               <div ng-show="!lists.length" class="table-row">
                 <div>No Mailing Lists</div>
@@ -604,7 +592,7 @@ $if -fieldregex'form'='^$'$
               <div ng-repeat="campaign in campaigns" ng-controller="ControllerCampaign" class="table-row">
                 <div class="list-name">{{ campaign.name }}</div>
                 <div class="list-desc">{{ campaign.description }}</div>
-                <div class="member-of"><input id="{{idPrefix}}IsOn" type="checkbox" ng-model="campaign.isOnList"></div>
+                <div class="member-of"><input ng-attr-id="{{idPrefix}}IsOn" type="checkbox" ng-model="campaign.isOnList"></div>
               </div>
               <div ng-show="!campaigns.length" class="table-row"><div colspan="3">No Campaigns</div></div>
             </div>
@@ -620,12 +608,12 @@ $if -fieldregex'form'='^$'$
               <div ng-repeat="article in articles" ng-controller="ControllerArticle" class="table-row">
                 <div class="list-name">{{ article.topic }}</div>
                 <div class="list-desc">{{ article.subject }}</div>
-                <div class="member-of"><input id="{{idPrefix}}IsOn" type="checkbox" ng-model="article.isOnList"></div>
+                <div class="member-of"><input ng-attr-id="{{idPrefix}}IsOn" type="checkbox" ng-model="article.isOnList"></div>
               </div>
               <div ng-show="!articles.length" class="table-row"><div colspan="3">No Articles</div></div>
             </div>
           </div>
-          <button ng-cloak class="save" id="{{idPrefix}}save" type="button" ng-click="SaveClick()">Save Subscriptions</button>
+          <button ng-cloak class="save" ng-attr-id="{{idPrefix}}save" type="button" ng-click="SaveClick()">Save Subscriptions</button>
 		  <div ng-show="subscriptionmsg" class="submitedsuccess inlin m20" >{{subscriptionmsg}}</div>
           <div class="errors" class="table-row">
             <div ng-cloak ng-repeat="error in iservice.errors" class="error-messages">{{ error }}</div>
@@ -647,7 +635,7 @@ $if -fieldregex'form'='^$'$
 </body>
 </html>
 $endif$$if -fieldregex'form'='^js$'$$header -filetype(js)$
-var app = angular.module('iService', ['iService.ng','iService.directive', 'angularUtils.directives.dirPagination', 'ngRoute', 'ui.bootstrap', 'angularMoment' ]);
+var app = angular.module('iService', ['iService.ng', 'iService.directive', 'angularUtils.directives.dirPagination', 'ngRoute', 'ui.bootstrap', 'angularMoment' ]);
 app.config(function ($routeProvider) {
   $routeProvider
   .when('/find-answers', {
@@ -679,19 +667,6 @@ app.config(function ($routeProvider) {
 })
 var loggedIn = $json -loginloggedin$; 
 iservice.ProcessLogin(loggedIn);
-var articleID;
-var toggle = 0;
-var change = 0;
-app.directive('onFinishRender', function ($timeout) {
-  return {
-    restrict: 'A',
-    link: function (scope, element, attr) {
-      if (scope.$last === true) {
-        scope.$evalAsync(attr.onFinishRender);
-      }
-    }
-  }
-});
 angular.module("uib/template/accordion/accordion-group.html", []).run(["$templateCache", function($templateCache) {
   $templateCache.put("uib/template/accordion/accordion-group.html",
     "<div class=\"panel\" ng-class=\"panelClass || 'panel-default'\">\n" +
@@ -708,13 +683,13 @@ angular.module("uib/template/accordion/accordion-group.html", []).run(["$templat
 
 
 
-app.controller('ControllerTab', ['$scope', '$location', '$rootScope', function ($scope, $location, $rootScope) {
+app.controller('ControllerTab', ['$scope', '$location', function ($scope, $location) {
   $scope.isActive = function (viewLocation) {
     return viewLocation === $location.path();
   };
 }]);
 
-app.controller('ControllerFALogin', ['$scope', '$window', '$route', '$http','$timeout', '$rootScope', function ($scope, $window, $route, $http,$timeout, $rootScope) {
+app.controller('ControllerFALogin', ['$scope', '$window', '$route', '$http','$timeout', function ($scope, $window, $route, $http, $timeout) {
   $scope.$window = $window;
   $scope.toggleLogin = true;
   $scope.toggleRegister = true;
@@ -873,10 +848,10 @@ function FinishedArticleSearch() {
     articleListQueue[0]();
   }
 }
-app.controller('ControllerFindAnswers', ['$scope', '$http', '$window', '$sce', '$rootScope', '$location', '$routeParams', '$timeout', '$filter', 'orderByFilter', function ($scope, $http, $window, $sce, $rootScope, $location, $routeParams, $timeout, $filter, orderByFilter) { 
+app.controller('ControllerFindAnswers', ['$scope', '$http', '$window', '$sce', '$location', '$routeParams', '$timeout', '$filter', 'orderByFilter', function ($scope, $http, $window, $sce, $location, $routeParams, $timeout, $filter, orderByFilter) { 
   $scope.pageSize = 8;
-  $scope.param = $routeParams.articleID;
-  $scope.param2 = $routeParams.topicID;
+  $scope.urlArticleID = $routeParams.articleID;
+  $scope.urlTopicID = $routeParams.topicID;
   $scope.SelectedPage = 1;
   $scope.sort = function(keyname){
     $scope.sortKey = keyname;   //set the sortKey to the param passed
@@ -885,118 +860,108 @@ app.controller('ControllerFindAnswers', ['$scope', '$http', '$window', '$sce', '
   $scope.recursive = true;
   $scope.myClass = []; 
   $scope.myClassFaq = []; 
-  $rootScope.firstTopicID = '';
+  $scope.rootTopics = [];
   function LoadTopics() {
     $scope.Loading = iservice.FindAnswerTopics($http, function (data) {
       var topics = data.topics;
-      $rootScope.topicList = topics;
+      var isRoot = {};
       var topicByID = {};
-      for (var i = 0; i < topics.length; i++) { 
-        topicByID[topics[i].id] = topics[i]; 
-        if (topics[i].id == $scope.param2) { 
-          $scope.match = 1;
-          $rootScope.initTopic = topics[i];
+      var curChild = null;
+      ForArray(topics, function (topic) {
+        topicByID[topic.id] = topic; 
+        var parent = topicByID[topic.parentID];
+        if (!parent) {
+          isRoot[topic.id] = true;
+          $scope.rootTopics.push(topic);
+          topic.children = [];
+        }
+        else if (isRoot[parent.id]) {
+          parent.children.push(topic);
+          topic.subchildren = [];
+          curChild = topic;
+        }
+        else {
+          curChild.subchildren.push(topic);
+        }
+      });
+      ForArray($scope.rootTopics, function (root) {
+        ForArray(root.children, function (child) {
+          ForArray(child.subchildren, function (subchild) {
+            child.countRecurse += subchild.countRecurse;
+          });
+          root.countRecurse += child.countRecurse;
+        });
+      });
+      $scope.topics = topics;
+      var urlTopic = topicByID[$scope.urlTopicID];
+      if (urlTopic) {
+        $scope.ShowTopic(urlTopic);
+      }
+      else {
+        for (var i = 0; i < $scope.rootTopics.length; i++) {
+          if ($scope.rootTopics[i].countRecurse) {
+            $scope.ShowTopic($scope.rootTopics[i]);
+            break;
+          }
         }
       }
-      for (var i = topics.length - 1; i >= 0; i--) {
-        var topic = topics[i];
-        var parent = topicByID[topic.parentID];
-        if (parent) parent.countRecurse += topic.countRecurse;
-      }
-      $scope.topics = topics;
-      $scope.topicArrya = [];
-      $scope.topicsubarray = [];
-      for (var i = 0; i < $scope.topics.length; i++) {
-        $scope.newarray = [];
-        $scope.objtoarray = []; 
-        for (var j = 0; j < $scope.topics.length; j++) { 
-          $scope.temparray=[]; 
-          if ($scope.topics[i]['id'] == $scope.topics[j]['parentID']) {
-            $scope.subarray = [];
-            for (var k = 0; k < $scope.topics.length; k++) {  
-              if ($scope.topics[j]['id'] == $scope.topics[k]['parentID']) {
-                $scope.subarray.push($scope.topics[k]);
-              }
-            }
-            $scope.topics[j]['subarray'] = $scope.subarray;
-            $scope.newarray.push($scope.topics[j]);
-          }
-        } 
-        if ($scope.topics[i]['parentID'] == '') {
-          $scope.objtoarray.push({ 
-            id: $scope.topics[i]['id'],
-            name: $scope.topics[i]['name'],
-            count: $scope.topics[i]['count'],
-            countRecurse: $scope.topics[i]['countRecurse'],
-            segmentName: $scope.topics[i]['segmentName'],
-            parentID: $scope.topics[i]['parentID'],
-            subarray: $scope.newarray
-          });
-        } 
-        if ($scope.objtoarray.length > 0) {
-          $scope.topicArrya.push($scope.objtoarray);
-        } 
-      }
+      topfaq();
     });
-
-    $rootScope.firstTopicID = topics[0].id;
-    topfaq();
   }
   LoadTopics();
   $scope.$watch('iservice.loggedIn.contactID', function(newValue, oldValue) {
+    if (newValue === oldValue) return;
     $scope.selectedTopic = undefined;
     $scope.selectedArticle = undefined;
     $scope.articleList = undefined;
-    LoadTopics();
-    if($scope.lastArticle != undefined || $scope.lastArticle !=''){
-      $scope.param = $scope.lastArticle.id;
-    }else{ $scope.param = ''; }
+    if ($scope.selectedArticle){
+      $scope.urlArticleID = $scope.selectedArticle.id;
+    } else { 
+      $scope.urlArticleID = ''; 
+    }
   });
   function topfaq() {
     if (QueueArticleSearch(topfaq)) return;
     $scope.recursive = true;
-    iservice.FindAnswerArticles($http, $rootScope.firstTopicID, $scope.searchString, $scope.recursive, 1, 5, 'RATING_REVERSE', function (data) {
+    iservice.FindAnswerArticles($http, $scope.rootTopics[0].id, $scope.searchString, $scope.recursive, 1, 5, 'RATING_REVERSE', function (data) {
       $scope.articleListFaq = data.interactions;
       $timeout(FinishedArticleSearch);
     });
   }
-  $scope.ShowTopic = function (topic, ini) {
-    if(ini === 1){$scope.activeid = function(topicval){ if(topic.id == topicval.id) return true;}}else{$scope.activeid = function(topicval){ return false;}}
+  $scope.ShowTopic = function (topic) {
     if (QueueArticleSearch(function () { 
-      $scope.ShowTopic(topic,ini); 
+      $scope.ShowTopic(topic); 
     })) return;
     $scope.selectedTopic = topic;
     
     $scope.Searching = iservice.FindAnswerArticles($http, topic.id, $scope.searchString, $scope.recursive, 1, 1000, null, function (data) {
       iservice.SanitizeHistoryRows(data.interactions);
       $scope.articleList = data.interactions;
-      document.getElementById("udata_"+topic.id).innerHTML = data.interactions.length;
       $scope.newJson = [];
       for (var j = 0; j < data.interactions.length; j++) {
         $scope.newJson.push({ "id":data.interactions[j].id, "subject": data.interactions[j].subject, "date": data.interactions[j].date, "topicID": data.interactions[j].topicID, "topicName": data.interactions[j].topicName, "rating": data.interactions[j].rating, "viewCount":parseInt(data.interactions[j].viewCount), "public": data.interactions[j].public });
       }
       $scope.articleList = $scope.newJson;
       $scope.articleListval = data.interactions.length;
-      $scope.t = '';
-      var p =1;
+      
+      var p = 1;
       for (var j = 0; j < data.interactions.length; j++) {
-        
         var x = (parseInt(p)) * $scope.pageSize;
         if (x <= j) {
-          p = parseInt(p) + 1;
+          p = p + 1;
         }
-        if ($scope.param == data.interactions[j].id) {
+        if ($scope.urlArticleID == data.interactions[j].id) {
           $scope.SelectedPage = p;
+          $timeout(function () { $scope.ShowArticle(data.interactions[j]); });
           break;
         }
       }
       $timeout(FinishedArticleSearch);
     });
-    $scope.selected = topic; 
-    $scope.isActive = function(topic) {
-      return $scope.selected === topic;
-    };
   }
+  $scope.isActive = function(topic) {
+    return $scope.selectedTopic === topic;
+  };
   function FixFilePath(article, member) {
     iservice.SanitizeInlineImageAttachments(article, member, article.attachments);
     article[member] = article[member].split('src="File.aspx?interactionID=').join('src="$value -rootpath$File.aspx?interactionID=');
@@ -1019,88 +984,39 @@ app.controller('ControllerFindAnswers', ['$scope', '$http', '$window', '$sce', '
       $scope.myClassFaq.pop('nav2');
     }
   };
-  $scope.SeeArticle = function (article, $index) {
-    if ($scope.selectedArticle === article) {
-      if (articleID == article.id && change ==1) {
-        return true;
-      }
-      if (articleID == article.id) {
-        return !toggle;
-      }
-      return true;
-    }
-    else return false;
+  $scope.ArticleDetailsUrl = function (article) {
+    if (!$scope.selectedArticle || !$scope.selectedArticle.data) return '';
+    return ($scope.selectedArticle.id === article.id) ? 'article-details.html' : '';
   }
-  $scope.ShowArticle = function (article, $index, init) {
-    $scope.sharetoggle = false;
+  $scope.ShowArticle = function (article) {
+    if ($scope.selectedArticle && $scope.selectedArticle.id == article.id) {
+      $scope.selectedArticle = null;
+      return;
+    }
     $scope.selectedArticle = article;
-    if (init == 'init') {
-      articleID = article.id;change  = 1;toggle = 0;
-      $scope.lastArticle =  article;
-      $scope.toggleOpen =  1;
-    }
-    else {
-      if (articleID != article.id) {
-        $scope.lastArticle =  article;
-        $scope.toggleOpen = 1;
-        articleID = article.id;
-        change = 1;
-        toggle = 0;
-      }
-      else {
-        $scope.lastArticle =  article;
-        $scope.toggleOpen = 1;
-        change = 0;
-        toggle = !toggle;
-        if (toggle) {
-          $scope.toggleOpen == 2;
-          $scope.lastArticle = '';
-          return false;
-        }
-      }
-    }
+    $scope.selectedArticle.data = null;
     $scope.Searching = iservice.FindAnswerDetails($http, article.id, function (data) {
       $scope.selectedArticle.data = data;
       FixFilePath(data, 'question');
       FixFilePath(data, 'answer');
       data.questionSafe = $sce.trustAsHtml(data.question);
       data.answerSafe = $sce.trustAsHtml(data.answer);
-      data.articleIdSafe = $sce.trustAsHtml(data.id); 
-      data.createdBySafe = $sce.trustAsHtml(data.creatorName);
-      data.ratingSafe = $sce.trustAsHtml(data.rating); 
-      data.dateSafe =  $sce.trustAsHtml(data.date);
-      $scope.datet = data.date;
-      data.viewSafe = $sce.trustAsHtml(data.viewCount);
     });
   }
   $scope.hosturl = $location.absUrl().split('?')[0];
-  $scope.showArticleInt = function() {
-    if ($scope.match != 1) { 
-      if (topics[0].id != '' && $scope.param2 == undefined) {
-        $timeout(function() {
-          $scope.ShowTopic(topics[0],1);
-        }, 0);
-      }
-    }else{
-        $timeout(function() {
-          $scope.ShowTopic($rootScope.initTopic);
-        }, 0);
-      } 
-  }
 }]);
-app.controller('ControllerAskAQuestion', ['$scope', '$http', '$rootScope', function ($scope, $http, $rootScope) {
-  $scope.topicList = [];
-  $rootScope.details = { topicID: '' };
+app.controller('ControllerAskAQuestion', ['$scope', '$http', function ($scope, $http) {
+  $scope.details = { topicID: '' };
   function LoadTopics() {
     $scope.Loading = iservice.FindAnswerTopics($http, function (data) {
       var topics = data.topics;
       $scope.topicsList = topics; 
-      $rootScope.details = { topicID: $scope.topicsList[0].id };
+      $scope.details = { topicID: $scope.topicsList[0].id };
     });
   }
   LoadTopics();
   $scope.$watch('details.topicID', function(newValue, oldValue) {
-    $scope.Searching = iservice.FindAnswerTopicProperties($http, $rootScope.details.topicID, function (data) {
+    $scope.Searching = iservice.FindAnswerTopicProperties($http, $scope.details.topicID, function (data) {
       iservice.SanitizePropertyGroups(data.properties);
       $scope.properties = data.properties;
     });
@@ -1125,7 +1041,7 @@ app.controller('ControllerAskAQuestion', ['$scope', '$http', '$rootScope', funct
     }
   }
 }]);
-app.controller('ControllerMyHistory', ['$scope', '$http', '$rootScope', function ($scope, $http, $rootScope) {
+app.controller('ControllerMyHistory', ['$scope', '$http', function ($scope, $http) {
   SetIDPrefix($scope, 'History');
   InstallControllerSortPaged($scope, { column: 'dateObj', ascend: false }, 10);
   $scope.HistoryChildrenFunc = iservice.FindAnswerHistoryChildren;
@@ -1141,10 +1057,9 @@ app.controller('ControllerMyHistory', ['$scope', '$http', '$rootScope', function
   LoadHistory();
   $scope.$watch('iservice.loggedIn.contactID', function (newValue, oldValue) {
     LoadHistory();
-
   });
 }]);
-app.controller('ControllerMyDetails', ['$scope', '$route', '$http', '$rootScope', function ($scope, $route, $http, $rootScope) {
+app.controller('ControllerMyDetails', ['$scope', '$route', '$http', function ($scope, $route, $http) {
   SetIDPrefix($scope, 'Details');
   $scope.detailcontent = true;
   if ($route.current.controller != 'ControllerMyDetails'){
@@ -1176,7 +1091,7 @@ app.controller('ControllerMyDetails', ['$scope', '$route', '$http', '$rootScope'
     });
   };
 }]);
-app.controller('ControllerMySubscriptions', ['$scope', '$route', '$http', '$rootScope', function ($scope, $route, $http, $rootScope) {
+app.controller('ControllerMySubscriptions', ['$scope', '$route', '$http', function ($scope, $route, $http) {
   SetIDPrefix($scope, 'Subscriptions');
   $scope.subscontent = true;
   if ($route.current.controller != 'ControllerMySubscriptions') {
@@ -1592,7 +1507,6 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
 blockquote, q { quotes: none; }
 blockquote:before, blockquote:after, q:before, q:after { content: ''; content: none}
 li { display: list-item }
-
 head { display: none }
 table { display: table }
 tr { display: table-row }
@@ -1806,7 +1720,7 @@ div.interaction-history div.thread-even, div.interaction-history div.thread-odd 
 .thread-children-history .child-details-container .child-details-info .interaction-details-properties { background:none; }
 .thread-children-history .child-details-container .child-details-info { width: 100%; float: left; }
 .thread-children-history .child-details-container .child-details-info .interaction-details-properties p { width: auto; float:left; padding: 2px 12px; background: #fff; border: 1px solid #e6e4e4; border-radius: 8px; margin-right: 10px; margin-bottom:10px;}
-.thread-children-history .child-details-container .child-details .child-details-actions { float: left; width: 100%;margin-bottom: 10px;}
+.thread-children-history .child-details-container .child-details .interaction-details-actions { float: left; width: 100%;margin-bottom: 10px;}
 .history-content-row .thread-children-history .thread-child-history { float: left; width: 98%;}
 .history-content-row .thread-children-history .thread-child-history .child-expander{ float: left; width: 6%;}
 .history-content-row .thread-children-history .thread-child-history .column-subject{ float: left; width: 56%;}
@@ -1816,16 +1730,11 @@ div.customer-details div.segment { clear: both; width: 700px; }
 div.customer-details div.properties-left { width: 320px; float: left; }
 div.customer-details div.properties-right { float: right; width: 320px; }
 .error-messages, .warning-messages{ float: left; width: 97%; padding: 6px 10px; margin-top: 12px; border-radius: 3px;   background: rgb(245, 199, 184); border: 1px solid rgb(241, 161, 161); color: rgb(143, 20, 20); font-size: 12px;}
-.child-details .child-details-actions .detail_audit { float: left; width: 100%; background: #fff; border: 1px solid #e6e4e4;width: 97%; border-radius: 5px; margin-top: 10px; margin-bottom: 10px;}
-.child-details .child-details-actions .detail_audit .auditheading div{width:15%;float:left;font-weight:bold;padding-left:2px;text-align: center; height: 24px; padding-top: 4px;}
-.child-details .child-details-actions .detail_audit  .auditheading{ float: left; width: 100%; background: #e6e4e4; border-radius: 5px 5px 0px 0px;font-size: 13px; }
-.child-details .child-details-actions .detail_audit .auditdetail{ float: left; width: 100%; font-size: 12px; }
-.child-details .child-details-actions .detail_audit .auditdetail div { width: 15%; float: left; padding-left: 8px; }
-.child-details-info .interaction-history-action-properties .vars { background: #fff; border: 1px solid #e6e4e4; border-radius:5px; margin-bottom: 10px;}
-.child-details-info .interaction-history-action-properties .vars input{ border: 1px solid #e6e4e4; border-radius: 5px; margin:10px 0px 10px 0px; color: #e6e4e4; width: 100%; padding: 5px 10px; }
-.child-details-info .interaction-history-action-properties .tabs .tab-active{ background: #2196f3; color: #fff; height: 26px;padding-bottom: 21px; border-radius: 5px 5px 0px 0px;}
-.child-details-info .interaction-history-action-properties .tabs .tab-inactive{ background: #a4a5a8; color: #fff; height: 26px;padding-bottom: 21px; border-radius: 5px 5px 0px 0px;}
-.child-details-info .interaction-history-action-properties .tabs span.nglink { color: #fff;}
+.child-details .interaction-details-actions .detail_audit { float: left; width: 100%; background: #fff; border: 1px solid #e6e4e4;width: 97%; border-radius: 5px; margin-top: 10px; margin-bottom: 10px;}
+.child-details .interaction-details-actions .detail_audit .auditheading div{width:15%;float:left;font-weight:bold;padding-left:2px;text-align: center; height: 24px; padding-top: 4px;}
+.child-details .interaction-details-actions .detail_audit  .auditheading{ float: left; width: 100%; background: #e6e4e4; border-radius: 5px 5px 0px 0px;font-size: 13px; }
+.child-details .interaction-details-actions .detail_audit .auditdetail{ float: left; width: 100%; font-size: 12px; }
+.child-details .interaction-details-actions .detail_audit .auditdetail div { width: 15%; float: left; padding-left: 8px; }
 .interaction-type-history .child-details .child-details-body .header-row { width: 100%; float: left; margin-bottom: 10px;}
 .interaction-type-history .child-details .child-details-body .header-row .label { width: 20%; min-width: 100px; float: left}
 .interaction-type-history .child-details .child-details-body .header-row  input { color: #a4a5a8; width: 80%; min-width: 100px; border: 1px solid #e6e4e4; border-radius: 4px; height: 28px; }
@@ -1913,7 +1822,7 @@ nav.topiclist .subtopics { padding: 10px 10px 10px 54px;border-bottom: 1px solid
 .subtopics .subtopiclist { padding: 10px 10px 10px 54px; border-bottom: 1px solid #dfdede;}
 .subsubtopics .panel-heading { padding: 10px 30px;}
 .subsubtopics .panel-body ul li { padding: 10px 10px 10px 75px; border-bottom: 1px solid #dfdede;}
-nav.nav.topiclist .active, nav.topiclist .subtopics:hover, .topicheading:hover, .subsubtopiclist:hover, .subsubtopics .panel-body ul li:hover { color: #6c7ae0; background:none;}
+nav.nav.topiclist .active, nav.nav.topiclist .active div:hover, nav.topiclist .subtopics:hover,.subsubtopics .panel-body ul li:hover, .topic-link { color: #6c7ae0; background:none;}
 .mainbody { width: 100%; float: left; margin-bottom: 50px; margin-top: 14px; min-height: 500px;}
 .menu_arrow { display:none; }
 [grey-out] div.cover-button { position:fixed !important;}
@@ -1963,9 +1872,9 @@ nav.nav.topiclist .active, nav.topiclist .subtopics:hover, .topicheading:hover, 
   .child-open-header .child-open-subject { width: 93%; }
   .history-content-row .thread-children-history .thread-child-history .column-subject { width: 92%; float: left; } 
   .child-open-header .child-open-type, .child-open-header .child-open-date { width: 44%; padding-left: 6%; }
-  .child-details .child-details-actions .detail_audit .auditheading{  width: 31%;}
-  .child-details .child-details-actions .detail_audit .auditdetail { width: 69%;}
-  .child-details .child-details-actions .detail_audit .auditheading div,.child-details .child-details-actions .detail_audit .auditdetail div { width: 100%;}
+  .child-details .interaction-details-actions .detail_audit .auditheading{  width: 31%;}
+  .child-details .interaction-details-actions .detail_audit .auditdetail { width: 69%;}
+  .child-details .interaction-details-actions .detail_audit .auditheading div,.child-details .child-details-actions .detail_audit .auditdetail div { width: 100%;}
   div.customer-details div.segment { width: 100%;}
   div.customer-details div.properties-right,div.customer-details div.properties-left,div.customer-details div.logins div.login{float: left; width: 98%}
   .interaction-property-list div.interaction-property,div.customer-details div.logins div.login input.text-no-desc{ width: 87%;}
