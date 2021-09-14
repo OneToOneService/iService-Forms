@@ -1,0 +1,1273 @@
+<script type="text/ng-template" id="customerportal-tabs-header.html">
+<header id="header" class="clearfix" style="float:left">
+   <div class="topcontainer">
+      <div id="logo">
+         <a title="iservice.us" href="https://iservice.us/">    <img id="dnn_dnnLOGO_imgLogo" width="136" height="26" title="" alt="iservice.us" style="margin-top:5px" src="https://iservice.us/wp-content/uploads/2020/04/logo.png" />
+         </a>
+      </div>
+      
+      <div id="main-nav" class="main-nav use-form-styles clearfix">
+         <div class="menucontainer" ng-class="{showheadermenu : togglemenu}">
+           <div class="responsivemenu" ng-class="{responsiveheadermenu : togglemenu}" ng-click="togglemenu = !togglemenu" ng-init="togglemenu = false">      <img width="32" height="32" title="" alt="" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAALEwAACxMBAJqcGAAAAPBJREFUWIXt1j9KA0EcxfFPVsQ2KPYKuYCEgJWN4jGsvIeooEdIkeQiWnoAQcFOG3v/dMEgsYiyYLYIvzUjCfOFbR7smzc/dt4OmUyMAhd4xxvO0EgZ4BjjX89RxKgIBtiv0A5SBniq0B6DXiE2cKcc/y2aEaM6H84q9r4D3GBUwyuzmOxigD46/7H4SHkKPtBOGWBgugm7EaNoEY1n1OZGx2TsP7sfYidiVKeI2sqfUs+kDTOLx0qNd9dwiBae8fkniWZkEw/KU3CP9ZQBLk0X0WnEKFpEWxXadsoA1xXaVdArRIFzvOIFJxJfyzPLwxcD2DUBcQ3X/gAAAABJRU5ErkJggg==" />
+           </div>
+	       <ul class="mobilemenu" ng-class="{showheadermenu : togglemenu}">
+               <li class="root">
+                  <a href="https://iservice.us/features/">Features</a>
+                  <ul class="submenu">
+                     <li><a href="https://iservice.us/features/messaging/">Messaging</a></li>
+                     <li><a href="https://iservice.us/features/customer-info/">Customer Info</a></li>
+                     <li><a href="https://iservice.us/features/customer-portals/">Customer Engagement Centers</a></li>
+                     <li><a href="https://iservice.us/features/omnichannel-support/">Omnichannel Support</a></li>
+                     <li><a href="https://iservice.us/features/business-intelligence/">Business Intelligence</a></li>
+                     <li><a href="https://iservice.us/features/integrations/">Integrations</a></li>
+                     <li><a href="https://iservice.us/features/email-marketing/">Email Marketing</a></li>
+                     <li><a href="https://iservice.us/features/live-chat/">Live Chat</a></li>
+                     <li><a href="https://iservice.us/features/knowledge-base/">Knowledge Base</a></li>
+                     <li><a href="https://iservice.us/features/agent-workspace-and-collaboration/">Agent Workspace</a></li>
+                     <li><a href="https://iservice.us/features/iservice-enterprise-features/">Enterprise Features</a></li>
+                     <li><a href="https://iservice.us/features/security/">Security</a></li>
+                  </ul>
+               </li>
+               <li class="root">
+                  <a href="http://1to1service.com/Solutions.html">Solutions</a>
+                  <ul class="submenu">
+                     <li><a href="https://iservice.us/business-development/">Business Development</a></li>
+                  </ul>
+               </li>
+               <li class="root">
+                  <a href="http://1to1service.com/Services.html">Resources</a>
+                  <ul class="submenu">
+                     <li><a href="https://1to1service.iservicecrm.com/f/customerportal-tabs">iService Help Center</a></li>
+                     <li><a href="https://www.iservice.info">iService User Guides</a></li>
+                     <li><a href="https://www.iservice.info/training.html">iService Online Training</a></li>
+                  </ul>
+               </li>
+               <li class="root"><a href="https://iservice.us/contact/">Contact</a></li>
+            </ul>
+         </div>
+      </div>
+      <div class="menu-right-option">
+         <div class="talk-btn">
+            <a class="raven-button raven-button-link" href="https://iservice.us/lets-talk/" target="_blank" rel="nofollow"> <span class="raven-button-content"> <span class="raven-button-align-icon-left raven-button-tablet-align-icon- raven-button-mobile-align-icon- raven-button-icon"> <i aria-hidden="true" class="fa fa-headphones"></i> </span> <span class="raven-button-text"> Let's talk </span> </span> </a>
+         </div>
+         <div class="social-share">
+            <div class="items">
+               <a href="https://www.facebook.com/iservice/" class="facebook"><i class="fa fa-facebook-f"></i></a>
+               <a href="https://twitter.com/iservicenews" class="twitter"><i class="fa fa-twitter"></i> </a>
+               <a href="https://www.linkedin.com/company/one-to-one-service.com" class="linkedin"><i class="fa fa-linkedin"></i></a>
+               <a href="https://www.youtube.com/channel/UCTOWJAJLFYkUSyZdy3FXDjg" class="youtube"><i class="fa fa-youtube-play"></i></a>
+            </div>
+         </div>
+      </div>
+	  
+   </div>
+</header>
+<div class="clearfix"></div>
+</script>
+<script type="text/ng-template" id="customerportal-tabs-footer.html">
+<section class="custom-footer">
+    <div class="footer-container">
+        <div class="footer-column">
+            <div class="logo"> <a class="logo" href="https://iservice.us"> <picture><img class="logo" alt="iService" data-no-lazy="1" src=" https://iservice.us/wp-content/uploads/2020/04/iservice-logo-white.png "></picture> </a></div>
+            <div class="footer-text"><p>Strengthen your customer link with better interactions</p></div>
+            <div class="social-icon">
+                <a href="https://www.facebook.com/iservice/"><i class="fa fa-facebook"></i></a>
+                <a href="https://twitter.com/iservicenews"><i class="fa fa-twitter"></i></a>
+                <a href="https://www.linkedin.com/company/one-to-one-service.com"><i class="fa fa-linkedin"></i></a>
+                <a href="https://www.youtube.com/channel/UCTOWJAJLFYkUSyZdy3FXDjg"><i class="fa fa-youtube-play"></i></a>
+            </div>
+        </div>
+        <div class="footer-column">
+            <span class="footer-heading-title">Top Features</span>
+            <div class="column-content">
+                <ul class="elementor-icon-list-items">
+                    <li> <a href="https://iservice.us/agent-workspace-and-collaboration"> <span>Agent Workspace &amp; Collaboration</span> </a></li>
+                    <li> <a href="https://iservice.us/business-intelligence"> <span>Business Intelligence</span> </a></li>
+                    <li> <a href="https://iservice.us/customer-info"> <span>Customer Info</span> </a></li>
+                    <li> <a href="https://iservice.us/customer-portals"> <span>Customer Engagement Centers</span> </a></li>
+                    <li> <a href="https://iservice.us/email-marketing"> <span>Email Marketing</span> </a></li>
+                    <li> <a href="https://iservice.us/features/iservice-enterprise-features/"> <span>Enterprise Features</span> </a></li>
+                    <li> <a href="https://iservice.us/integrations"> <span>Integrations</span> </a></li>
+                    <li> <a href="https://iservice.us/features/knowledge-base/"> <span>Knowledgebase</span> </a></li>
+                    <li> <a href="https://iservice.us/live-chat"> <span>Live chat</span> </a></li>
+                    <li> <a href="https://iservice.us/messaging"> <span>Messaging</span> </a></li>
+                    <li> <a href="https://iservice.us/omnichannel-support"> <span>Omnichannel Support</span> </a></li>
+                    <li> <a href="https://iservice.us/security"> <span>Security</span> </a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-column">
+            <span class="footer-heading-title">Resources</span>
+            <div class="column-content">
+                <ul class="elementor-icon-list-items">
+                    <li> <a href="https://1to1service.iservicecrm.com/f/customerportal-tabs#/support-home"> <span>iService Help Center</span> </a></li>
+                    <li> <a href="https://www.iservice.info/"> <span>iService User Guides</span> </a></li>
+                    <li> <a href="https://www.iservice.info/training.html"> <span>iService Online Training </span> </a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-column">
+            <span class="footer-heading-title">Solutions</span>
+            <div class="column-content">
+                <ul class="elementor-icon-list-items">
+                    <li> <a href="https://iservice.us/financial-services/"> <span>Financial Services</span> </a></li>
+                    <li> <a href="https://iservice.us/business-development/"> <span>Business Development</span> </a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-column">
+            <span class="footer-heading-title">Company</span>
+            <div class="column-content">
+                <ul class="elementor-icon-list-items">
+                    <li> <a href="https://iservice.us/contact/"> <span>Contact Us</span> </a></li>
+                    <li> <a href="https://1to1service.com"> <span>About Us</span> </a></li>
+                    <li> <a href="https://iservice.us/privacy-policy/"> <span>Privacy</span> </a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+</script>
+<script type="text/ng-template" id="customerportal-tabs-home-section1">
+<div class="row-container-full-width mtop30">
+<div class="container">
+ <div class="row">
+	<div class="col-md-12 mbottom40">
+		<h1 class="heading page-sub-heading text-left">iService User Guides</h1>
+		<p class="hero-description text-left">
+		  The user guides provide the most complete description of how to use and configure iService. This is the best place to start if you want a deeper understanding. Click an icon to load the user guide or try the quick search option.
+		</p>
+	</div>
+	<div class="col-lg-4 col-sm-6">
+	    <div class="box-container">
+	        <div class="icon-container">
+	            <a href="https://www.iservice.info/guides/users/index.html" target="_blank">
+	            <span class="c-icon">
+	                 <img class="icon agent" src="$value -rootpath$images/icon-sprite.png">
+	            </span>
+	            </a>   
+	        </div>    
+	        <div class="c-heading"> 
+	            Agent User Guide
+	        </div>
+	        <p class="p-detail" style="height: 50px;">    
+	            For agents that use or configure iService
+	        </p> 
+	        <a href="https://www.iservice.info/guides/users/index.html" class="read-more" target="_blank"> Read More</a> 
+			<div class="container-option">	
+				<div class="btn-option">
+					<a class="btn-custom" href="https://www.iservice.info/guides/users/userguide.pdf"><i class="fa fa-file-pdf-o"></i>	 PDF				
+					</a>
+					<a class="btn-custom" href="https://www.iservice.info/guides/users/userguide.epub"><i class="fa fa-mobile-phone"></i>	 iPad/iBook				
+					</a>
+				</div>
+				<div class="search-option">
+					<form name="documentation_search" method="GET" action="https://www.iservice.info/user_guide_search/search.html?zoom_query=access&amp;zoom_per_page=10&amp;zoom_and=1&amp;zoom_sort=0">
+						<div class="input-group input-group-sm">
+						  <input name="zoom_query" type="text" class="form-control">
+						  <span class="input-group-btn">
+							<button type="submit" class="btn btn-info btn-flat"><i class="fa fa-search"></i></button>
+						  </span>
+						</div>
+				     </form>	
+				</div>
+			</div>
+	    </div>    
+	</div>  
+
+	<div class="col-lg-4 col-sm-6 aos-init aos-animate" data-aos="fade-up">
+	    <div class="box-container">
+	        <div class="icon-container">
+	            <a href="https://www.iservice.info/guides/developers/index.html" target="_blank">
+	            <span class="c-icon">
+	               <img class="icon forms" src="$value -rootpath$images/icon-sprite.png">
+	            </span>   
+	            </a>
+	        </div>    
+	        <div class="c-heading"> 
+	           Forms Developer Guide
+	        </div>
+	        <p class="p-detail" style="height: 50px;">    
+	           Primarily for developers that create custom forms within iService
+	        </p> 
+	        <a href="https://www.iservice.info/guides/developers/index.html" class="read-more" target="_blank"> Read More</a>
+			<div class="container-option">	
+				<div class="btn-option">
+					<a class="btn-custom" href="https://www.iservice.info/guides/developers/developers.pdf"><i class="fa fa-file-pdf-o"></i> PDF				
+					</a>
+					<a class="btn-custom" href=" https://www.iservice.info/guides/developers/developers.epub"><i class="fa fa-mobile-phone"></i> iPad/iBook				
+					</a>
+				</div>
+				<div class="search-option">
+					<form name="documentation_search" method="GET" action="https://www.iservice.info/developers_guide_search/search.html?zoom_query=access&amp;zoom_per_page=10&amp;zoom_and=1&amp;zoom_sort=0">
+						<div class="input-group input-group-sm">
+						  <input name="zoom_query" type="text" class="form-control">
+						  <span class="input-group-btn">
+							<button type="submit" class="btn btn-info btn-flat"><i class="fa fa-search"></i></button>
+						  </span>
+						</div>
+				     </form>	
+				</div>
+			</div>
+	    </div>    
+	</div>   
+	<div class="col-lg-4 col-sm-6 aos-init aos-animate" data-aos="fade-up">
+	    <div class="box-container">
+	        <div class="icon-container">
+	            <a href="https://www.iservice.info/guides/technical/index.html" target="_blank"> 
+	            <span class="c-icon">
+	                <img class="icon administration" src="$value -rootpath$images/icon-sprite.png">
+	            </span> 
+	            </a>  
+	        </div>    
+	        <div class="c-heading"> 
+	            Technical Guide
+	        </div>
+	        <p class="p-detail" style="height: 50px;">    
+	           For on-premise administrators that install and upgrade iService
+	        </p> 
+	        <a href="https://www.iservice.info/guides/technical/index.html" class="read-more" target="_blank"> Read More</a> 
+			<div class="container-option">	
+				<div class="btn-option">
+					<a class="btn-custom" href="https://www.iservice.info/guides/technical/iService-Technical-Guide.pdf"><i class="fa fa-file-pdf-o"></i> PDF				
+					</a>
+					<a class="btn-custom" href="https://www.iservice.info/guides/technical/technicalguide.epub"><i class="fa fa-mobile-phone"></i>	 iPad/iBook				
+					</a>
+
+				</div>
+				<div class="search-option">
+					<form name="documentation_search" method="GET" action="https://www.iservice.info/technical_guide_search/search.html?zoom_query=access&amp;zoom_per_page=10&amp;zoom_and=1&amp;zoom_sort=0">
+						<div class="input-group input-group-sm">
+						  <input name="zoom_query" type="text" class="form-control">
+						  <span class="input-group-btn">
+							<button type="submit" class="btn btn-info btn-flat"><i class="fa fa-search"></i></button>
+						  </span>
+						</div>
+				     </form>	
+				</div>
+			</div>
+	    </div>    
+	</div>
+</div>
+</div>
+</div>
+</script>
+<script type="text/ng-template" id="customerportal-tabs-home-section2">
+<div class="row-container-full-width">
+  
+    <div class="row-container-full-width row-bg">
+	   <div class="container">
+	      <div class="col-md-12">
+			  <h1 class="heading page-sub-heading text-left"><span>Popular Knowledge Base Topics</span></h1>
+		  </div>
+	      <div class="col-md-12">
+		     <p class="hero-description text-left">
+			   Check the articles in these hot knowledge base topics for answers to common questions. For the full list of knowledge base articles,  <a href="/f/customerportal-tabs#/knowledge-base/all-articles">open the Knowledge Base</a></p>
+		  </div>
+          <div class="col-md-12">
+             <div class="hot-topic-box mtop30 mbottom40">
+			    <a href="/f/customerportal-tabs#/knowledge-base/1144">
+				  <img src="https://www.iservice.info/customer-portal/img/answering-question.png">
+				  <br><span>
+				  Answering Question</span>
+				</a>
+				 <a href="/f/customerportal-tabs#/knowledge-base/65">
+				  <img src="https://www.iservice.info/customer-portal/img/working-with-contacts.png">
+				  <br><span>
+				  Working With Contacts</span>
+				</a>
+				 <a href="/f/customerportal-tabs#/knowledge-base/53">
+				  <img src="https://www.iservice.info/customer-portal/img/email-processing.png">
+				  <br><span>
+				  Email Processing</span>
+				</a>
+				<a href="/f/customerportal-tabs#/knowledge-base/52">
+				  <img src="https://www.iservice.info/customer-portal/img/site-configuration.png">
+				  <br>
+				  <span>
+				  Site Configuration</span>
+				</a>
+			 </div>
+			 
+          </div>
+	   </div>
+	</div>
+</div>
+</script>
+<script type="text/ng-template" id="customerportal-tabs-home-section4">
+<div class="row-container-full-width">
+  <section id="services" class="section-padding">
+	<div class="container">
+        <div class="contents">
+		  <h2 class="heading page-sub-heading text-left">iService Training Courses</h2>
+		   <p class="hero-description">Training curriculum for current iService users of all levels.
+           </p>
+	    </div>
+        <div class="body-container">
+            <!--<div class="row">
+                <div class="col-md-12 text-center">
+                      <h1 class="heading page-heading">Training Videos</h1>
+                      <h3 class="heading-desc">User guides provide detailed information about the different roles for iService agents and administrator.</h3>
+                </div>  
+            </div> --> 
+
+            
+            <div class="row" id="accordion">
+                <div class="col-lg-12 col-sm-12" data-aos="fade-up">
+					 <h2 class="table-heading collapsed foundationCourse" data-toggle="collapse" data-parent="#accordion" href="#foundationCourse">
+						 <i class="fa fa-minus"></i>
+						 <i class="fa fa-plus"></i>
+						<span class="underline">iService Foundation Courses</span>
+					 </h2>
+					<p class="title_description">The foundation course curriculum provides important background details for all iService users. After completing these courses you will have a basic understanding of the core concepts of iService, with emphasis on how interactions are created and presented to users.
+					<br><br>
+					All users should complete the foundation course series as a prerequisite for other courses.
+
+					 </p>
+					 <div class="table-data-container table-responsive  collapse" id="foundationCourse">
+						<table id="example1" class="table table-striped table-hover dataTable no-footer" role="grid" aria-describedby="example1_info">
+							<thead>
+								<tr role="row">
+									<th class="no-sort sorting_disabled" name="name" rowspan="1" colspan="1" aria-label="" style="width: 32px;">
+										Id
+									</th>
+									<th class="no-sort sorting_disabled" name="name" rowspan="1" colspan="1" aria-label="" style="width: 32px;">
+										Course Name
+									</th>
+									<th class="no-sort sorting_disabled" name="name" rowspan="1" colspan="1" aria-label="" style="width: 32px;">
+										Description
+									</th>
+									 <th class="no-sort sorting_disabled" name="name" rowspan="1" colspan="1" aria-label="" style="width: 32px;">
+										Target Audience
+									</th>
+									<th class="no-sort sorting_disabled" align="center" name="name" rowspan="1" colspan="1" aria-label="" style="width: 32px;">
+									   
+									</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td>
+									  F1
+									</td>
+									<td>iService overview</td>
+									<td>This course follows the iService agent user guide and provides basic information about the core concepts of iService. It covers the following chapters within the introduction section of the user guide:
+									<br><br>
+									<ul class="table-list-item">
+										<li>iService core concepts</li>
+										<li>User types and roles</li>
+										<li>Working with data tables</li>
+										<li>Working with the rich text editor</li>
+										<li>The iService user interface</li>
+										<li>The iService style guide</li>
+										<li>Understanding contacts</li>
+										<li>Understanding topics</li>
+									</ul>
+								
+									</td>
+									<td>All Users</td>
+									<td align="right"><div class="video_thumb"><a href="https://www.iservice.info/training/intro/overview.html"  target="_blank"><img src="https://www.iservice.info/video_thumbs/overview-1.png">
+									  <img class="video-icon" style="display:none;" src="https://www.iservice.info/img/play-icon.png" alt="Play Icon">
+									  
+									</a><div class="video-duration">7m 07s</div></div>
+									<div class="thumb-text">Released May 25,2020</div>
+									</td>
+								</tr>
+								<tr>
+									<td>
+									   F2
+									</td>
+									<td>iService business rules</td>
+									<td>This course explains that some of the key business rules that are enforced within iService. This includes business rules related to contacts, departments, segments, and tenants.</td>
+									<td>All Users</td>
+									<td align="right"><div class="video_thumb"><a href="https://www.iservice.info/training/rules/businessrules.html"  target="_blank">
+										<img src="https://www.iservice.info/video_thumbs/iservice-business-rule-2.png">
+										<img class="video-icon" style="display:none;"  src="https://www.iservice.info/img/play-icon.png" alt="Play Icon">
+										</a>
+										<div class="video-duration">1m 59s</div>
+										</div>
+										<div class="thumb-text">Released May 25,2020</div>
+										
+									</td>
+								</tr>
+								<tr>
+									<td>
+									   F3
+									</td>
+									<td> Interaction types</td>
+									<td>
+									It's important to understand the various interaction types and statuses used by iService. Future courses in the foundation series assume that you have completed this course and have a thorough understanding of each interaction type, and the statuses they follow. We'll explain the various interaction types for questions, answers, and notifications.</td>
+									<td>All Users</td>
+									<td align="right"><div class="video_thumb">
+									<a href="https://www.iservice.info/training/types/interactiontypes.html"  target="_blank">
+									<img src="https://www.iservice.info/video_thumbs/interaction-types-and-statuses-3.png">
+									<img class="video-icon" style="display:none;"  src="https://www.iservice.info/img/play-icon.png" alt="Play Icon">
+									</a>
+									<div class="video-duration">5m 17s</div>
+									</div>
+									<div class="thumb-text">Released May 25,2020</div>
+									</td>
+								</tr>
+								<tr>
+									<td>
+									   F4
+									</td>
+									<td>Interaction timestamps</td>
+									<td>iService tracks timestamps for every interaction, including a detailed audit trail for any change in an interaction's status. This course explains the different ways that times are recorded and displayed in the user interface. This information is critical when researching history or searching for interactions. We review the various times displayed in the interface, and how to use the status audit panel for an interaction.
+</td>
+									<td>All Users</td>
+									<td align="right"><div class="video_thumb">
+									<a href="https://www.iservice.info/training/times/timestamps.html"  target="_blank">
+									<img src="https://www.iservice.info/video_thumbs/interaction-timestamps-4.png">
+									<img class="video-icon" style="display:none;"  src="https://www.iservice.info/img/play-icon.png" alt="Play Icon">
+									</a>
+									<div class="video-duration">8m 57s</div>
+									</div>
+									<div class="thumb-text">Released May 25,2020</div>
+									</td>
+								</tr>
+								<tr>
+									<td>
+									   F5
+									</td>
+									<td>The interaction view mode</td>
+									<td>
+Interaction history is always displayed using a common layout called the "View Mode". Understanding this layout is critical to working with iService. This course explains the various parts of the view mode and common actions that are available to perform the following: add an agent email, add a note, add a ticket, and forward the interaction to an email address. We also review the More Actions panel with the Show Status Audit, Show Full Case, Display Plain Text, and Print buttons.</td>
+									<td>All Users</td>
+									<td align="right"><div class="video_thumb">
+									<a href="https://www.iservice.info/training/viewmode/viewmode.html" target="_blank">
+									<img src="https://www.iservice.info/video_thumbs/interaction-view-mode-5.png">
+									<img class="video-icon" style="display:none;"  src="https://www.iservice.info/img/play-icon.png" alt="Play Icon">
+									</a>
+									<div class="video-duration">4m 47s</div>
+									</div>
+									<div class="thumb-text">Released May 25,2020</div>
+									</td>
+								</tr>
+								<tr>   
+									<td>
+									   F6
+									</td>
+									<td>The action mode </td>
+									<td>One of the most important tasks in iService is taking action on customer questions. This course reviews all of the actions available when interacting with a customer question. We explain each of the action buttons including: Send, Resolve, forward, Save, Chance Topic, and Spam.
+</td>
+									<td>All Users</td>
+									<td align="right"><div class="video_thumb">
+									<a href="https://www.iservice.info/training/actions/actions.html"  target="_blank">
+									<img src="https://www.iservice.info/video_thumbs/action-mode-6.png">
+									<img class="video-icon" style="display:none;"  src="https://www.iservice.info/img/play-icon.png" alt="Play Icon">
+									
+									</a><div class="video-duration">8m 0s</div>
+									</div>
+									<div class="thumb-text">Released May 25,2020</div>
+									</td>
+								</tr>
+								
+								
+								<tr>   
+									<td>
+									   F7
+									</td>
+									<td>The details and attachments tab</td>
+									<td>
+									The details and attachments tab is shown in both the view mode, and the action mode. This course explains where you'll find this tab and how to interpret its contents.
+
+									</td>
+									<td>All Users</td>
+									<td align="right"><div class="video_thumb">
+									<a href="https://www.iservice.info/training/details/details.html"  target="_blank">
+									<img src="https://www.iservice.info/video_thumbs/details-and-attachments-7.png">
+									<img class="video-icon" style="display:none;"  src="https://www.iservice.info/img/play-icon.png" alt="Play Icon">
+									
+									</a><div class="video-duration">3m 18s</div>
+									</div>
+									<div class="thumb-text">Released May 25,2020</div>
+									</td>
+								</tr>
+								
+								<tr>   
+									<td>
+									   F8
+									</td>
+									<td>The Interaction properties</td>
+									<td>
+									Interaction properties can be used for skills-based routing, or to provide additional information for agents. This video reviews the different types of interaction properties and explains the interaction properties tab in the view and action mode.
+
+									</td>
+									<td>All Users</td>
+									<td align="right"><div class="video_thumb">
+									<a href="https://www.iservice.info/training/properties/properties.html"  target="_blank">
+									<img src="https://www.iservice.info/video_thumbs/interaction-properties-8.png">
+									<img class="video-icon" style="display:none;"  src="https://www.iservice.info/img/play-icon.png" alt="Play Icon">
+									
+									</a><div class="video-duration">3m 32s</div>
+									</div>
+									<div class="thumb-text">Released May 25,2020</div>
+									</td>
+								</tr>
+								<tr>   
+									<td>
+									   F9
+									</td>
+									<td>Private Comments</td>
+									<td>
+									Agents can add private comments to interactions to help other agents understand the history of a conversation. They can also be used to pass information along to external agents.
+
+									</td>
+									<td>All Users</td>
+									<td align="right"><div class="video_thumb">
+									<a href="https://www.iservice.info/training/comments/comments.html"  target="_blank">
+									<img src="https://www.iservice.info/video_thumbs/private-comments-9.png">
+									<img class="video-icon" style="display:none;"  src="https://www.iservice.info/img/play-icon.png" alt="Play Icon">
+									
+									</a><div class="video-duration">1m 55s</div>
+									</div>
+									<div class="thumb-text">Released May 25,2020</div>
+									</td>
+								</tr>
+								<tr>   
+									<td>
+									   F10
+									</td>
+									<td>Variables and stock responses</td>
+									<td>
+									Variables can be used to streamline agent responses. Every contact and interaction property can be accessed through a variable, which is explained in this video.
+
+
+									</td>
+									<td>All Users</td>
+									<td align="right"><div class="video_thumb">
+									<a href="https://www.iservice.info/training/variables/variables.html"  target="_blank">
+									<img src="https://www.iservice.info/video_thumbs/variables-and-stock-responses-10.png">
+									<img class="video-icon" style="display:none;"  src="https://www.iservice.info/img/play-icon.png" alt="Play Icon">
+									
+									</a><div class="video-duration">2m 03s</div>
+									</div>
+									<div class="thumb-text">Released May 25,2020</div>
+									</td>
+								</tr>
+								<tr>   
+									<td>
+									   F11
+									</td>
+									<td>Full case view</td>
+									<td>
+									Conversations in iService are grouped into cases. This course reviews the full case view that is available in customer history, as well as the show full case button on every interaction.
+
+									</td>
+									<td>All Users</td>
+									<td align="right"><div class="video_thumb">
+									<a href="https://www.iservice.info/training/fullcase/fullcase.html"  target="_blank">
+									<img src="https://www.iservice.info/video_thumbs/full-case-view-11.png">
+									<img class="video-icon" style="display:none;"  src="https://www.iservice.info/img/play-icon.png" alt="Play Icon">
+									
+									</a><div class="video-duration">2m 59s</div>
+									</div>
+									<div class="thumb-text">Released May 25,2020</div>
+									</td>
+								</tr>
+								
+								
+								
+								<tr>   
+									<td>
+									   F12
+									</td>
+									<td>Access control for interactions</td>
+									<td>
+									iService limits access to interaction history and unresolved questions. This course reviews how this access control is implemented from an agent's perspective.
+
+									</td>
+									<td>All Users</td>
+									<td align="right"><div class="video_thumb">
+									<a href="https://www.iservice.info/training/access/access.html"  target="_blank">
+									<img src="https://www.iservice.info/video_thumbs/access-control-for-interactions-12.png">
+									<img class="video-icon" style="display:none;"  src="https://www.iservice.info/img/play-icon.png" alt="Play Icon">
+									
+									</a><div class="video-duration">3m 0s</div>
+									</div>
+									<div class="thumb-text">Released May 25,2020</div>
+									</td>
+								</tr>
+								
+								
+								<tr>   
+									<td>
+									   F13
+									</td>
+									<td>Assigning interactions</td>
+									<td>
+									Interactions must be assigned to an agent before they can compose a response. This course reviews the various ways to assign interactions to agents.
+
+									</td>
+									<td>All Users</td>
+									<td align="right">
+									<div class="video_thumb">
+									<a href="https://www.iservice.info/training/assigning/assigning.html"  target="_blank">
+									<img src="https://www.iservice.info/video_thumbs/assigning-interactions-13.png">
+									<img class="video-icon" style="display:none;"  src="https://www.iservice.info/img/play-icon.png" alt="Play Icon">
+									
+									</a><div class="video-duration">3m 49s</div>
+									</div>
+									<div class="thumb-text">Released May 25,2020</div>
+									</td>
+								</tr>
+								
+								
+								<tr>   
+									<td>
+									   F14
+									</td>
+									<td>Searching interactions</td>
+									<td>
+									iService provides an extensive search capability, which is explained in detail within this course.
+									</td>
+									<td>All Users</td>
+									<td align="right"><div class="video_thumb">
+									<a href="https://www.iservice.info/training/search/search.html"  target="_blank">
+									<img src="https://www.iservice.info/video_thumbs/searching-interactions-14.png">
+									<img class="video-icon" style="display:none;"  src="https://www.iservice.info/img/play-icon.png" alt="Play Icon">
+									
+									</a><div class="video-duration">3m 37s</div>
+									</div>
+									<div class="thumb-text">Released May 25,2020</div>
+									</td>
+								</tr>
+								
+							</tbody>
+						</table>
+					 </div>
+				
+				
+				    <h2 class="table-heading collapsed agentCourse" data-toggle="collapse" data-parent="#accordion" href="#agentCourse">
+						 <i class="fa fa-minus"></i>
+						 <i class="fa fa-plus"></i>
+						<span class="underline">Agent Interface Courses</span>
+					 </h2>
+					 <p class="title_description">The Agent Interface courses provide a detailed explanation for each of the user interfaces available to agents. These courses are organized based on user type. Agents that have additional access rights beyond CSR should complete all courses.
+
+					 </p>
+					 <div class="sub-courses collapse" id="agentCourse">
+					    <h2 class="table-heading collapsed customerInfo" data-toggle="collapse" data-parent="#accordion" href="#customerInfo">
+							 <i class="fa fa-minus"></i>
+							 <i class="fa fa-plus"></i>
+							<span class="underline">Working With Customer Info</span>
+						</h2>
+						<div class="table-data-container table-responsive  collapse" id="customerInfo">
+							<table id="example1" class="table table-striped table-hover dataTable no-footer" role="grid" aria-describedby="example1_info">
+								<thead>
+									<tr role="row">
+										<th class="no-sort sorting_disabled" name="name" rowspan="1" colspan="1" aria-label="" style="width: 32px;">
+											Id
+										</th>
+										<th class="no-sort sorting_disabled" name="name" rowspan="1" colspan="1" aria-label="" style="width: 32px;">
+											Course Name
+										</th>
+										<th class="no-sort sorting_disabled" name="name" rowspan="1" colspan="1" aria-label="" style="width: 32px;">
+											Description
+										</th>
+										 <th class="no-sort sorting_disabled" name="name" rowspan="1" colspan="1" aria-label="" style="width: 32px;">
+											Target Audience
+										</th>
+										<th class="no-sort sorting_disabled" align="center" name="name" rowspan="1" colspan="1" aria-label="" style="width: 32px;">
+										  
+										</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td>
+										  A1
+										</td>
+										<td>Logging into iService</td>
+										<td>This course covers the login and password change process for your tenant. 
+										</td>
+										<td>All Agents</td>
+										<td align="right"><div class="video_thumb">
+										<a href="https://www.iservice.info/training/login/login.html"  target="_blank">
+										<img src="https://www.iservice.info/video_thumbs/working-with-contacts-a1.png">
+										  <img class="video-icon" style="display:none;" src="https://www.iservice.info/img/play-icon.png" alt="Play Icon">
+										  
+										</a><div class="video-duration">1m 39s</div></div>
+										<div class="thumb-text">Released June 19,2020</div>
+										</td>
+									</tr>
+									<tr>
+										<td>
+										  A2
+										</td>
+										<td>Searching for Contacts</td>
+										<td>Learn how to efficiently locate contacts using the search options of iService. 
+										</td>
+										<td>All Agents</td>
+										<td align="right">
+										<div class="video_thumb">
+										<a href="https://www.iservice.info/training/searchcontacts/searchcontacts.html"  target="_blank">
+										  <img src="https://www.iservice.info/video_thumbs/chatting-with-customers-a2.png">
+										  <img class="video-icon" style="display:none;" src="https://www.iservice.info/img/play-icon.png" alt="Play Icon">
+										  
+										</a><div class="video-duration">2m 37s</div></div>
+										<div class="thumb-text">Released June 19,2020</div>
+										</td>
+									</tr>
+									<tr>
+										<td>
+										  A3
+										</td>
+										<td>Create a New Contact</td>
+										<td>This course shows you how to create a new contact. Concepts include contact properties available and setting segment membership for the contact. 
+										</td>
+										<td>All Agents</td>
+										<td align="right"><div class="video_thumb">
+										<a href="https://www.iservice.info/training/newcontact/newcontact.html"  target="_blank">
+										<img src="https://www.iservice.info/video_thumbs/my-work-queues-a3.png">
+										  <img class="video-icon" style="display:none;" src="https://www.iservice.info/img/play-icon.png" alt="Play Icon">
+										  
+										</a><div class="video-duration">1m 24s</div></div>
+										<div class="thumb-text">Released June 19,2020</div>
+										</td>
+									</tr>
+									<tr>
+										<td>
+										  A4
+										</td>
+										<td>Contact Summary and Details</td>
+										<td>The contact summary page provides an overview of the contact's information and interaction status. We'll review the information on this page, and learn about entering information into the Contact Details page. 
+										</td>
+										<td>All</td>
+										<td align="right"><div class="video_thumb">
+										<a href="https://www.iservice.info/training/summary/summary.html"  target="_blank">
+										<img src="https://www.iservice.info/video_thumbs/contact-summary-a4.png">
+										  <img class="video-icon" style="display:none;" src="https://www.iservice.info/img/play-icon.png" alt="Play Icon">
+										  
+										</a><div class="video-duration">3m 44s</div>
+										</div>
+										<div class="thumb-text">Coming soon</div>
+										</td>
+									</tr>
+									<tr>
+										<td>
+										  A5
+										</td>
+										<td>Contact Subscriptions</td>
+										<td>This course explains how subscriptions work, and how they are managed by agents and customers.
+										</td>
+										<td>CSR Manager</td>
+										<td align="right"><div class="video_thumb">
+										<a href="https://www.iservice.info/training/subscriptions/subscriptions.html"  target="_blank">
+										<img src="https://www.iservice.info/video_thumbs/contact-subscription-tab-a5.png">
+										  <img class="video-icon" style="display:none;" src="https://www.iservice.info/img/play-icon.png" alt="Play Icon">
+										  
+										</a><div class="video-duration">1m 46s</div>
+										</div>
+										<div class="thumb-text">Coming soon</div>
+										</td>
+									</tr>
+									<tr>
+										<td>
+										  A6
+										</td>
+										<td>Contact History</td>
+										<td>
+										    iService tracks every interaction that you have with your contacts. These interactions are displayed in a contact history page that has two modes for viewing: chronological and case. This course explains those two modes of contact history.
+										<td>All Agents</td>
+										<td align="right"><div class="video_thumb">
+										<a href="https://www.iservice.info/training/history/history.html"  target="_blank">
+										<img src="https://www.iservice.info/video_thumbs/contact-history-a6.png">
+										  <img class="video-icon" style="display:none;" src="https://www.iservice.info/img/play-icon.png" alt="Play Icon">
+										  
+										</a><div class="video-duration">2m 58s</div>
+										</div>
+										<div class="thumb-text">Coming soon</div>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						 </div>
+						 <div class="clearfix"></div>
+						 <h2 class="table-heading collapsed workQueue" data-toggle="collapse" data-parent="#accordion" href="#workQueue">
+							 <i class="fa fa-minus"></i>
+							 <i class="fa fa-plus"></i>
+							<span class="underline">My Work Queues</span>
+						</h2>
+						<div class="table-data-container table-responsive  collapse" id="workQueue">
+							<table id="example1" class="table table-striped table-hover dataTable no-footer" role="grid" aria-describedby="example1_info">
+								<thead>
+									<tr role="row">
+										<th class="no-sort sorting_disabled" name="name" rowspan="1" colspan="1" aria-label="" style="width: 32px;">
+											Id
+										</th>
+										<th class="no-sort sorting_disabled" name="name" rowspan="1" colspan="1" aria-label="" style="width: 32px;">
+											Course Name
+										</th>
+										<th class="no-sort sorting_disabled" name="name" rowspan="1" colspan="1" aria-label="" style="width: 32px;">
+											Description
+										</th>
+										 <th class="no-sort sorting_disabled" name="name" rowspan="1" colspan="1" aria-label="" style="width: 32px;">
+											Target Audience
+										</th>
+										<th class="no-sort sorting_disabled" align="center" name="name" rowspan="1" colspan="1" aria-label="" style="width: 32px;">
+										  
+										</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td>
+										  A7
+										</td>
+										<td>My Message Inbox</td>
+										<td>The My Message Inbox lists all questions that have been assigned to you. This course reviews the basic concepts of this page, including getting new questions and acting on them.
+										</td>
+										<td>All Users</td>
+										<td align="right"><div class="video_thumb">
+										<a href="https://www.iservice.info/training/myqueue/myqueue.html"  target="_blank">
+										<img src="https://www.iservice.info/video_thumbs/message-inbox-a1.png">
+										  <img class="video-icon" style="display:none;" src="https://www.iservice.info/img/play-icon.png" alt="Play Icon">
+										  
+										</a><div class="video-duration">2m 27s</div></div>
+										<div class="thumb-text">Released July 06,2020</div>
+										</td>
+									</tr>
+									<tr>
+										<td>
+										  A8
+										</td>
+										<td>My Pending Messages</td>
+										<td>This course explains the content within the my pending messages page, and covers the most common usage scenarios.</td>
+										<td>All Users</td>
+										<td align="right"><div class="video_thumb">
+										<a href="https://www.iservice.info/training/pending/pending.html"  target="_blank">
+										<img src="https://www.iservice.info/video_thumbs/my-pending-messages-a2.png">
+										  <img class="video-icon" style="display:none;" src="https://www.iservice.info/img/play-icon.png" alt="Play Icon">
+										  
+										</a><div class="video-duration">2m 18s</div></div>
+										<div class="thumb-text">Released July 06,2020</div>
+										</td>
+									</tr>
+									<tr>
+										<td>
+										  A9
+										</td>
+										<td>My Messages To Approve</td>
+										<td>QA Managers are responsible for reviewing proposed answers before they are delivered to a customer. This course reviews the My Messages to Approve page and basic use cases.</td>
+										<td>QA Managers</td>
+										<td align="right"><div class="video_thumb">
+										<a href="https://www.iservice.info/training/approve/approve.html"  target="_blank">
+										<img src="https://www.iservice.info/video_thumbs/my-messages-to-approve-a3.png">
+										  <img class="video-icon" style="display:none;" src="https://www.iservice.info/img/play-icon.png" alt="Play Icon">
+										  
+										</a><div class="video-duration">1m 49s</div></div>
+										<div class="thumb-text">Released July 06,2020</div>
+										</td>
+									</tr>
+									
+								</tbody>
+							</table>
+						 </div>
+				         <div class="clearfix"></div>
+						 <h2 class="table-heading collapsed manageWorkQueue" data-toggle="collapse" data-parent="#accordion" href="#manageWorkQueue">
+							 <i class="fa fa-minus"></i>
+							 <i class="fa fa-plus"></i>
+							<span class="underline">Managing Work Queues</span>
+						</h2>
+						<div class="table-data-container table-responsive  collapse" id="manageWorkQueue">
+							<table id="example1" class="table table-striped table-hover dataTable no-footer" role="grid" aria-describedby="example1_info">
+								<thead>
+									<tr role="row">
+										<th class="no-sort sorting_disabled" name="name" rowspan="1" colspan="1" aria-label="" style="width: 32px;">
+											Id
+										</th>
+										<th class="no-sort sorting_disabled" name="name" rowspan="1" colspan="1" aria-label="" style="width: 32px;">
+											Course Name
+										</th>
+										<th class="no-sort sorting_disabled" name="name" rowspan="1" colspan="1" aria-label="" style="width: 32px;">
+											Description
+										</th>
+										 <th class="no-sort sorting_disabled" name="name" rowspan="1" colspan="1" aria-label="" style="width: 32px;">
+											Target Audience
+										</th>
+										<th class="no-sort sorting_disabled" align="center" name="name" rowspan="1" colspan="1" aria-label="" style="width: 32px;">
+										  
+										</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td>
+										  A10
+										</td>
+										<td>Manage Messages</td>
+										<td>Managers can use the Manage Messages page to monitor the work queues in their assigned segments. This course explains the contents of this page and common use cases.</td>
+										<td>Manager and above</td>
+										<td align="right"><div class="video_thumb">
+										<a href="https://www.iservice.info/training/managemessages/managemessages.html"  target="_blank">
+										<img src="https://www.iservice.info/video_thumbs/manage-messages-a1.png">
+										  <img class="video-icon" style="display:none;" src="https://www.iservice.info/img/play-icon.png" alt="Play Icon">
+										  
+										</a><div class="video-duration">1m 24s</div></div>
+										<div class="thumb-text">Released June 19,2020</div>
+										</td>
+									</tr>
+									<tr>
+										<td>
+										  A11
+										</td>
+										<td>Manage Chats</td>
+										<td>The Manage Chats page is similar to the Manage Messages page. This course reviews how to monitor and act on active chats within your segments.</td>
+										<td>Manager and above</td>
+										<td align="right"><div class="video_thumb">
+										<a href="https://www.iservice.info/training/managechat/managechat.html"  target="_blank">
+										<img src="https://www.iservice.info/video_thumbs/manage-chats-a2.png">
+										  <img class="video-icon" style="display:none;" src="https://www.iservice.info/img/play-icon.png" alt="Play Icon">
+										  
+										</a><div class="video-duration">1m 24s</div></div>
+										<div class="thumb-text">Released June 19,2020</div>
+										</td>
+									</tr>
+									<tr>
+										<td>
+										  A12
+										</td>
+										<td>Logged In Agents</td>
+										<td>Chat managers can use the Logged In Agents page to track agent availability. This webinar reviews the basic concepts of this page.</td>
+										<td>Managers and above that monitor chats</td>
+										<td align="right"><div class="video_thumb">
+										<a href="https://www.iservice.info/training/loggedinagents/loggedinagents.html"  target="_blank">
+										<img src="https://www.iservice.info/video_thumbs/loggedin-agents-a3.png">
+										  <img class="video-icon" style="display:none;" src="https://www.iservice.info/img/play-icon.png" alt="Play Icon">
+										</a><div class="video-duration">1m 24s</div></div>
+										<div class="thumb-text">Released June 19,2020</div>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						 </div>
+				     
+					     <div class="clearfix"></div>
+						 <h2 class="table-heading collapsed customForms" data-toggle="collapse" data-parent="#accordion" href="#customForms">
+							 <i class="fa fa-minus"></i>
+							 <i class="fa fa-plus"></i>
+							<span class="underline">Custom Forms</span>
+						</h2>
+						<div class="table-data-container table-responsive  collapse" id="customForms">
+							<table id="example1" class="table table-striped table-hover dataTable no-footer" role="grid" aria-describedby="example1_info">
+								<thead>
+									<tr role="row">
+										<th class="no-sort sorting_disabled" name="name" rowspan="1" colspan="1" aria-label="" style="width: 32px;">
+											Id
+										</th>
+										<th class="no-sort sorting_disabled" name="name" rowspan="1" colspan="1" aria-label="" style="width: 32px;">
+											Course Name
+										</th>
+										<th class="no-sort sorting_disabled" name="name" rowspan="1" colspan="1" aria-label="" style="width: 32px;">
+											Description
+										</th>
+										 <th class="no-sort sorting_disabled" name="name" rowspan="1" colspan="1" aria-label="" style="width: 32px;">
+											Target Audience
+										</th>
+										<th class="no-sort sorting_disabled" align="center" name="name" rowspan="1" colspan="1" aria-label="" style="width: 32px;">
+										  
+										</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+									<td>
+									  A13
+									</td>
+									<td>Built in Forms</td>
+									<td>This course describes the built-in forms available for the Custom Forms section of the agent interface.
+									</td>
+									<td>All users</td>
+									<td align="right"><div class="video_thumb">
+									<a href="https://www.iservice.info/training/builtinforms/builtinforms.html"  target="_blank">
+									<img src="https://www.iservice.info/video_thumbs/builtin-forms-ct1.png">
+									  <img class="video-icon" style="display:none;" src="https://www.iservice.info/img/play-icon.png" alt="Play Icon">
+									  
+									</a><div class="video-duration">7m 07s</div></div>
+									<div class="thumb-text">Coming soon</div>
+									</td>
+								</tr>
+								<tr>
+									<td>
+									  A14
+									</td>
+									<td>My Custom Forms</td>
+									<td>Every tenant may have its own forms that support custom workflow. This course explains how administrators can add their own custom forms to this section of the interface.
+									</td>
+									<td>iService Administrators</td>
+									<td align="right">
+									<div class="video_thumb">
+									<a href="https://www.iservice.info/training/customforms/customforms.html"  target="_blank">
+									  <img src="https://www.iservice.info/video_thumbs/my-custom-forms-ct2.png">
+									  <img class="video-icon" style="display:none;" src="https://www.iservice.info/img/play-icon.png" alt="Play Icon">
+									  
+									</a><div class="video-duration">7m 07s</div></div>
+									 <div class="thumb-text">Coming soon</div>
+									</td>
+								</tr>
+								
+									
+								</tbody>
+							</table>
+						 </div>
+				     
+					 </div>
+				    <h2 class="table-heading collapsed adminstaratorCourse" data-toggle="collapse" data-parent="#accordion" href="#adminstaratorCourse">
+						 <i class="fa fa-minus"></i>
+						 <i class="fa fa-plus"></i>
+						<span class="underline">iService Administrator Training</span>
+					 </h2>
+					<p class="title_description">The iService Administrator courses provide a detailed explanation for basic and advanced tenant setup.
+
+					 </p>
+					 <div class="table-data-container table-responsive  collapse" id="adminstaratorCourse">
+						<table id="example1" class="table table-striped table-hover dataTable no-footer" role="grid" aria-describedby="example1_info">
+							<thead>
+								<tr role="row">
+									<th class="no-sort sorting_disabled" name="name" rowspan="1" colspan="1" aria-label="" style="width: 32px;">
+										Id
+									</th>
+									<th class="no-sort sorting_disabled" name="name" rowspan="1" colspan="1" aria-label="" style="width: 32px;">
+										Course Name
+									</th>
+									<th class="no-sort sorting_disabled" name="name" rowspan="1" colspan="1" aria-label="" style="width: 32px;">
+										Description
+									</th>
+									 <th class="no-sort sorting_disabled" name="name" rowspan="1" colspan="1" aria-label="" style="width: 32px;">
+										Target Audience
+									</th>
+									<th class="no-sort sorting_disabled" align="center" name="name" rowspan="1" colspan="1" aria-label="" style="width: 32px;">
+									   
+									</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td>
+									  AT1
+									</td>
+									<td> Basic tenant setup</td>
+									<td> Basic tenant setup
+									</td>
+									<td>iService Administrator</td>
+									<td align="right"><div class="video_thumb">
+									<a href="https://www.iservice.info/training/tenantsetup/tenantsetup.html"  target="_blank">
+									<img src="https://www.iservice.info/video_thumbs/basic-tenant-setup-at1.png">
+									  <img class="video-icon" style="display:none;" src="https://www.iservice.info/img/play-icon.png" alt="Play Icon">
+									  
+									</a><div class="video-duration">7m 07s</div></div>
+									<div class="thumb-text">Coming soon</div>
+									</td>
+								</tr>
+								<tr>
+									<td>
+									  AT2
+									</td>
+									<td>Advanced setup topics</td>
+									<td>Advanced setup topics
+									</td>
+									<td>iService Administrator</td>
+									<td align="right">
+									<div class="video_thumb">
+									<a href="https://www.iservice.info/training/setuptopics/setuptopics.html"  target="_blank">
+									  <img src="https://www.iservice.info/video_thumbs/advanced-setup-topics-at2.png">
+									  <img class="video-icon" style="display:none;" src="https://www.iservice.info/img/play-icon.png" alt="Play Icon">
+									  
+									</a><div class="video-duration">7m 07s</div></div>
+									 <div class="thumb-text">Coming soon</div>
+									</td>
+								</tr>
+								
+							</tbody>
+						</table>
+					 </div>
+				
+				
+				    <h2 class="table-heading collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseSystemAdminCourse">
+						 <i class="fa fa-minus"></i>
+						 <i class="fa fa-plus"></i>
+						<span class="underline">Technical Training for Systems Admins</span>
+					 </h2>
+					<p class="title_description">The iService Technical Training courses provide a detailed explanation for System Admin.
+
+					 </p>
+					 <div class="table-data-container table-responsive  collapse" id="collapseSystemAdminCourse">
+						<table id="example1" class="table table-striped table-hover dataTable no-footer" role="grid" aria-describedby="example1_info">
+							<thead>
+								<tr role="row">
+									<th class="no-sort sorting_disabled" name="name" rowspan="1" colspan="1" aria-label="" style="width: 32px;">
+										Id
+									</th>
+									<th class="no-sort sorting_disabled" name="name" rowspan="1" colspan="1" aria-label="" style="width: 32px;">
+										Course Name
+									</th>
+									<th class="no-sort sorting_disabled" name="name" rowspan="1" colspan="1" aria-label="" style="width: 32px;">
+										Description
+									</th>
+									 <th class="no-sort sorting_disabled" name="name" rowspan="1" colspan="1" aria-label="" style="width: 32px;">
+										Target Audience
+									</th>
+									<th class="no-sort sorting_disabled" align="center" name="name" rowspan="1" colspan="1" aria-label="" style="width: 32px;">
+									   
+									</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td>
+									  SA1
+									</td>
+									<td>TBD</td>
+									<td>TBD
+									</td>
+									<td>System Admin</td>
+									<td align="right"><div class="video_thumb">
+									<a href="https://www.iservice.info/training/tbd/tbd.html"  target="_blank">
+									<img src="https://www.iservice.info/video_thumbs/tbd-sa1.png">
+									  <img class="video-icon" style="display:none;" src="https://www.iservice.info/img/play-icon.png" alt="Play Icon">
+									  
+									</a><div class="video-duration">7m 07s</div></div>
+									  <div class="thumb-text">Coming soon</div>
+									</td>
+								</tr>
+								
+							</tbody>
+						</table>
+					 </div>
+				
+				</div>  
+			
+						
+					 </div>
+				</div>  
+        </div>   
+        
+    </div>    
+    </section>
+  </div>	
+</script>
+<script type="text/ng-template" id="customerportal-tabs-home-section5">
+<div class="row-container-full-width row-bg ptop60 pbottom60">
+    <div class="container">      
+          <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" data-aos="fade-left">
+              <div class="contents text-center">
+                <h2 class="heading page-sub-heading text-left">iService Utilities</h2>
+                <p class="hero-description text-left">Download the iService utilities to automate actions within your iService tenant.
+			   </p>
+              </div>
+            </div>
+            
+          </div> 
+		   <div class="row" id="accordion">
+                <div class="col-lg-12 col-sm-12" data-aos="fade-up">
+				 <h3 class="heading-desc"> Download the iService utilities that match your tenant version. <a href="https://www.iservice.info/guides/users/iservice-utilities.html">Read more</a> about iService utilities.</h3>
+				
+				  <div class="zip-container">	
+				    <div class="zip-version">
+					  v8.5
+					</div>
+					<div class="clearfix"></div>
+					<div class="zip-icon">
+					 <a href="https://www.iservice.info/new/assets/utilitieszip/iservice_utilitiesv8.5.0047.zip"> <img src="https://www.iservice.info/img/zipv8.png"></a>
+					</div>
+					<div class="clearfix"></div>
+					<a class="download-btn" href="https://www.iservice.info/new/assets/utilitieszip/iservice_utilitiesv8.5.0047.zip">
+					 Download
+					</a>
+				 </div>				
+				<div class="zip-container">	
+				    <div class="zip-version">
+					  v8.4
+					</div>
+					<div class="clearfix"></div>
+					<div class="zip-icon">
+					 <a href="https://www.iservice.info/new/assets/utilitieszip/iservice_utilitiesv8.4.0144.zip"> <img src="https://www.iservice.info/img/zipv8.png"></a>
+					</div>
+					<div class="clearfix"></div>
+					<a class="download-btn" href="https://www.iservice.info/new/assets/utilitieszip/iservice_utilitiesv8.4.0144.zip">
+					 Download
+					</a>
+				 </div>
+				 <div class="zip-container">	
+				    <div class="zip-version">
+					  v8.3
+					</div>
+					<div class="clearfix"></div>
+					<div class="zip-icon">
+					 <a href="https://www.iservice.info/new/assets/utilitieszip/iservice_utilitiesv8.3.0033.zip"> <img src="https://www.iservice.info/img/zipv8.png"></a>
+					</div>
+					<div class="clearfix"></div>
+					<a class="download-btn" href="https://www.iservice.info/new/assets/utilitieszip/iservice_utilitiesv8.3.0033.zip">
+					 Download
+					</a>
+				 </div>
+				 <div class="zip-container">	
+				    <div class="zip-version">
+					  v7.8
+					</div>
+					<div class="clearfix"></div>
+					<div class="zip-icon">
+					   <a href="https://www.iservice.info/new/assets/utilities-zip/7.8.105-utilities.zip"><img src="https://www.iservice.info/img/zipv78.png"></a>
+					</div>
+					<div class="clearfix"></div>
+					<a class="download-btn" href="https://www.iservice.info/new/assets/utilities-zip/7.8.105-utilities.zip">
+					 Download
+					</a>
+				 </div>
+				</div>  
+			</div>  
+       
+        </div> 
+</div>
+
+<div class="row-container-full-width row-bg-blue ptop60 pbottom60">
+    <div class="container">      
+          <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+              <div class="contents text-center">
+                <h2 class="heading page-sub-heading">If you're not using iservice yet,<br>
+				  take one of these actions to get started.
+				</h2>
+                
+              </div>
+            </div>
+            
+          </div> 
+		   <div class="row mtop30" id="accordion">
+                <div class="col-lg-12 col-sm-12" data-aos="fade-up">
+				  <div class="demo-btn-cont">
+				      <span class="demo-item">
+					   <img src="https://www.iservice.info/customer-portal/img/watch-demo.png"><a href="https://www.youtube.com/watch?v=TAbij9XGxgc" class="btn demo-btn">Watch A Demo</a>
+					  </span>
+					  <span class="demo-item">
+					  <img src="https://www.iservice.info/customer-portal/img/setup-call.png"><a href="https://iservice.us/lets-talk" class="btn demo-btn">Setup A Short Call</a>
+					   </span>
+					   <span class="demo-item">
+					   <img src="https://www.iservice.info/customer-portal/img/live-demo.png"><a href="https://iservice.us/get-a-live-demo/" class="btn demo-btn">Schedule A Live Demo</a>
+				       </span>
+				  </div>
+				</div>  
+			</div>  
+        </div> 
+</div>
+</script>
+
+<script>
+//login register section settings
+var showLoginRegister = true;  //true or false
+
+//tab settings
+var showSupportHome = true;  //true or false
+var showKnowledgebase = true;  //true or false
+var showMysubscriptions = true;  //true or false
+var showAskQuestion = true;  //true or false
+var showAccessHistory = true;  //true or false
+var showUpdateProfile = true;  //true or false
+
+//Support Home FAQ topic list, Display your custom topics, 
+var faqtopics = ["49", "70"]; //parent topic id
+
+</script>
