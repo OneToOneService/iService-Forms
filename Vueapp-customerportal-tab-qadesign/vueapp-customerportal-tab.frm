@@ -29,6 +29,15 @@ $if -fieldregex'part'='^$'$
     h1 {
       font-size: 30px;
     }
+    h2 {
+      font-size: 24px;
+    }
+    h3 {
+      font-size: 18px;
+    }
+    h4 {
+      font-size: 14px;
+    }
 
     .top_head_sect {
       display: flex;
@@ -172,7 +181,7 @@ $if -fieldregex'part'='^$'$
     .text-left {
       text-align: left !important;
     }
-
+    .message-attachments{margin-left:15px; margin-right:15px;}
     .drop-box {
       cursor: pointer;
       font-weight: normal;
@@ -5185,7 +5194,7 @@ $include -blob'portal-tabs-component-templates'$
   </script>
 
   <script type="text/x-template" id="support-home">
-    <div class="container">
+    <div class="container min-vh-100">
       $include -blob'portal-tabs-homepage'$
     </div>
   </script>
@@ -5445,9 +5454,9 @@ $include -blob'portal-tabs-component-templates'$
               <div class="message-body-container mb-15">
                 <div class="row">
                   <iservice-message-notification v-bind:feature="featureAAQ" v-if="featureAAQ.success"></iservice-message-notification>
-                  <div class="col-6 col-md-6">
+                  <div class="col-12 col-md-6">
                     <div class="form-group" v-bind:class="{'has-error': !featureAAQ.details.topicID}">
-                      <label for="inputPassword3" class="col-sm-12 control-label text-left">Please pick the topic of your question</label>
+                      <label for="inputPassword3" class="col-12 control-label text-left">Please pick the topic of your question</label>
                       <div class="col-12">
                         <Multiselect v-model="featureAAQ.details.topicID" v-bind:caret="true" placeholder="Select or search for a topic" valueProp="id" label="name" trackBy="name" v-bind:groups="true" v-bind:searchable="true" v-bind:options="topicGroups" v-bind:can-clear="false" @select="featureAAQ.getArticlesByTopic(featureAAQ.details.topicID)" noOptionsText="Gathering topics...">
                           <template v-slot:option="{ option }">
@@ -5458,7 +5467,7 @@ $include -blob'portal-tabs-component-templates'$
                       </div>
                     </div>
                   </div>
-                  <div class="col-6 col-md-6 mtop30" v-if="featureAAQ.submitticket">
+                  <div class="col-12 col-md-6 mtop30" v-if="featureAAQ.submitticket">
                     <div class="message-attachments">
                       <div class="row">
                         <div class="col-md-12">
@@ -5520,7 +5529,7 @@ $include -blob'portal-tabs-component-templates'$
                         </div>
                         <div class="clearfix"></div>
                         <div class="form-group" v-bind:class="{'has-error': !featureAAQ.details.bodyHtml}">
-                          <label for="inputPassword3" class="col-sm-12 control-label text-left">Body</label>
+                          <label for="inputPassword3" class="col-12 control-label text-left">Body</label>
                           <div class="col-12">
                             <tinymce-editor v-model="featureAAQ.details.bodyHtml" v-bind:customer-tools="featureAAQ.customerTools"></tinymce-editor>
                             <span v-if="featureAAQ.error.body && !featureAAQ.details.bodyHtml" class="text-red"><i class="fa fa-warning"></i> Body is required field.</span>
@@ -5939,8 +5948,8 @@ $include -blob'portal-tabs-component-templates'$
                 <div class="row">
                   <div class="col-6 col-md-6">
                     <div class="form-group">
-                      <label for="inputPassword3" class="col-sm-12 control-label text-left">Subject</label>
-                      <div class="col-sm-12">
+                      <label for="inputPassword3" class="col-12 control-label text-left">Subject</label>
+                      <div class="col-12">
                         <input type="text" class="form-control" v-model="selectedRow.subject" />
                       </div>
                     </div>
@@ -5958,8 +5967,8 @@ $include -blob'portal-tabs-component-templates'$
                   </div>
                   <div class="col-12">
                     <div class="form-group">
-                      <label for="inputPassword3" class="col-sm-12 control-label text-left">Body</label>
-                      <div class="col-sm-12">
+                      <label for="inputPassword3" class="col-12 control-label text-left">Body</label>
+                      <div class="col-12">
                         <tinymce-editor v-model="selectedRow.bodyHtml"></tinymce-editor>
                       </div>
                     </div>
@@ -5968,7 +5977,7 @@ $include -blob'portal-tabs-component-templates'$
               </div>
               <div class="message-attachments">
                 <div class="row">
-                  <div class="col-sm-12 col-md-6 col-lg-6 mb-15">
+                  <div class="col-12 col-md-6 col-lg-6 mb-15">
                     <label class="drop-box" @drop="featureUploads.Drop">
                       Drop files here or click to upload
                       <input type="file" style="display:none;" multiple @change="featureUploads.Choose">
