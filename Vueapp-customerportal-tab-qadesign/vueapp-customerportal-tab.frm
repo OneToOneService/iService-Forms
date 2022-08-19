@@ -5371,7 +5371,7 @@ $include -blob'portal-tabs-component-templates'$
     </div>
   </script>
   <script type="text/x-template" id="subscriptions">
-    <div class="container" v-if="config.pageComponents && config.pageComponents.enableLoginRegister && config.pageComponents.enableSubscription">
+    <div class="container min-vh-100" v-if="config.pageComponents && config.pageComponents.enableLoginRegister && config.pageComponents.enableSubscription">
       <p v-if="!loggedIn.isLoggedIn">
         Please login to view your subscriptions.
       </p>
@@ -5564,7 +5564,7 @@ $include -blob'portal-tabs-component-templates'$
     </div>
   </script>
   <script type="text/x-template" id="my-history">
-    <div class="container" v-if="config.pageComponents && config.pageComponents.enableInbox">
+    <div class="container min-vh-100" v-if="config.pageComponents && config.pageComponents.enableInbox">
 
       <p v-if="!loggedIn.isLoggedIn">
         Please login to view your message history.
@@ -5647,7 +5647,7 @@ $include -blob'portal-tabs-component-templates'$
     </div>
   </script>
   <script type="text/x-template" id="my-profile">
-    <div class="container" v-if="config.pageComponents && config.pageComponents.enableProfile">
+    <div class="container min-vh-100" v-if="config.pageComponents && config.pageComponents.enableProfile">
       <p v-if="!loggedIn.isLoggedIn">
         Please login to view your profile.
       </p>
